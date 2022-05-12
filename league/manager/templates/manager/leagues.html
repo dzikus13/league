@@ -1,0 +1,11 @@
+{%extends "manager/base.html"%}
+
+{%block content%}
+<table>
+   {%for league in leagues%}
+    <tr><td>{{league.name}}</td> <td>{{league.ended}}</td></tr>
+    {%empty%}
+    <tr><td>Mo Leagues found</td></tr>
+    {%endfor%}
+</table>
+{%endblock%}

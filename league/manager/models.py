@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 # Create your models here.
@@ -5,9 +6,14 @@ from django.db import models
 
 class League(models.Model):
     name = models.CharField(max_length=50)
+    max_number_of_teams = models.IntegerField(10)
     points_for_win = 3
     points_for_lost = 0
     points_for_draw = 1
+
+    @property
+    def teams_number(self):
+        return self.team_set.all().count()
 
     @property
     def all_matches(self):
@@ -32,26 +38,29 @@ class League(models.Model):
 
 
 class Team(models.Model):
+    league = models.ForeignKey(League)
     team_id = models.CharField(max_length=10)
     matches_won = models.IntegerField()
     matches_draw = models.IntegerField()
     matches_lost = models.IntegerField()
 
-    @property
-    def sum_of_points(self):
-        return self.matches_won * League.points_for_win + self.matches_draw * League.points_for_draw + self.matches_lost * League.points_for_lost
+    def save(self, *args, **kwargs):
+        if self.league.teams_number >= self.league.max_teams_in_league:
+            raise ValidationError("Max number of teams exceeded", code="max_teams")
+        return super().save(*args, **kwargs)
 
-    @property
-    def matches_teams_played(self):
-        return self.matches_won + self.matches_draw + self.matches_lost
+class SumOfPoints(models.Model):
+    pass
+
+
+class Result(models.Model):
+    pass
 
 
 class Match(models.Model):
-    match_id = models.IntegerField()
     time = models.DateTimeField()
-    result = models.IntegerField()
-    teams = models.ManyToManyField(Team)
     league = models.ForeignKey(League, on_delete=models.CASCADE)
+    result = models.CharField(max_length=20, null=True)
 
 
 class TeamPlayer(models.Model):
