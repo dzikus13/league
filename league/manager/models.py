@@ -6,7 +6,7 @@ from django.db import models
 
 class League(models.Model):
     name = models.CharField(max_length=50)
-    max_number_of_teams = models.IntegerField(10)
+    max_number_of_teams = models.IntegerField()
     points_for_win = 3
     points_for_lost = 0
     points_for_draw = 1
@@ -38,7 +38,7 @@ class League(models.Model):
 
 
 class Team(models.Model):
-    league = models.ForeignKey(League)
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_id = models.CharField(max_length=10)
     matches_won = models.IntegerField()
     matches_draw = models.IntegerField()
