@@ -6,7 +6,7 @@ from django.db import models
 
 class League(models.Model):
     name = models.CharField(max_length=50)
-    max_number_of_teams = models.IntegerField(10)
+    max_number_of_teams = models.IntegerField(default=10)
     points_for_win = 3
     points_for_lost = 0
     points_for_draw = 1
@@ -38,14 +38,14 @@ class League(models.Model):
 
 
 class Team(models.Model):
-    league = models.ForeignKey(League)
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_id = models.CharField(max_length=10)
     matches_won = models.IntegerField()
     matches_draw = models.IntegerField()
     matches_lost = models.IntegerField()
 
     def save(self, *args, **kwargs):
-        if self.league.teams_number >= self.league.max_teams_in_league:
+        if self.league.teams_number >= self.league.max_number_of_teams:
             raise ValidationError("Max number of teams exceeded", code="max_teams")
         return super().save(*args, **kwargs)
 
