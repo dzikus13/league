@@ -7,3 +7,4 @@
 /dataSources/
 /dataSources.local.xml
 league/db.sqlite3
+league/__pycache__/
