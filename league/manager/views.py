@@ -25,3 +25,7 @@ def manager(request):
             print(f)
  
     return render(request, "manager/manager.html", all_views_context)
+
+def league_details(request, league_id):
+    league = League.objects.get(id=league_id)
+    return render(request, "manager/league_details.html", {"league": league})
