@@ -1,15 +1,19 @@
 {%extends "manager/base.html"%} {%block content%}
 <table>
+    <!--{% debug %}-->
     <tr>
-        <th>All Views</th>
+        <th>All list of all views</th>
     </tr>
-    {%for league in leagues%}
     <tr>
-        <td>{{league.ended}}</td>
+        <td><a href="admin">admin</a></td>
+    </tr>
+    {%for link in links_list%}
+    <tr>
+        <td><a href="{{link}}">{{link}}</a></td>
     </tr>
     {%empty%}
     <tr>
-        <td>No Leagues found</td>
+        <td>No models (somehow?)</td>
     </tr>
     {%endfor%}
 </table>

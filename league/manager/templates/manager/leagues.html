@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {%extends "manager/base.html"%} {%block content%}
 <table>
     <tr>
@@ -7,23 +6,13 @@
     </tr>
     {%for league in leagues%}
     <tr>
-        <td>{{league.name}}</td>
+        <td><a href="{%url "league_details" league.id%}">{{league.name}}</td>
         <td>{{league.ended}}</td>
     </tr>
     {%empty%}
     <tr>
-        <td>Mo Leagues found</td>
+        <td>No Leagues found</td>
     </tr>
-=======
-{%extends "manager/base.html"%}
-
-{%block content%}
-<table>
-   {%for league in leagues%}
-    <tr><td><a href="{%url "league_details" league.id%}">{{league.name}}</td> <td>{{league.ended}}</td></tr>
-    {%empty%}
-    <tr><td>Mo Leagues found</td></tr>
->>>>>>> BACKEND
     {%endfor%}
 </table>
 {%endblock%}

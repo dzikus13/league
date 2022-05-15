@@ -63,7 +63,8 @@ class Team(models.Model):
 
 
 class Match(models.Model):
-    match_id = models.IntegerField()
+    # match_id = models.IntegerField()
+    # bo nie potrzebne
     time = models.DateTimeField()
     result = models.IntegerField(default=0)
     teams = models.ManyToManyField(Team)
