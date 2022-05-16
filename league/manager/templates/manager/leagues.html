@@ -3,9 +3,10 @@
 {%block content%}
 <table>
    {%for league in leagues%}
-    <tr><td><a href="{%url "league_details" league.id%}">{{league.name}}</td> <td>{{league.ended}}</td></tr>
+    <tr><td><a href="{%url "league_details" league.id%}">{{league.name}}</td> <td>{{league.ended}}</td><td><a href="{%url "league_edit" league.id%}">Edit</a></td></tr>
     {%empty%}
     <tr><td>Mo Leagues found</td></tr>
     {%endfor%}
 </table>
+<a href="{%url "league_add"%}"> Dodaj Ligę</a>
 {%endblock%}

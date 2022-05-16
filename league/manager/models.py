@@ -3,13 +3,19 @@ from django.db import models
 
 # Create your models here.
 
+DEFAULT_MAX_LEAGUE_PLAYERS = 2    # Maxiumum players in a league
+
 
 class League(models.Model):
+    DEFAULT_MAX_LEAGUE_PLAYERS = 2
     name = models.CharField(max_length=50)
     max_number_of_teams = models.IntegerField(default=10)
     points_for_win = 3
     points_for_lost = 0
     points_for_draw = 1
+
+    # Leagule.DEFAULT_MAX_LEAGUE_PLAYESR
+
 
     @property
     def teams_number(self):
