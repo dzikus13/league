@@ -1,0 +1,26 @@
+{%extends "manager/base.html"%} {%block content%}
+<table>
+    <tr>
+        <th>Match id</th>
+        <th>time</th>
+        <th>result</th>
+        <th>teams</th>
+        <th>league</th>
+        <!--<th>save</th>-->
+    </tr>
+    {%for match in matches%}
+    <tr>
+        <td><a href="{%url "match_details" match.id%}">{{match.id}}</a></td>
+        <td>{{match.time}}</td>
+        <td>{{match.result}}</td>
+        <td>{{match.teams}}</td>
+        <td>{{match.league}}</td>
+    </tr>
+    </a>
+    {%empty%}
+    <tr>
+        <td>No matches found</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

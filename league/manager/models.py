@@ -61,7 +61,6 @@ class Team(models.Model):
         return self.matches_won + self.matches_draw + self.matches_lost
 
 
-
 class Match(models.Model):
     # match_id = models.IntegerField()
     # bo nie potrzebne

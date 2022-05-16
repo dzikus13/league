@@ -14,15 +14,11 @@ BASE_DIR = Path(__file__).resolve().parent
 
 # Create your views here.
 
-from .models import League
+from .models import League, Match, Team, TeamPlayer, Event, EventType
+
 
 def base(request):
     return render(request, "manager/base.html")
-
-def leagues(request):
-    all_leagues = League.objects.all()
-    league_context = {"leagues": all_leagues}
-    return render(request, "manager/leagues.html", league_context)
 
 
 def manager(request):
@@ -39,6 +35,21 @@ def manager(request):
     return render(request, "manager/manager.html", model_links)
 
 
+def error(request):
+    return render(request, "manager/error.html", {"error_log": "Nie doszlo do zadnego bledu"})
+    # sprawic by mi pycharm nie krzyczal ze tak nie mozna
+
+
+def add_forms(request):
+    return render(request, "manager/add_forms.html")
+
+
+def leagues(request):
+    all_leagues = League.objects.all()
+    league_context = {"leagues": all_leagues}
+    return render(request, "manager/leagues.html", league_context)
+
+
 def league_details(request, league_id):
     try:
         league = League.objects.get(id=league_id)
@@ -50,10 +61,82 @@ def league_details(request, league_id):
         # sprawic by mi pycharm nie krzyczal ze tak nie mozna
 
 
-def error(request):
-    return render(request, "manager/error.html", {"error_log": "Nie doszlo do zadnego bledu"})
-    # sprawic by mi pycharm nie krzyczal ze tak nie mozna
+def teams(request):
+    all_teams = Team.objects.all()
+    teams_context = {"teams": all_teams}
+    return render(request, "manager/teams.html", teams_context)
 
 
-def add_forms(request):
-    return render(request, "manager/add_forms.html")
+def team_details(request, team_id):
+    try:
+        team = Team.objects.get(id=team_id)
+        return render(request, "manager/team_details.html", {"team": team})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+
+
+def matches(request):
+    all_matches = Match.objects.all()
+    matches_context = {"matches": all_matches}
+    return render(request, "manager/matches.html", matches_context)
+
+
+def match_details(request, match_id):
+    try:
+        match = Match.objects.get(id=match_id)
+        return render(request, "manager/match_details.html", {"match": match})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+
+
+def players(request):
+    all_players = TeamPlayer.objects.all()
+    players_context = {"players": all_players}
+    return render(request, "manager/players.html", players_context)
+
+
+def player_details(request, player_id):
+    try:
+        player = TeamPlayer.objects.get(id=player_id)
+        return render(request, "manager/player_details.html", {"player": player})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+
+
+def event_types(request):
+    all_event_types = EventType.objects.all()
+    event_types_context = {"event_types": all_event_types}
+    return render(request, "manager/event_types.html", event_types_context)
+
+
+def event_type_details(request, event_type_id):
+    try:
+        event_type = EventType.objects.get(id=event_type_id)
+        return render(request, "manager/event_type_details.html", {"event_type": event_type})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+
+
+def events(request):
+    all_events = Event.objects.all()
+    events_context = {"events": all_events}
+    return render(request, "manager/events.html", events_context)
+
+
+def event_details(request, event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+        return render(request, "manager/event_details.html", {"event": event})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+
