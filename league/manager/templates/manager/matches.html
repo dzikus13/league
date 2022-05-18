@@ -10,7 +10,7 @@
     </tr>
     {%for match in matches%}
     <tr>
-        <td><a href="{%url "match_details" match.id%}">{{match.id}}</a></td>
+        <td><a class="a_table" href="{%url "match_details" match.id%}">{{match.id}}</a></td>
         <td>{{match.time}}</td>
         <td>{{match.result}}</td>
         <td>{{match.teams}}</td>

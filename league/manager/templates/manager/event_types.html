@@ -7,7 +7,7 @@
     {%for event_type in event_types%}
     <tr>
         <td>{{event_type.id}}</td>
-        <td><a href="{%url "event_type_details" event_type.id%}">{{event_type.name}}</a></td>
+        <td><a class="a_table" href="{%url "event_type_details" event_type.id%}">{{event_type.name}}</a></td>
     </tr>
     {%empty%}
     <tr>

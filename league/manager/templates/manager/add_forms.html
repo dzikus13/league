@@ -1,134 +1,103 @@
 {%extends "manager/base.html"%} {%block content%}
 
+<div class="form_box">
+    <FORM METHOD="" ACTION="">
+        <a>League Name:</a>
+            <INPUT autocomplete="off" TYPE="text" NAME="league_name" SIZE="40" MAXLENGTH="40" class="form_input" placeholder="League Name">
+        <p></p>
+        <a>Maximal Number of Teams:</a>
+            <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
+        <p>
+        <input class="button2" TYPE="reset" VALUE="Clear"></input>
+        <input class="button" TYPE="submit" VALUE="Submit"></input>
+    </FORM>
+</div>
 
-    <div class="main">
-        <FORM METHOD="" ACTION="">
-            <a>League Name:</a>
-            <INPUT autocomplete="off" TYPE="text" NAME="league_name" SIZE="40" MAXLENGTH="40" style="float:right; border-radius: 2px;" placeholder="League Name">
+<div class="form_box">
+    <FORM METHOD="" ACTION="">
+        <a>Team Name:</a>
+            <INPUT autocomplete="off" TYPE="text" NAME="team_name" SIZE="40" MAXLENGTH="40" class="form_input" placeholder="Team Name">
+        <p></p>
+        <a class="">League:</a>
+            <SELECT NAME="league" class="form_select">
+                <option>League Name</option>
+            </SELECT>
+        <p></p>
+        <a>Maximal Number of Players:</a>
+            <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
+        <p></p>
+        <input class="button2" TYPE="reset" VALUE="  Clear  "></input>
+        <input class="button" TYPE="submit" VALUE="  Submit  "></input>
+    </FORM>
+</div>
 
-            <p>
-
-                <a>Maximal Number of Teams:</a>
-                <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" style="float:right; border-radius: 2px; text-align:center;" placeholder="00">
-
-                <p>
-
-                    <input class="button2" TYPE="reset" VALUE="Clear"></input>
-                    <input class="button" TYPE="submit" VALUE="Submit"></input>
-        </FORM>
-    </div>
-
-    <div class="main2">
-        <FORM METHOD="" ACTION="">
-            <a>Team Name:</a>
-            <INPUT autocomplete="off" TYPE="text" NAME="team_name" SIZE="40" MAXLENGTH="40" style="float:right; border-radius: 2px;" placeholder="Team Name">
-
-            <p>
-
-                <a>League:</a>
-                <SELECT NAME="league" style="float:right; border-radius: 2px; cursor:pointer;">
-                    <option>League Name</option>
-                </SELECT>
-
-                <p>
-
-                    <a>Maximal Number of Players:</a>
-                    <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" style="float:right; border-radius: 2px; text-align:center;" placeholder="00">
-
-                    <p>
-                        <input class="button2" TYPE="reset" VALUE="  Clear  "></input>
-                        <input class="button" TYPE="submit" VALUE="  Submit  "></input>
-        </FORM>
-    </div>
-
-    <div class="main">
-        <FORM METHOD="" ACTION="">
-            <a>Player Nick:</a>
-            <INPUT autocomplete="off" TYPE="text" NAME="nick" SIZE="40" MAXLENGTH="60" style="float:right; border-radius: 2px;" placeholder="Player Nick">
-
-            <p>
-
-                <a>Team:</a>
-                <SELECT NAME="team" style="float:right; border-radius: 2px; cursor:pointer;">
-                    <option>Team Name</option>
-                </SELECT>
-
-                <p>
-
-                    <input class="button2" TYPE="reset" VALUE="  Clear  "></input>
-                    <input class="button" TYPE="submit" VALUE="  Submit  "></input>
-        </FORM>
-    </div>
-
-    <div class="main3">
-        <FORM METHOD="" ACTION="">
-            <a>Team 1:</a>
-            <SELECT NAME="team" style="float:right; border-radius: 2px; cursor:pointer;">
+<div class="form_box">
+    <FORM METHOD="" ACTION="">
+        <a>Player Nick:</a>
+            <INPUT autocomplete="off" TYPE="text" NAME="nick" SIZE="40" MAXLENGTH="60" class="form_input" placeholder="Player Nick">
+        <p></p>
+        <a>Team:</a>
+            <SELECT NAME="team" class="form_select">
                 <option>Team Name</option>
             </SELECT>
+        <p></p>
+        <input class="button2" TYPE="reset" VALUE="  Clear  "></input>
+        <input class="button" TYPE="submit" VALUE="  Submit  "></input>
+    </FORM>
+</div>
 
-            <p>
+<div class="form_box">
+    <FORM METHOD="" ACTION="">
+        <a>Team 1:</a>
+            <SELECT NAME="team" class="form_select">
+                <option>Team Name</option>
+            </SELECT>
+        <p></p>
+        <a>Team 2:</a>
+            <SELECT NAME="team" class="form_select">
+                <option>Team Name</option>
+            </SELECT>
+        <p></p>
+        <a>Number of Goals For Team 1:</a>
+            <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
+        <p></p>
+        <a>Number of Goals For Team 2:</a>
+            <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
+        <p></p>
+        <input class="button2" TYPE="reset" VALUE="  Clear  "></input>
+        <input class="button" TYPE="submit" VALUE="  Submit  "></input>
+    </FORM>
+</div>
 
-                <a>Team 2:</a>
-                <SELECT NAME="team" style="float:right; border-radius: 2px; cursor:pointer;">
-                    <option>Team Name</option>
-                </SELECT>
-
-                <p>
-
-                    <a>Number of Goals For Team 1:</a>
-                    <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" style="float:right; border-radius: 2px; text-align:center;" placeholder="00">
-
-                    <p>
-
-                        <a>Number of Goals For Team 2:</a>
-                        <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" style="float:right; border-radius: 2px; text-align:center;" placeholder="00">
-
-                        <p>
-
-                            <input class="button2" TYPE="reset" VALUE="  Clear  "></input>
-                            <input class="button" TYPE="submit" VALUE="  Submit  "></input>
-        </FORM>
-    </div>
-
-    <div class="main4">
+<div class="form_box">
         <FORM METHOD="" ACTION="">
             <a>Match:</a>
-            <SELECT NAME="match_id" style="float:right; border-radius: 2px; cursor:pointer;">
-                <option>Match ID</option>
-            </SELECT>
-
-            <p>
-
-                <a>Player:</a>
-                <SELECT NAME="player_nick" style="float:right; border-radius: 2px; cursor:pointer;">
+                <SELECT NAME="match_id" class="form_select">
+                    <option>Match ID</option>
+                </SELECT>
+            <p></p>
+            <a>Player:</a>
+                <SELECT NAME="player_nick" class="form_select">
                     <option>Player Nick</option>
                 </SELECT>
-
-                <p>
-
-                    <a>Number of Goals:</a>
-                    <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" style="float:right; border-radius: 2px; text-align:center;" placeholder="00">
-
-                    <p>
-
-                        <a>Yellow Card:</a>
-                        <SELECT NAME="yellow_card" style="float:right; border-radius: 2px; cursor:pointer;">
+            <p></p>
+            <a>Number of Goals:</a>
+                <INPUT autocomplete="off" TYPE="text" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
+            <p></p>
+            <a>Yellow Card:</a>
+                <SELECT NAME="yellow_card" class="form_select">
                     <option value="0">No</option>
                     <option value="1">Yes</option>
                 </SELECT>
-                        <p>
-
-                            <a>Red Card:</a>
-                            <SELECT NAME="red_card" style="float:right; border-radius: 2px; cursor:pointer;">
+            <p></p>
+            <a>Red Card:</a>
+                <SELECT NAME="red_card" class="form_select">
                     <option value="0">No</option>
                     <option value="1">Yes</option>
                 </SELECT>
-
-                            <p>
-
-                                <input class="button2" TYPE="reset" VALUE="  Clear  "></input>
-                                <input class="button" TYPE="submit" VALUE="  Submit  "></input>
-        </FORM>
-    </div>
+            <p></p>
+            <input class="button2" TYPE="reset" VALUE="  Clear  "></input>
+            <input class="button" TYPE="submit" VALUE="  Submit  "></input>
+    </FORM>
+</div>
 {%endblock%}
