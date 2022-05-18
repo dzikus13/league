@@ -13,7 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent
 # -----------------------------------------
 
 # Create your views here.
-
+# do tworzenia generic views
+from django.views import generic
 from .models import League, Match, Team, TeamPlayer, Event, EventType
 
 
@@ -48,6 +49,18 @@ def leagues(request):
     all_leagues = League.objects.all()
     league_context = {"leagues": all_leagues}
     return render(request, "manager/leagues.html", league_context)
+
+
+class Leagues(generic.ListView):
+    template_name = 'manager/manager.html'
+
+    def get_queryset(self):
+        return League.objects.all()
+
+
+class LeagueDetailView(generic.DetailView):
+    model = League
+    template_name = 'league_details.html'
 
 
 def league_details(request, league_id):
@@ -139,4 +152,6 @@ def event_details(request, event_id):
         return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
     except:
         return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+
+
 

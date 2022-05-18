@@ -1,14 +1,20 @@
 from django.contrib import admin
 from django.urls import path, re_path
 
+# do korzystania z generic views
+from . import views
+# ------------------------------
+
 from .views import base, error, manager, add_forms
+# '''
+# To nie jest wykorzystywane z generic views 
 from .views import leagues, league_details
 from .views import teams, team_details
 from .views import matches, match_details
 from .views import players, player_details
 from .views import event_types, event_type_details
 from .views import events, event_details
-
+# '''
 
 urlpatterns = [
     path("", manager),
@@ -20,6 +26,7 @@ urlpatterns = [
     path("leagues", leagues, name="league_list"),
     re_path(r"league_details/(?P<league_id>\d+)", league_details, name="league_details"),
     path("league_details", leagues, name="league_list"),
+    path("leagues", views.Leagues.as_view(), name="leagues"),
     # jezeli nie podane zostanie id wyswietli liste
 
     path("teams", teams, name="team_list"),
