@@ -4,22 +4,21 @@
     <title>F</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <meta charset="utf-8">
+</head>
 
-    <head>
+<body>
+    <div id="header">
+        <div id="menu">
+            <form action="/">
+                <input class="button3" type="submit" value="Przeglądanie" />
+            </form>
+            <form action="add_forms">
+                <input class="button3" type="submit" value="Dodawanie" />
+            </form>
+        </div>
+    </div>
 
-        <body>
-            <div id="header">
-                <div id="menu">
-                    <form action="/">
-                        <input class="button3" type="submit" value="Przeglądanie" />
-                    </form>
-                    <form action="add_forms">
-                        <input class="button3" type="submit" value="Dodawanie" />
-                    </form>
-                </div>
-            </div>
-
-            <div id="background">
-                {%block content%} {%endblock%}
-            </div>
-        </body>
+    <div id="main">
+        {%block content%} {%endblock%}
+    </div>
+</body>

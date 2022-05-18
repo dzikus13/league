@@ -10,8 +10,6 @@ from .views import event_types, event_type_details
 from .views import events, event_details
 
 
-
-
 urlpatterns = [
     path("", manager),
     path("base", base),

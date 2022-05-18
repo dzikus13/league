@@ -9,7 +9,7 @@
     </tr>
     {%for event in events%}
     <tr>
-        <td><a href="{%url "event_details" event.id%}">{{event.id}}</a></td>
+        <td><a class="a_table" href="{%url "event_details" event.id%}">{{event.id}}</a></td>
         <td>{{event.time}}</td>
         <td>{{event.player}}</td>
         <td>{{event.event_type}}</td>
