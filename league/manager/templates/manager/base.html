@@ -1,11 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{%block content%}
-{%endblock content%}
-</body>
-</html>
+    <title>F</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <meta charset="utf-8">
+
+    <head>
+
+        <body>
+            <div id="header">
+                <div id="menu">
+                    <form action="leagues">
+                        <input class="button3" type="submit" value="League Tables" />
+                    </form>
+                    <form action="2.html">
+                        <input class="button3" type="submit" value="Other Tables" />
+                    </form>
+                    <form action="3.html">
+                        <input class="button3" type="submit" value="Adding" />
+                    </form>
+                </div>
+            </div>
+
+            <div id="background">
+                {%block content%} {%endblock%}
+            </div>
+        </body>
