@@ -7,7 +7,7 @@
         <th>event_type</th>
         <th>match</th>
     </tr>
-    {%for event in events%}
+    {%for event in object_list%}
     <tr>
         <td><a class="a_table" href="{%url "event_details" event.id%}">{{event.id}}</a></td>
         <td>{{event.time}}</td>

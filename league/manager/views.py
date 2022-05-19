@@ -22,7 +22,22 @@ def base(request):
     return render(request, "manager/base.html")
 
 
-def manager(request):
+def list_of_views(request):
+    context = {"links_list": []}
+    context["links_list"].append("main")
+    context["links_list"].append("manager")
+    context["links_list"].append("add_forms")
+    context["links_list"].append("leagues")
+    context["links_list"].append("matches")
+    context["links_list"].append("teams")
+    context["links_list"].append("event_types")
+    context["links_list"].append("events")
+    context["links_list"].append("players")
+
+    return render(request, "manager/main.html", context)
+
+
+def debug_manager(request):
     # linki (a wlasciwie to "odnosniki"(ig?) do plikow html z folderu manager)
     directory = path.join(BASE_DIR, "templates\manager")
     model_links = {"links_list": []}
@@ -44,23 +59,12 @@ def error(request):
 def add_forms(request):
     return render(request, "manager/add_forms.html")
 
-
+'''
+# Stary sposob dla porownania
 def leagues(request):
     all_leagues = League.objects.all()
     league_context = {"leagues": all_leagues}
     return render(request, "manager/leagues.html", league_context)
-
-
-class Leagues(generic.ListView):
-    template_name = 'manager/manager.html'
-
-    def get_queryset(self):
-        return League.objects.all()
-
-
-class LeagueDetailView(generic.DetailView):
-    model = League
-    template_name = 'league_details.html'
 
 
 def league_details(request, league_id):
@@ -72,86 +76,78 @@ def league_details(request, league_id):
     except:
         return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
         # sprawic by mi pycharm nie krzyczal ze tak nie mozna
+'''
+
+class Leagues(generic.ListView):
+    template_name = 'manager/leagues.html'
+    # context_object_name = 'Leagues'
+    # gdybym chcial zmienic nazwe, ale wole posluzyc sie default'em (object_list)
+
+    def get_queryset(self):
+        return League.objects.all()
 
 
-def teams(request):
-    all_teams = Team.objects.all()
-    teams_context = {"teams": all_teams}
-    return render(request, "manager/teams.html", teams_context)
+class LeagueDetail(generic.DetailView):
+    model = League
+    template_name = 'manager/league_details.html'
 
 
-def team_details(request, team_id):
-    try:
-        team = Team.objects.get(id=team_id)
-        return render(request, "manager/team_details.html", {"team": team})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+class Teams(generic.ListView):
+    template_name = 'manager/teams.html'
+
+    def get_queryset(self):
+        return Team.objects.all()
+    # TODO wypisac graczy poprawnie
 
 
-def matches(request):
-    all_matches = Match.objects.all()
-    matches_context = {"matches": all_matches}
-    return render(request, "manager/matches.html", matches_context)
+class TeamDetail(generic.DetailView):
+    model = Team
+    template_name = 'manager/team_details.html'
+    # TODO wypisac graczy poprawnie
 
 
-def match_details(request, match_id):
-    try:
-        match = Match.objects.get(id=match_id)
-        return render(request, "manager/match_details.html", {"match": match})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+class Matches(generic.ListView):
+    template_name = 'manager/matches.html'
+
+    def get_queryset(self):
+        return Match.objects.all()
+
+class MatchDetail(generic.DetailView):
+    model = Match
+    template_name = 'manager/match_details.html'
 
 
-def players(request):
-    all_players = TeamPlayer.objects.all()
-    players_context = {"players": all_players}
-    return render(request, "manager/players.html", players_context)
+class Players(generic.ListView):
+    template_name = 'manager/players.html'
+
+    def get_queryset(self):
+        return TeamPlayer.objects.all()
 
 
-def player_details(request, player_id):
-    try:
-        player = TeamPlayer.objects.get(id=player_id)
-        return render(request, "manager/player_details.html", {"player": player})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+class PlayerDetail(generic.DetailView):
+    model = TeamPlayer
+    template_name = 'manager/player_details.html'
 
 
-def event_types(request):
-    all_event_types = EventType.objects.all()
-    event_types_context = {"event_types": all_event_types}
-    return render(request, "manager/event_types.html", event_types_context)
+class EventTypes(generic.ListView):
+    template_name = 'manager/event_types.html'
+
+    def get_queryset(self):
+        return EventType.objects.all()
 
 
-def event_type_details(request, event_type_id):
-    try:
-        event_type = EventType.objects.get(id=event_type_id)
-        return render(request, "manager/event_type_details.html", {"event_type": event_type})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+class EventTypeDetail(generic.DetailView):
+    model = EventType
+    template_name = 'manager/event_type_details.html'
 
 
-def events(request):
-    all_events = Event.objects.all()
-    events_context = {"events": all_events}
-    return render(request, "manager/events.html", events_context)
+class Events(generic.ListView):
+    template_name = 'manager/events.html'
+
+    def get_queryset(self):
+        return Event.objects.all()
 
 
-def event_details(request, event_id):
-    try:
-        event = Event.objects.get(id=event_id)
-        return render(request, "manager/event_details.html", {"event": event})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
-
-
-
+class EventDetail(generic.DetailView):
+    model = Event
+    template_name = 'manager/event_details.html'
