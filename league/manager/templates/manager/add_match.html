@@ -1,15 +1,19 @@
+<!--
+AUTHORISATION:
+Admin
+-->
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
 	<FORM METHOD="" ACTION="">
 		<span style="float:left;">
-			Match Date:
+			<label>Match Date:</label>
 			<br>
 				<INPUT TYPE="date" class="form_select" NAME="match_date" SIZE="7" MAXLENGTH="10">
 			</br>
 			
 			<br></br>
 	
-			Team 1:
+			<label>Team 1:</label>
 			<br>
 				<SELECT NAME="team" class="form_select">
 					<option>team_id</option>
@@ -18,7 +22,7 @@
 				
 			<br></br>
 				
-			Team 2:
+			<label>Team 2:</label>
 			<br>
 				<SELECT NAME="team" class="form_select">
 					<option>team_id</option>
@@ -27,14 +31,14 @@
 			
 			<br></br>
 		
-			Number of Goals For Team 1:
+			<label>Number of Goals For Team 1:</label>
 			<br>
 				<INPUT autocomplete="off" TYPE="number" NAME="number_of_team_1_goals" class="form_input" placeholder="00">
 			</br>
 			
 			<br></br>
 		
-			Number of Goals For Team 2:
+			<label>Number of Goals For Team 2:</label>
 			<br>
 				<INPUT autocomplete="off" TYPE="number" NAME="number_of_team_2_goals" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
 			</br>	

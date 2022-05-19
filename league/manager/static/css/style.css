@@ -48,6 +48,10 @@ html, body
 	border-bottom-right-radius:15px;
 	margin:auto;
 }
+#password_checkbox
+{
+    float:right;
+}
 
 a 
 {
@@ -81,6 +85,11 @@ table, tr, th, td
     margin-right:10px;
     float:right;
     border-radius:5px;
+}
+
+.color_white
+{
+    color:white;
 }
 
 .button_form_clear 
@@ -167,6 +176,16 @@ table, tr, th, td
 	border-color:white;
 }
 
+.select_option
+{
+    background-color:white;
+}
+
+.select_option:hover
+{
+    background-color:lightgreen;
+}
+
 .form_box
 {
 	overflow:auto;
@@ -202,6 +221,14 @@ table, tr, th, td
 	color:black;
 	position:relative;
 	border-radius:5px;
+}
+
+select:focus{
+    box-shadow: 0 0 10px 100px #fff inset;
+    border-color: lightgreen;
+   	border-radius:15px;
+   	border-width:2px;
+    outline:none;
 }
 
 ol
