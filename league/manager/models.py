@@ -69,7 +69,7 @@ class Team(models.Model):
 
 class Match(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
-    # date = models.DateTimeField(default=datetime.now, blank=True)
+    date = models.DateTimeField(blank=True)
     match_duration = models.DurationField(default="01:30:00")
 
     def amount_gols(self):
