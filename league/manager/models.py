@@ -11,6 +11,7 @@ class League(models.Model):
     points_for_lost = models.IntegerField(default=0)
     points_for_draw = models.IntegerField(default=1)
     max_number_of_teams = models.IntegerField(default=10)
+    max_number_of_players_in_team = models.IntegerField(default=2)
 
     @property
     def teams_number(self):
@@ -61,6 +62,10 @@ class Team(models.Model):
                self.matches_draw +\
                self.matches_lost
 
+    @property
+    def players_number(self):
+        return self.teamplayer_set.all().count()
+
 
 class Match(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
@@ -93,6 +98,11 @@ class TeamPlayer(models.Model):
     def goals(self):
         # TODO: ilosc goli zdobytych prze gracza
         pass
+
+    def save(self, *args, **kwargs):
+        if self.team.players_number >= self.team.league.max_number_of_players_in_team:
+            raise ValidationError("Max number of players in that team exceeded", code="max_players_in_team")
+        return super().save(*args, **kwargs)
 
 
 class EventType(Enum): # TODO:Shefour try adding enum to database :)
