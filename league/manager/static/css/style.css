@@ -1,56 +1,63 @@
 html, body 
 {
-    background-color: #202225;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    font-family: tahoma;
+    background-color:#202225;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    font-family:tahoma;
 }
 
 #header 
 {
-    background-color: black;
-    height: 140px;
-    width: 100%;
-    position: fixed;
-    display: block;
-    z-index: 9;
+    background-color:black;
+    height:90px;
+    width:100%;
+    position:fixed;
+    display:block;
+    z-index:9;
+	box-shadow:0px 5px 10px;
 }
 
 #menu 
 {
-    background-color: black;
-    height: 140px;
-    width: 900;
-    display: flex;
-    margin: auto;
+    background-color:black;
+    height:90px;
+    width:900px;
+    margin:auto;
+}
+
+#user_login_menu
+{
+    height:40px;
+    width:150px;
+	float:right;
 }
 
 #main
 {
 	background-color:#2f3136;
 	text-align:center;
-	padding-top:150px;		
+	padding-top:110px;		
 	padding-bottom:20px;
-	overflow: auto;
+	overflow:auto;
 	width:885px;
 	margin-top:10px;
 	margin-left:7px;
 	margin:7px;
-	border-bottom-left-radius: 15px;
-	border-bottom-right-radius: 15px;
+	border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
 	margin:auto;
 }
 
 a 
 {
-    font-size: 20px;
-    text-decoration: none;
+    font-size:20px;
+    text-decoration:none;
 }
 
 .a_table
 {
-    color: white;
+    color:white;
 }
 
 .a_table:hover
@@ -60,101 +67,210 @@ a
 
 table, tr, th, td 
 {
-    text-align: center;
-    padding: 0px;
-    color: white;
-    border: solid white;
+    text-align:center;
+    padding:0px;
+    color:white;
+    border:solid white;
 }
 
-.button 
+.button_form_submit 
 {
-    text-align: center;
-    WIDTH: 75px;
-    cursor: pointer;
-    margin-right: 10px;
-    float: right;
-    border-radius: 5px;
+    text-align:center;
+    WIDTH:75px;
+    cursor:pointer;
+    margin-right:10px;
+    float:right;
+    border-radius:5px;
 }
 
-.button2 
+.button_form_clear 
 {
-    text-align: center;
-    WIDTH: 75px;
-    cursor: pointer;
-    margin-right: 10px;
-    float: right;
-    border-radius: 5px;
+    text-align:center;
+    WIDTH:75px;
+    cursor:pointer;
+    margin-right:10px;
+    float:right;
+    border-radius:5px;
 }
 
-.button3 
+.button_header_menu 
 {
-    text-align: center;
-    background-color: black;
-    width: 300px;
-    height: 140px;
-    cursor: pointer;
-    color: white;
-    font-size: 30px;
-    border-color: black;
+    text-align:center;
+    background-color:black;
+    width:300px;
+    height:90px;
+    cursor:pointer;
+    color:white;
+    font-size:30px;
+    border-color:black;
+	display:table-cell;
+	float:left;
+}
+.button_back{
+	text-align:center;
+    WIDTH:75px;
+    cursor:pointer;
+    border-radius:5px;
+}
+.button_back:hover 
+{
+    background-color:lightgreen;
+    color:black;
+    cursor:pointer;
 }
 
-.button:hover 
+.button_form_submit:hover 
 {
-    background-color: lightgreen;
-    color: black;
-    cursor: pointer;
+    background-color:lightgreen;
+    color:black;
+    cursor:pointer;
 }
 
-.button2:hover 
+.button_form_clear:hover 
 {
-    background-color: #FF5858;
-    color: black;
-    cursor: pointer;
+    background-color:#FF5858;
+    color:black;
+    cursor:pointer;
 }
 
-.button3:hover 
+.button_header_menu:hover 
 {
-    background-color: lightgreen;
-    color: black;
-    cursor: pointer;
+    background-color:lightgreen;
+    color:black;
+    cursor:pointer;
 }
 
 .form_input
 {
-	float:right;
-	border-radius: 2px;
+	float:left;
+	height:35px;
+	width:260px;
+	border-radius:15px;
 	text-align:center;
+	outline-offset:0px;
+	outline-color:lightgreen;
+	border-width:10px;
+	border-color:white;
 }
-
 
 .form_select
 {
-	float:right;
-	border-radius: 2px;
 	cursor:pointer;
+	float:left;
+	height:36px;
+	width:260px;
+	border-radius:15px;
+	text-align:center;
+	outline-offset:0px;
+	outline-color:lightgreen;
+	border-width:10px;
+	border-color:white;
 }
 
 .form_box
 {
-	overflow: auto;
+	overflow:auto;
+	width:260px;
 	min-height:100px;
 	background-color:#d3d3d3;
-	float:left;
 	text-align:left;
 	padding-top:20px;
 	padding-bottom:20px;
-	padding-left:20px;
-	padding-right:20px;
-	width:560px;
+	margin:auto;
 	margin-top:7px;
 	margin-bottom:7px;
-	margin-left:15%;
+	color:black;
+	position:relative;
+	border-radius:5px;
+	padding-left:20px;
+	padding-right:20px;
+}
+.form_box_login
+{
+	overflow:auto;
+	min-height:100px;
+	background-color:#d3d3d3;
+	text-align:left;
+	padding-top:20px;
+	padding-bottom:10px;
+	padding-left:20px;
+	padding-right:20px;
+	width:260px;
+	margin-top:7px;
+	margin-bottom:7px;
+	margin:auto;
 	color:black;
 	position:relative;
 	border-radius:5px;
 }
 
-.color_white
+ol
 {
-    color: white;
+	display:table-cell;
+	width:150px;
+	list-style-type:none;
+	padding:0px;
+	margin:0px;
+	background-color:#FFF;
+	font-size:20px;
+	height:20px;
+	line-height:35px;
+	text-align:center;
+}
+
+ol a
+{
+	display:block;
+	text-decoration:none;
+	color:#000;
+	padding-bottom:5px;
+	padding-top:0px;
+}
+
+ol > li
+{
+	width:150px;
+	background-color:#EEE;
+	height:2em;
+	color:white;
+}
+
+ol > li:first-child
+{
+	cursor:normal;
+	background-color:black;
+}
+
+ol > li:first-child:hover
+{
+	background-color:#90ee90;
+}
+
+ol > li a:first-child
+{
+	color:white;
+}
+
+ol > li a:first-child:hover
+{
+	color:black;
+}
+
+ol > li:hover > ul {
+	display:block;
+}
+
+ol > li > ul {
+	display:none;
+	list-style-type:none;
+	padding:0;
+	margin:0;
+}
+
+ol > li > ul > li{
+	background-color:#171717;
+}
+
+ol > li > ul > li:hover {
+	background-color:#90ee90;
 }

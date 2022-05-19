@@ -9,13 +9,23 @@
 <body>
     <div id="header">
         <div id="menu">
-            <form action="/">
-                <input class="button3" type="submit" value="Przeglądanie" />
+            <form action="/" class="button_header_menu">
+                <input class="button_header_menu" type="submit" value="Widoki"/>
             </form>
-            <form action="add_forms">
-                <input class="button3" type="submit" value="Dodawanie" />
+            <form action="add_forms" class="button_header_menu">
+                <input class="button_header_menu" type="submit" value="Dodawanie" />
             </form>
-        </div>
+            <div id="user_login_menu">
+			    <ol>
+			        <li><a>User</a>
+			            <ul>
+                            <li><a href="login">Login</a></li>
+			                <li><a href="register">Register</a></li>
+			            </ul>
+			        </li>
+			    </ol>
+			</div>
+	    </div>
     </div>
 
     <div id="main">

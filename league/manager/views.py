@@ -44,6 +44,38 @@ def add_forms(request):
     return render(request, "manager/add_forms.html")
 
 
+def add_event(request):
+    return render(request, "manager/add_event.html")
+
+
+def add_league(request):
+    return render(request, "manager/add_league.html")
+
+
+def add_match(request):
+    return render(request, "manager/add_match.html")
+
+
+def add_player(request):
+    return render(request, "manager/add_player.html")
+
+
+def add_player_stats(request):
+    return render(request, "manager/add_player_stats.html")
+
+
+def add_team(request):
+    return render(request, "manager/add_team.html")
+
+
+def login(request):
+    return render(request, "manager/login.html")
+
+
+def register(request):
+    return render(request, "manager/register.html")
+
+
 def leagues(request):
     all_leagues = League.objects.all()
     league_context = {"leagues": all_leagues}
