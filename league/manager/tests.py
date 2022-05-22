@@ -5,6 +5,7 @@ from django.test import TestCase
 
 from .models import League, Team, TeamPlayer
 
+
 class LeagueTest(TestCase):
     def test_league_adding(self):
         self.assertEqual(League.objects.all().count(), 0)
@@ -22,12 +23,12 @@ class LeagueTest(TestCase):
             team = Team.objects.create(league=league, team_name="Test team name")
 
 
-
 class LeagueAddedTest(TestCase):
     def setUp(self):
         self.league = League.objects.create(name="Test league")
+
     def test_league_name(self):
-        self.assertEqual(self.league.name,"Test league")
+        self.assertEqual(self.league.name, "Test league")
 
     def test_league_teams(self):
         self.assertEqual(self.league.teams_number, 0)
