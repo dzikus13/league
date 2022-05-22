@@ -23,7 +23,7 @@ class League(models.Model):
 
     @property
     def played_matches(self):
-        return self.match_set.filter(result__isnull=False).count()
+        return self.match_set.filter(event__isnull=False).count()
 
     @property
     def ended(self):
@@ -69,7 +69,7 @@ class Team(models.Model):
 
 class Match(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
-    # date = models.DateTimeField(default=datetime.now, blank=True)
+    match_date = models.DateTimeField(default=timezone.now, blank=True)
     match_duration = models.DurationField(default="01:30:00")
 
     def amount_gols(self):
