@@ -2,12 +2,19 @@
 <table>
     <tr>
         <th>League name</th>
-        <th>League has ended</th>
+        <th>Teams</th>
+        <th>Matches</th>
+        <th>Is over</th>
+        <th>Winner</th>
     </tr>
-    {%for league in object_list%} <!-- views.py cialo klasy Leagues dla odpowiedzi  -->
+    {%for league in object_list%}
+    <!-- views.py cialo klasy Leagues dla odpowiedzi  -->
     <tr>
         <td><a class="a_table" href="{%url "league_details" league.id%}">{{league.name}}</a></td>
+        <td>{{league.teams_number}}/{{league.max_number_of_teams}}</td>
+        <td>{{league.played_matches}}/{{league.all_matches}}</td>
         <td>{{league.ended}}</td>
+        <td>{{league.league_winner}}</td>
     </tr>
     {%empty%}
     <tr>

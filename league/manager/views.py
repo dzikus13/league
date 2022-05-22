@@ -30,7 +30,7 @@ def list_of_views(request):
     context["links_list"].append("leagues")
     context["links_list"].append("matches")
     context["links_list"].append("teams")
-    context["links_list"].append("event_types")
+#    context["links_list"].append("event_types")
     context["links_list"].append("events")
     context["links_list"].append("players")
 
@@ -53,7 +53,7 @@ def debug_manager(request):
 
 def error(request):
     return render(request, "manager/error.html", {"error_log": "Nie doszlo do zadnego bledu"})
-    # sprawic by mi pycharm nie krzyczal ze tak nie mozna
+    # przerzucenie sie na customowe error page (500.html itp)
 
 
 def add_forms(request):
@@ -128,7 +128,8 @@ class PlayerDetail(generic.DetailView):
     model = TeamPlayer
     template_name = 'manager/player_details.html'
 
-
+'''
+# model zostal calkowicie zmieniony
 class EventTypes(generic.ListView):
     template_name = 'manager/event_types.html'
 
@@ -139,7 +140,7 @@ class EventTypes(generic.ListView):
 class EventTypeDetail(generic.DetailView):
     model = EventType
     template_name = 'manager/event_type_details.html'
-
+'''
 
 class Events(generic.ListView):
     template_name = 'manager/events.html'

@@ -6,14 +6,17 @@
         <th>player</th>
         <th>event_type</th>
         <th>match</th>
+        <th>team</th>
+
     </tr>
     {%for event in object_list%}
     <tr>
         <td><a class="a_table" href="{%url "event_details" event.id%}">{{event.id}}</a></td>
-        <td>{{event.time}}</td>
+        <td>{{event.event_time}}</td>
         <td>{{event.player}}</td>
         <td>{{event.event_type}}</td>
         <td>{{event.match}}</td>
+        <td>{{event.team}}</td>
     </tr>
     </a>
     {%empty%}

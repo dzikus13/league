@@ -2,19 +2,23 @@
 <table>
     <tr>
         <th>Match id</th>
-        <th>time</th>
-        <th>result</th>
-        <th>teams</th>
+        <th>duration</th>
+        <th>winner</th>
+        <th>loser</th>
+        <th>drawn</th>
+        <th>amount_gols</th>
         <th>league</th>
         <!--<th>save</th>-->
     </tr>
-    {%for match in matches%}
+    {%for match in object_list%}
     <tr>
         <td><a class="a_table" href="{%url "match_details" match.id%}">{{match.id}}</a></td>
-        <td>{{match.time}}</td>
-        <td>{{match.result}}</td>
-        <td>{{match.teams}}</td>
-        <td>{{match.league}}</td>
+        <th>{{match.duration}}</th>
+        <th>{{match.winner}}</th>
+        <th>{{match.loser}}</th>
+        <th>{{match.drawn}}</th>
+        <th>{{match.amount_gols}}</th>
+        <th>{{match.league}}</th>
     </tr>
     </a>
     {%empty%}

@@ -3,7 +3,7 @@ from enum import Enum
 from django.core.exceptions import ValidationError
 from django.db import models
 from datetime import datetime
-
+# ???
 
 class League(models.Model):
     name = models.CharField(max_length=50)
@@ -64,7 +64,7 @@ class Team(models.Model):
 
 class Match(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
-    # date = models.DateTimeField(default=datetime.now, blank=True)
+    # date = models.DateTimeField(blank=True)
     match_duration = models.DurationField(default="01:30:00")
 
     def amount_gols(self):
@@ -82,7 +82,6 @@ class Match(models.Model):
     def drawn(self):
         # TODO:elzbietagawickaLOVE remis w meczu
         pass
-
 
 
 class TeamPlayer(models.Model):
@@ -107,7 +106,7 @@ class Event(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE)
-    event_time = models.DateTimeField(auto_now_add=True)
+    event_time = models.DateTimeField(blank=True)
 
     @classmethod
     def get_events_for(cls, match, event_type=None):

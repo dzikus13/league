@@ -43,8 +43,8 @@ urlpatterns = [
     path("players", views.Players.as_view(), name="player_list"),
     re_path(r"player_details/(?P<pk>[0-9]+)/$", views.PlayerDetail.as_view(), name="player_details"),
 
-    path("event_types", views.EventTypes.as_view(), name="event_types_list"),
-    re_path(r"event_type_details/(?P<pk>[0-9]+)/$", views.EventTypeDetail.as_view(), name="event_type_details"),
+    #path("event_types", views.EventTypes.as_view(), name="event_types_list"),
+    #re_path(r"event_type_details/(?P<pk>[0-9]+)/$", views.EventTypeDetail.as_view(), name="event_type_details"),
 
     path("events", views.Events.as_view(), name="events_list"),
     re_path(r"event_details/(?P<pk>[0-9]+)/$", views.EventDetail.as_view(), name="event_details"),
