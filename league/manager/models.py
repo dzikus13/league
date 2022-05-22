@@ -1,4 +1,3 @@
-from enum import Enum
 from django.core.exceptions import ValidationError
 from django.db import models
 from datetime import datetime
@@ -45,6 +44,7 @@ class League(models.Model):
         return super().save(*args, **kwargs)
     '''
 
+
 class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
@@ -76,39 +76,45 @@ class Match(models.Model):
     match_duration = models.DurationField(default="01:30:00")
     teams = models.ManyToManyField(Team)
 
-    def gols_amount_team(self, which_team):
-        # TODO:elzbietagawickaLOVE Number of goals scored by the team2
+    def goals_amount_team(self, which_team):
+        # TODO:elzbietagawickaLOVE Number of goals scored by the team
         return Event.objects.all().filter(Event.event_type == "MATCH_GOAL", Event.team == which_team).count()
 
-    def gols_amount_list(self):
-        array = []
+    def goals_amount_dict(self):
+        my_dict = {}
         for team in self.Match.teams:
-            amount = self.gols_amount_team(team)
-            array.append(amount)
-        array.sort()
-        return array
+            amount = self.goals_amount_team(team)
+            my_dict[team] = amount
+        return my_dict
 
     @property
     def winner(self):
         # TODO:elzbietagawickaLOVE Winner in match
-        array = self.gols_amount_list()
-        if array[0] == array[1]:
-            return False
-        return array[0]
+        my_dict = self.goals_amount_dict()
+        my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1])
+        return list(my_dict_sorted.keys())[0]
 
     @property
     def loser(self):
         # TODO:elzbietagawickaLOVE Loser in match
-        array = self.gols_amount_list()
-        return array[-1]
+        my_dict = self.goals_amount_dict()
+        my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
+        return list(my_dict_sorted.keys())[0]
 
     @property
     def drawn(self):
         # TODO:elzbietagawickaLOVE Draw in match
-        array = self.gols_amount_list()
-        if array.count(array[0]) == len(array):
+        my_dict = self.goals_amount_dict()
+        res = True
+        test_val = list(my_dict.values())[0]
+        for elem in my_dict:
+            if my_dict[elem] != test_val:
+                res = False
+                break
+        if res is False:
+            return False
+        else:
             return True
-        return False
 
 
 class TeamPlayer(models.Model):
