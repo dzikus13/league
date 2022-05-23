@@ -128,7 +128,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = (
     # "league\manager\static",
     # juz nie potrafie powiedziec ktore dziala bo jestem dosc pewien ze CSS sie nie aktualizuje/cashuje w pamieci przegladraki/django
-    path.join(BASE_DIR, "manager\static"),
+    path.join(BASE_DIR, "manager", "static"),
 )
 
 # Default primary key field type

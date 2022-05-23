@@ -39,7 +39,7 @@ def list_of_views(request):
 
 def debug_manager(request):
     # linki (a wlasciwie to "odnosniki"(ig?) do plikow html z folderu manager)
-    directory = path.join(BASE_DIR, "templates\manager")
+    directory = path.join(BASE_DIR, "templates/manager")
     model_links = {"links_list": []}
     i = 0
     for filename in listdir(directory):
@@ -65,6 +65,7 @@ def leagues(request):
     all_leagues = League.objects.all()
     league_context = {"leagues": all_leagues}
     return render(request, "manager/leagues.html", league_context)
+
 
 
 def league_details(request, league_id):
