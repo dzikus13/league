@@ -1,8 +1,6 @@
 from enum import Enum
-
 from django.core.exceptions import ValidationError
 from django.db import models
-from datetime import datetime
 
 
 class League(models.Model):
@@ -26,7 +24,7 @@ class League(models.Model):
         return self.match_set.filter(event__isnull=False).count()
 
     @property
-    def ended(self):
+    def is_ended(self):
         if self.all_matches > 0:
             return self.all_matches == self.played_matches
         else:
@@ -34,32 +32,34 @@ class League(models.Model):
 
     @property
     def league_winner(self):
-        #TODO: zrobic winnera ligi ASAP
-        pass
-
+        if self.is_ended:
+            return max(self.team_set.all().sum_of_points)
+        else:
+            return None
+          
 
 class Team(models.Model):
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
     matches_won = models.IntegerField(default=0)
     matches_draw = models.IntegerField(default=0)
     matches_lost = models.IntegerField(default=0)
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if self.league.teams_number >= self.league.max_number_of_teams:
             raise ValidationError("Max number of teams exceeded", code="max_teams")
         return super().save(*args, **kwargs)
 
-    @property # TODO:Zuzannka77 add test to check if this property works properly
+    @property  # TODO:Zuzannka77 add test to check if this property works properly
     def sum_of_points(self):
-        return self.matches_won * self.league.points_for_win +\
-               self.matches_draw * self.league.points_for_draw +\
+        return self.matches_won * self.league.points_for_win + \
+               self.matches_draw * self.league.points_for_draw + \
                self.matches_lost * self.league.points_for_lost
 
-    @property # TODO:Zuzannka77 add test to check if this property works properly
+    @property  # TODO:Zuzannka77 add test to check if this property works properly
     def matches_team_played(self):
-        return self.matches_won +\
-               self.matches_draw +\
+        return self.matches_won + \
+               self.matches_draw + \
                self.matches_lost
 
     @property
@@ -71,23 +71,42 @@ class Match(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     match_date = models.DateTimeField(default=timezone.now, blank=True)
     match_duration = models.DurationField(default="01:30:00")
+    # team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1')
+    # team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2')
 
-    def amount_gols(self):
-        # TODO:elzbietagawickaLOVE zrobic ilosc strzelonych goli przez druzyne
+    def amount_gols_team1(self):
+        # TODO:elzbietagawickaLOVE Number of goals scored by the team1
+        # return Event.objects.filter(Event.event_type="gol").filter(Event.team = team1).count()
+        pass
+
+    def amount_gols_team2(self):
+        # TODO:elzbietagawickaLOVE Number of goals scored by the team2
+        # return Event.objects.filter(Event.event_type="gol").filter(Event.team = team2).count()
         pass
 
     def winner(self):
-        # TODO:elzbietagawickaLOVE zwyciesca meczu
-        pass
+        # TODO:elzbietagawickaLOVE Winner in match
+        if self.drawn():
+            return None
+        else:
+            if self.amount_gols_team1 > self.amount_gols_team2:
+                return self.team1.team_name
+            else:
+                return self.team2.team_name
 
     def loser(self):
-        # TODO:elzbietagawickaLOVE przegrany meczu
-        pass
+        # TODO:elzbietagawickaLOVE Loser in match
+        if self.drawn():
+            return None
+        else:
+            if self.amount_gols_team1 < self.amount_gols_team2:
+                return self.team1.team_name
+            else:
+                return self.team2.team_name
 
     def drawn(self):
-        # TODO:elzbietagawickaLOVE remis w meczu
-        pass
-
+        # TODO:elzbietagawickaLOVE Draw in match
+        return self.amount_gols_team1 == self.amount_gols_team2
 
 
 class TeamPlayer(models.Model):
@@ -96,7 +115,7 @@ class TeamPlayer(models.Model):
 
     @property
     def goals(self):
-        # TODO: ilosc goli zdobytych prze gracza
+        # TODO: Number of goals scored by the player
         pass
 
     def save(self, *args, **kwargs):
@@ -105,7 +124,7 @@ class TeamPlayer(models.Model):
         return super().save(*args, **kwargs)
 
 
-class EventType(Enum): # TODO:Shefour try adding enum to database :)
+class EventType(models.TextChoices):  # TODO:Shefour try adding enum to database :)
     MATCH_WON = "Match has been won"
     MATCH_LOST = "Match has been lost"
     MATCH_DRAW = "Match has been drawn"
@@ -113,7 +132,7 @@ class EventType(Enum): # TODO:Shefour try adding enum to database :)
 
 
 class Event(models.Model):
-    event_type = models.CharField(max_length=20)
+    event_type = models.CharField(max_length=20, choices=EventType.choices)
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE)
