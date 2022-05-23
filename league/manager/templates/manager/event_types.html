@@ -1,0 +1,18 @@
+{%extends "manager/base.html"%} {%block content%}
+<table>
+    <tr>
+        <th>Event type id</th>
+        <th>Event type name</th>
+    </tr>
+    {%for event_type in event_types%}
+    <tr>
+        <td>{{event_type.id}}</td>
+        <td><a class="a_table" href="{%url "event_type_details" event_type.id%}">{{event_type.name}}</a></td>
+    </tr>
+    {%empty%}
+    <tr>
+        <td>No event types found</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

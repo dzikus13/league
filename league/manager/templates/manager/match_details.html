@@ -1,0 +1,21 @@
+{%extends "manager/base.html"%} {%block content%}
+Details about match#{{match.id}}
+<table>
+    <tr>
+        <th>time</th>
+        <th>{{match.time}}</th>
+    </tr>
+    <tr>
+        <td>result</td>
+        <td>{{match.result}}</td>
+    </tr>
+    <tr>
+        <td>teams</td>
+        <td>{{match.teams}}</td>
+    </tr>
+    <tr>
+        <td>league</td>
+        <td>{{match.league}}</td>
+    </tr>
+</table>
+{%endblock%}

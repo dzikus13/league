@@ -89,7 +89,6 @@ class Match(models.Model):
         pass
 
 
-
 class TeamPlayer(models.Model):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
     player_nick = models.CharField(max_length=20)
@@ -110,6 +109,9 @@ class EventType(Enum): # TODO:Shefour try adding enum to database :)
     MATCH_LOST = "Match has been lost"
     MATCH_DRAW = "Match has been drawn"
     MATCH_GOAL = "Goal has been scored"
+    MATCH_FIRST_YELLOW = "First yellow card risen"
+    MATCH_SECOND_YELLOW = "Second yellow card risen"
+    MATCH_RED = "Red card risen"
 
 
 class Event(models.Model):

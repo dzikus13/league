@@ -1,0 +1,25 @@
+{%extends "manager/base.html"%} {%block content%}
+<table>
+    <tr>
+        <th>Event id</th>
+        <th>time</th>
+        <th>player</th>
+        <th>event_type</th>
+        <th>match</th>
+    </tr>
+    {%for event in events%}
+    <tr>
+        <td><a class="a_table" href="{%url "event_details" event.id%}">{{event.id}}</a></td>
+        <td>{{event.time}}</td>
+        <td>{{event.player}}</td>
+        <td>{{event.event_type}}</td>
+        <td>{{event.match}}</td>
+    </tr>
+    </a>
+    {%empty%}
+    <tr>
+        <td>No events found</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

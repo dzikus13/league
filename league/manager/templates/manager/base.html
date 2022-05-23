@@ -1,11 +1,35 @@
-<!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>F</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <meta charset="utf-8">
 </head>
 <body>
-{%block content%}
-{%endblock content%}
+    <div id="header">
+        <div id="menu">
+            <form action="/" class="button_header_menu">
+                <input class="button_header_menu" type="submit" value="Widoki"/>
+            </form>
+            <form action="add_forms" class="button_header_menu">
+                <input class="button_header_menu" type="submit" value="Dodawanie" />
+            </form>
+            <div id="user_login_menu">
+			    <ol>
+			        <li><a>User</a>
+			            <ul>
+                            <li><a href="login">Login</a></li>
+			                <li><a href="register">Register</a></li>
+			            </ul>
+			        </li>
+			    </ol>
+			</div>
+	    </div>
+    </div>
+
+    <div id="main">
+        {%block content%} {%endblock%}
+    </div>
 </body>
 </html>

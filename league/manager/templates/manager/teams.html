@@ -1,0 +1,26 @@
+{%extends "manager/base.html"%} {%block content%}
+<table>
+    <tr>
+        <th>Team name</th>
+        <th>Matches won</th>
+        <th>Matches lost</th>
+        <th>Number of players</th>
+        <th>Sum of points</th>
+    </tr>
+    {%for team in teams%}
+
+    <tr>
+        <td><a class="a_table" href="{%url "team_details" team.id%}">{{team.team_name}}</a></td>
+        <td>{{team.matches_won}}</td>
+        <td>{{team.matches_lost}}</td>
+        <td>{{team.number_of_players}}</td>
+        <td>{{team.sum_of_points}}</td>
+    </tr>
+    </a>
+    {%empty%}
+    <tr>
+        <td>No teams found</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

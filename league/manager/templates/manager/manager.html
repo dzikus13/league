@@ -1,0 +1,20 @@
+{%extends "manager/base.html"%} {%block content%}
+<table>
+    <!--{% debug %}-->
+    <tr>
+        <th>List of all views</th>
+    </tr>
+    <tr>
+        <td><a class="a_table" href="admin">admin</a></td>
+    </tr>
+    {%for link in links_list%}
+    <tr>
+        <td><a class="a_table" href="{{link}}">{{link}}</a></td>
+    </tr>
+    {%empty%}
+    <tr>
+        <td>No models (somehow?)</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

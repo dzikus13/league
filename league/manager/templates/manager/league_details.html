@@ -1,0 +1,49 @@
+{%extends "manager/base.html"%} {%block content%}
+Details about {{league.name}}
+<table>
+    <tr>
+        <th>id</th>
+        <th>{{league.id}}</th>
+    </tr>
+    <tr>
+        <td>name</td>
+        <td>{{league.name}}</td>
+    </tr>
+    <tr>
+        <td>max_number_of_teams</td>
+        <td>{{league.max_number_of_teams}}</td>
+    </tr>
+    <tr>
+        <td>points_for_win</td>
+        <td>{{league.points_for_win}}</td>
+    </tr>
+    <tr>
+        <td>points_for_lost</td>
+        <td>{{league.points_for_lost}}</td>
+    </tr>
+    <tr>
+        <td>points_for_draw</td>
+        <td>{{league.points_for_draw}}</td>
+    </tr>
+    <tr>
+        <td>teams_number</td>
+        <td>{{league.teams_number}}</td>
+    </tr>
+    <tr>
+        <td>all_matches</td>
+        <td>{{league.all_matches}}</td>
+    </tr>
+    <tr>
+        <td>played_matches</td>
+        <td>{{league.played_matches}}</td>
+    </tr>
+    <tr>
+        <td>ended</td>
+        <td>{{league.ended}}</td>
+    </tr>
+    <tr>
+        <td>winner</td>
+        <td>{{league.winner}}</td>
+    </tr>
+</table>
+{%endblock%}
