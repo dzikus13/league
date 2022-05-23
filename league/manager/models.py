@@ -1,16 +1,15 @@
+from enum import Enum
 from django.core.exceptions import ValidationError
 from django.db import models
-from datetime import datetime
-
 
 
 class League(models.Model):
-    MIN_NUMBER_OF_TEAMS = 2
     name = models.CharField(max_length=50)
     points_for_win = models.IntegerField(default=3)
     points_for_lost = models.IntegerField(default=0)
     points_for_draw = models.IntegerField(default=1)
     max_number_of_teams = models.IntegerField(default=10)
+    max_number_of_players_in_team = models.IntegerField(default=2)
 
     @property
     def teams_number(self):
@@ -22,7 +21,7 @@ class League(models.Model):
 
     @property
     def played_matches(self):
-        return self.match_set.filter(winner__isnull=False, drawn__isnull=False).count()
+        return self.match_set.filter(event__isnull=False).count()
 
     @property
     def is_ended(self):
@@ -33,17 +32,11 @@ class League(models.Model):
 
     @property
     def league_winner(self):
-        # TODO: Implement condition for winning a league ASAP
-        pass
-
-    #TODO: Some a in test for this validation
-    '''
-    def save(self, *args, **kwargs):
-        if self.teams_number < self.MIN_NUMBER_OF_TEAMS:
-            raise ValidationError("Number of teams is not enough", code="not_enough_teams")
-        return super().save(*args, **kwargs)
-    '''
-
+        if self.is_ended:
+            return max(self.team_set.all().sum_of_points)
+        else:
+            return None
+          
 
 class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
@@ -69,10 +62,14 @@ class Team(models.Model):
                self.matches_draw + \
                self.matches_lost
 
+    @property
+    def players_number(self):
+        return self.teamplayer_set.all().count()
+
 
 class Match(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
-    match_date = models.DateTimeField(auto_now_add=True)
+    match_date = models.DateTimeField(default=timezone.now, blank=True)
     match_duration = models.DurationField(default="01:30:00")
     teams = models.ManyToManyField(Team)
 
@@ -87,7 +84,6 @@ class Match(models.Model):
             my_dict[team] = amount
         return my_dict
 
-    @property
     def winner(self):
         # TODO:elzbietagawickaLOVE Winner in match
         my_dict = self.goals_amount_dict()
@@ -125,6 +121,11 @@ class TeamPlayer(models.Model):
     def goals(self):
         # TODO: Number of goals scored by the player
         pass
+
+    def save(self, *args, **kwargs):
+        if self.team.players_number >= self.team.league.max_number_of_players_in_team:
+            raise ValidationError("Max number of players in that team exceeded", code="max_players_in_team")
+        return super().save(*args, **kwargs)
 
 
 class EventType(models.TextChoices):  # TODO:Shefour try adding enum to database :)
