@@ -1,5 +1,3 @@
-
-
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -7,12 +5,12 @@ from datetime import datetime
 
 
 class League(models.Model):
+    MIN_NUMBER_OF_TEAMS = 2
     name = models.CharField(max_length=50)
     points_for_win = models.IntegerField(default=3)
     points_for_lost = models.IntegerField(default=0)
     points_for_draw = models.IntegerField(default=1)
     max_number_of_teams = models.IntegerField(default=10)
-    max_number_of_players_in_team = models.IntegerField(default=2)
 
     def __str__(self):
         return self.name
@@ -27,7 +25,7 @@ class League(models.Model):
 
     @property
     def played_matches(self):
-        return self.match_set.filter(event__isnull=False).count()
+        return self.match_set.filter(winner__isnull=False, drawn__isnull=False).count()
 
     @property
     def is_ended(self):
@@ -39,39 +37,42 @@ class League(models.Model):
     @property
     def league_winner(self):
         if self.is_ended:
+
             # TODO: Iga - do poprawy 1. List comprehension, 2. powinno zwracać Team.
             return max(self.team_set.all().sum_of_points)
         else:
             return None
 
+    #TODO: Some a in test for this validation
+    def save(self, *args, **kwargs):
+        if self.teams_number < self.MIN_NUMBER_OF_TEAMS:
+            raise ValidationError("Number of teams is not enough", code="not_enough_teams")
+        return super().save(*args, **kwargs)
+
 
 class Team(models.Model):
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
     matches_won = models.IntegerField(default=0)
     matches_draw = models.IntegerField(default=0)
     matches_lost = models.IntegerField(default=0)
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if self.league.teams_number >= self.league.max_number_of_teams:
             raise ValidationError("Max number of teams exceeded", code="max_teams")
         return super().save(*args, **kwargs)
 
-    @property # TODO:Zuzannka77 add test to check if this property works properly
+    @property  # TODO:Zuzannka77 add test to check if this property works properly
     def sum_of_points(self):
-        return self.matches_won * self.league.points_for_win +\
-               self.matches_draw * self.league.points_for_draw +\
+        return self.matches_won * self.league.points_for_win + \
+               self.matches_draw * self.league.points_for_draw + \
                self.matches_lost * self.league.points_for_lost
 
-    @property # TODO:Zuzannka77 add test to check if this property works properly
+    @property  # TODO:Zuzannka77 add test to check if this property works properly
     def matches_team_played(self):
-        return self.matches_won +\
-               self.matches_draw +\
+        return self.matches_won + \
+               self.matches_draw + \
                self.matches_lost
-
-    @property
-    def players_number(self):
-        return self.teamplayer_set.all().count()
 
 
 class Match(models.Model):
@@ -89,8 +90,10 @@ class Match(models.Model):
         for team in self.Match.teams:  #TODO: a może self.teams.all()
             amount = self.goals_amount_team(team)
             my_dict[team] = amount   #TODO: prawdopodobnie sypnie ValueError - ravczej team.team_name (albo team.id)
+
         return my_dict
 
+    @property
     def winner(self):
         # TODO:elzbietagawickaLOVE Winner in match
         # TODO: dostosować do sytuacji z MATCH_WON Event
@@ -98,6 +101,7 @@ class Match(models.Model):
         my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1])
         winner_id = list(my_dict_sorted.keys())[0]
         return Team.objects.get(pk=winner_id)
+
 
     @property
     def loser(self):
@@ -117,18 +121,19 @@ class Match(models.Model):
 
         return True
 
-
 class TeamPlayer(models.Model):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
     score = models.IntegerField()
-    nick = models.CharField(max_length=20)
+    player_nick = models.CharField(max_length=20)
 
 
 class EventType(models.TextChoices):
+
     MATCH_WON = "Match has been won"
     MATCH_LOST = "Match has been lost"
     MATCH_DRAW = "Match has been drawn"
     MATCH_GOAL = "Goal has been scored"
+    MISSING = "Event not specified"
 
 
 class Event(models.Model):
