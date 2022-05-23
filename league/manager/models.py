@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from datetime import datetime
 
 
 
@@ -33,16 +32,16 @@ class League(models.Model):
 
     @property
     def league_winner(self):
-        # TODO: Implement condition for winning a league ASAP
-        pass
+        if self.is_ended:
+            return max(self.team_set.all().sum_of_points)
+        else:
+            return None
 
     #TODO: Some a in test for this validation
-    '''
     def save(self, *args, **kwargs):
         if self.teams_number < self.MIN_NUMBER_OF_TEAMS:
             raise ValidationError("Number of teams is not enough", code="not_enough_teams")
         return super().save(*args, **kwargs)
-    '''
 
 
 class Team(models.Model):
@@ -100,10 +99,9 @@ class Match(models.Model):
         my_dict = self.goals_amount_dict()
         my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
         return list(my_dict_sorted.keys())[0]
-
+    
     @property
     def drawn(self):
-        # TODO:elzbietagawickaLOVE Draw in match
         my_dict = self.goals_amount_dict()
         res = True
         test_val = list(my_dict.values())[0]
@@ -127,15 +125,18 @@ class TeamPlayer(models.Model):
         pass
 
 
-class EventType(models.TextChoices):  # TODO:Shefour try adding enum to database :)
+class EventType(models.TextChoices):
+
     MATCH_WON = "Match has been won"
     MATCH_LOST = "Match has been lost"
     MATCH_DRAW = "Match has been drawn"
     MATCH_GOAL = "Goal has been scored"
+    MISSING = "Event not specified"
 
 
 class Event(models.Model):
-    event_type = models.CharField(max_length=20, choices=EventType.choices)
+    event_type = models.CharField(max_length=20, choices=EventType.choices, default="MISSING")
+
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE)
