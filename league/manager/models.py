@@ -105,15 +105,16 @@ class TeamPlayer(models.Model):
         return super().save(*args, **kwargs)
 
 
-class EventType(Enum): # TODO:Shefour try adding enum to database :)
+class EventType(models.TextChoices):
     MATCH_WON = "Match has been won"
     MATCH_LOST = "Match has been lost"
     MATCH_DRAW = "Match has been drawn"
     MATCH_GOAL = "Goal has been scored"
+    MISSING = "Event not specified"
 
 
 class Event(models.Model):
-    event_type = models.CharField(max_length=20)
+    event_type = models.CharField(max_length=20, choices=EventType.choices, default="MISSING")
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE)
