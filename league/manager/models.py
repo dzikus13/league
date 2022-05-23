@@ -1,15 +1,15 @@
-from enum import Enum
 from django.core.exceptions import ValidationError
 from django.db import models
 
 
+
 class League(models.Model):
+    MIN_NUMBER_OF_TEAMS = 2
     name = models.CharField(max_length=50)
     points_for_win = models.IntegerField(default=3)
     points_for_lost = models.IntegerField(default=0)
     points_for_draw = models.IntegerField(default=1)
     max_number_of_teams = models.IntegerField(default=10)
-    max_number_of_players_in_team = models.IntegerField(default=2)
 
     @property
     def teams_number(self):
@@ -21,7 +21,7 @@ class League(models.Model):
 
     @property
     def played_matches(self):
-        return self.match_set.filter(event__isnull=False).count()
+        return self.match_set.filter(winner__isnull=False, drawn__isnull=False).count()
 
     @property
     def is_ended(self):
@@ -36,7 +36,13 @@ class League(models.Model):
             return max(self.team_set.all().sum_of_points)
         else:
             return None
-          
+
+    #TODO: Some a in test for this validation
+    def save(self, *args, **kwargs):
+        if self.teams_number < self.MIN_NUMBER_OF_TEAMS:
+            raise ValidationError("Number of teams is not enough", code="not_enough_teams")
+        return super().save(*args, **kwargs)
+
 
 class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
@@ -62,51 +68,51 @@ class Team(models.Model):
                self.matches_draw + \
                self.matches_lost
 
-    @property
-    def players_number(self):
-        return self.teamplayer_set.all().count()
-
 
 class Match(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
-    match_date = models.DateTimeField(default=timezone.now, blank=True)
+    match_date = models.DateTimeField(auto_now_add=True)
     match_duration = models.DurationField(default="01:30:00")
-    # team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1')
-    # team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2')
+    teams = models.ManyToManyField(Team)
 
-    def amount_gols_team1(self):
-        # TODO:elzbietagawickaLOVE Number of goals scored by the team1
-        # return Event.objects.filter(Event.event_type="gol").filter(Event.team = team1).count()
-        pass
+    def goals_amount_team(self, which_team):
+        # TODO:elzbietagawickaLOVE Number of goals scored by the team
+        return Event.objects.all().filter(Event.event_type == "MATCH_GOAL", Event.team == which_team).count()
 
-    def amount_gols_team2(self):
-        # TODO:elzbietagawickaLOVE Number of goals scored by the team2
-        # return Event.objects.filter(Event.event_type="gol").filter(Event.team = team2).count()
-        pass
+    def goals_amount_dict(self):
+        my_dict = {}
+        for team in self.Match.teams:
+            amount = self.goals_amount_team(team)
+            my_dict[team] = amount
+        return my_dict
 
+    @property
     def winner(self):
         # TODO:elzbietagawickaLOVE Winner in match
-        if self.drawn():
-            return None
-        else:
-            if self.amount_gols_team1 > self.amount_gols_team2:
-                return self.team1.team_name
-            else:
-                return self.team2.team_name
+        my_dict = self.goals_amount_dict()
+        my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1])
+        return list(my_dict_sorted.keys())[0]
 
+    @property
     def loser(self):
         # TODO:elzbietagawickaLOVE Loser in match
-        if self.drawn():
-            return None
-        else:
-            if self.amount_gols_team1 < self.amount_gols_team2:
-                return self.team1.team_name
-            else:
-                return self.team2.team_name
-
+        my_dict = self.goals_amount_dict()
+        my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
+        return list(my_dict_sorted.keys())[0]
+    
+    @property
     def drawn(self):
-        # TODO:elzbietagawickaLOVE Draw in match
-        return self.amount_gols_team1 == self.amount_gols_team2
+        my_dict = self.goals_amount_dict()
+        res = True
+        test_val = list(my_dict.values())[0]
+        for elem in my_dict:
+            if my_dict[elem] != test_val:
+                res = False
+                break
+        if res is False:
+            return False
+        else:
+            return True
 
 
 class TeamPlayer(models.Model):
@@ -117,11 +123,6 @@ class TeamPlayer(models.Model):
     def goals(self):
         # TODO: Number of goals scored by the player
         pass
-
-    def save(self, *args, **kwargs):
-        if self.team.players_number >= self.team.league.max_number_of_players_in_team:
-            raise ValidationError("Max number of players in that team exceeded", code="max_players_in_team")
-        return super().save(*args, **kwargs)
 
 
 class EventType(models.TextChoices):
