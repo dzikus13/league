@@ -6,6 +6,7 @@ from datetime import datetime
 
 class League(models.Model):
     MIN_NUMBER_OF_TEAMS = 2
+    DEFAULT_PLAYER_SCORE = 0
     name = models.CharField(max_length=50)
     points_for_win = models.IntegerField(default=3)
     points_for_lost = models.IntegerField(default=0)
@@ -123,7 +124,7 @@ class Match(models.Model):
 
 class TeamPlayer(models.Model):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
-    score = models.IntegerField()
+    score = models.IntegerField(default=DEFAULT_PLAYER_SCORE)
     player_nick = models.CharField(max_length=20)
 
 
