@@ -1,0 +1,23 @@
+{%extends "manager/base.html"%} {%block content%}
+<h1>List of players</h1>
+<table>
+    <tr>
+        <th>Player id</th>
+        <th>nick</th>
+        <th>team</th>
+        <th>goals</th>
+    </tr>
+    {%for player in object_list%}
+    <tr>
+        <td><a class="a_table" href="{%url "player_details" player.id%}">{{player.id}}</a></td>
+        <td>{{player.player_nick}}</td>
+        <td>{{player.team.team_name}}</td>
+        <td>{{player.score}}</td>
+    </tr>
+    {%empty%}
+    <tr>
+        <td>No players found</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

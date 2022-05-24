@@ -1,0 +1,29 @@
+{%extends "manager/base.html"%} {%block content%}
+<h1>Details about match #{{match.id}}</h1>
+<table>
+    <tr>
+        <td>id</td>
+        <td>{{match.id}}</td>
+    </tr>
+    <tr>
+        <td>league</td>
+        <td>{{match.league}}</td>
+    </tr>
+    <tr>
+        <th>amount_gols</th>
+        <th>{{match.amount_gols}}</th>
+    </tr>
+    <tr>
+        <td>winner</td>
+        <td>{{match.winner}}</td>
+    </tr>
+    <tr>
+        <td>loser</td>
+        <td>{{match.loser}}</td>
+    </tr>
+    <tr>
+        <td>drawn</td>
+        <td>{{match.drawn}}</td>
+    </tr>
+</table>
+{%endblock%}
