@@ -13,8 +13,8 @@
     <tr>
         <td><a class="a_table" href="{%url "league_details" league.id%}">{{league.name}}</a></td>
         <td>{{league.teams_number}}/{{league.max_number_of_teams}}</td>
-        <td>{{league.played_matches}}/{{league.all_matches}}</td>
-        <td>{{league.ended}}</td>
+        <td><!--league.played_matches-->FIX/{{league.all_matches}}</td> <!-- #TODO:skam34 wyswietlic ilosc zagranych dotychczas meczy -->
+        <td>{{league.is_ended}}</td>
         <td>{{league.league_winner}}</td>
     </tr>
     {%empty%}

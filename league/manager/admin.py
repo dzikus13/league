@@ -26,7 +26,7 @@ class TeamManager(admin.ModelAdmin):
 class MatchManager(admin.ModelAdmin):
     list_display = [
         "match_duration",
-        "winner", "loser", "drawn", "league"]
+        "winner", "loser", "draw_match", "league"]
 
 
 class TeamPlayerManager(admin.ModelAdmin):
@@ -35,7 +35,7 @@ class TeamPlayerManager(admin.ModelAdmin):
 
 
 class EventManager(admin.ModelAdmin):
-    list_display = ["event_type", "match", "team", "player", "event_time"]
+    list_display = ["event_type", "match", "team", "player"]
 
 
 admin.site.register(League, LeagueManager)
