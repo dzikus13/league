@@ -40,7 +40,7 @@ class League(models.Model):
             teams = []
             team_points = []
             for team in self.team_set.all():
-                teams.append(team.team_name)
+                teams.append(team)
                 team_points.append(team.sum_of_points)
             return teams[team_points.index(max(team_points))]
         else:
