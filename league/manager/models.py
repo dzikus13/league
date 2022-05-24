@@ -138,7 +138,7 @@ class TeamPlayer(models.Model):
 
     @property
     def goals_scored_by_player(self):
-        return Event.objects.all().filter(event_type=EventType.MATCH_GOAL, player=self).count()
+        return Event.objects.filter(event_type=EventType.MATCH_GOAL, player=self).count()
 
 
 class EventType(models.TextChoices):
