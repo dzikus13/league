@@ -123,11 +123,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_ROOT = 'staticdir'
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = (
-    # "league\manager\static",
-    # juz nie potrafie powiedziec ktore dziala bo jestem dosc pewien ze CSS sie nie aktualizuje/cashuje w pamieci przegladraki/django
     path.join(BASE_DIR, "manager", "static"),
 )
 
