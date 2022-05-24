@@ -37,9 +37,12 @@ class League(models.Model):
     @property
     def league_winner(self):
         if self.is_ended:
-
-            # TODO: Iga - do poprawy 1. List comprehension, 2. powinno zwracać Team.
-            return max(self.team_set.all().sum_of_points)
+            teams = []
+            team_points = []
+            for team in self.team_set.all():
+                teams.append(team)
+                team_points.append(team.sum_of_points)
+            return teams[team_points.index(max(team_points))]
         else:
             return None
 
