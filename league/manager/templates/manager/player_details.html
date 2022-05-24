@@ -1,21 +1,21 @@
 {%extends "manager/base.html"%} {%block content%}
-Details about {{player.player_nick}}
+<h1>Details about {{teamplayer.player_nick}}</h1>
 <table>
     <tr>
         <th>id</th>
-        <th>{{player.id}}</th>
+        <th>{{teamplayer.id}}</th>
     </tr>
     <tr>
         <td>team</td>
-        <td>{{player.team}}</td>
+        <td>{{teamplayer.team.team_name}}</td>
     </tr>
     <tr>
         <td>score</td>
-        <td>{{player.score}}</td>
+        <td>{{teamplayer.score}}</td>
     </tr>
     <tr>
         <td>nick</td>
-        <td>{{player.player_nick}}</td>
+        <td>{{teamplayer.player_nick}}</td>
     </tr>
 </table>
 {%endblock%}

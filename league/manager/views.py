@@ -24,13 +24,9 @@ def base(request):
 
 def list_of_views(request):
     context = {"links_list": []}
-    context["links_list"].append("main")
-    context["links_list"].append("manager")
-    context["links_list"].append("add_forms")
     context["links_list"].append("leagues")
     context["links_list"].append("matches")
     context["links_list"].append("teams")
-#    context["links_list"].append("event_types")
     context["links_list"].append("events")
     context["links_list"].append("players")
 
