@@ -64,15 +64,15 @@ class Team(models.Model):
 
     @property  # TODO:Zuzannka77 add test to check if this property works properly
     def sum_of_points(self):
-        return self.matches_won * self.league.points_for_win + \
-               self.matches_draw * self.league.points_for_draw + \
-               self.matches_lost * self.league.points_for_lost
+        return self.number_of_matches_won * self.league.points_for_win + \
+               self.number_of_matches_drawn * self.league.points_for_draw + \
+               self.number_of_matches_lost * self.league.points_for_lost
 
     @property  # TODO:Zuzannka77 add test to check if this property works properly
     def matches_team_played(self):
-        return self.matches_won + \
-               self.matches_draw + \
-               self.matches_lost
+        return self.number_of_matches_won + \
+               self.number_of_matches_drawn + \
+               self.number_of_matches_lost
     
         @property
     def number_of_matches_won(self):
