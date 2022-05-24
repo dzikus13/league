@@ -98,7 +98,7 @@ class Match(models.Model):
             my_dict = self.goals_amount_dict()
             my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
             winner_id = my_dict_sorted[0][0]
-            event = Event.objects.create(event_type=EventType.MATCH_WON, match=self, team=Team.objects.get(pk=winner_id))
+            event = Event.objects.get_or_create(event_type=EventType.MATCH_WON, match=self, team=Team.objects.get(pk=winner_id))
             return Team.objects.get(pk=winner_id)
         else:
             return False
