@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 from datetime import datetime
-# ???
+
 
 class League(models.Model):
     MIN_NUMBER_OF_TEAMS = 2
@@ -25,7 +25,7 @@ class League(models.Model):
 
     @property
     def played_matches(self):
-        return self.match_set.filter(event__isnull=False).count()
+        return self.match_set.filter(winner__isnull=False, drawn__isnull=False).count()
 
     @property
     def is_ended(self):
@@ -37,9 +37,12 @@ class League(models.Model):
     @property
     def league_winner(self):
         if self.is_ended:
-
-            # TODO: Iga - do poprawy 1. List comprehension, 2. powinno zwracać Team.
-            return max(self.team_set.all().sum_of_points)
+            teams = []
+            team_points = []
+            for team in self.team_set.all():
+                teams.append(team)
+                team_points.append(team.sum_of_points)
+            return teams[team_points.index(max(team_points))]
         else:
             return None
 
@@ -80,50 +83,59 @@ class Match(models.Model):
     match_date = models.DateTimeField(default=datetime.now, blank=True)
     match_duration = models.DurationField(default="01:30:00")
     teams = models.ManyToManyField(Team)
+    match_ended = models.BooleanField(default=False)
 
     def goals_amount_team(self, which_team):
-        # TODO:elzbietagawickaLOVE  1. Użyj stałem z klasy EventType.MATCH_GOAL,2 team=which_team 3. A mecz?  albp self.event_set.... albo dodać match=self.
-        return Event.objects.all().filter(event_type == "MATCH_GOAL", team=which_team).count()
+        return Event.objects.all().filter(event_type=EventType.MATCH_GOAL, team=which_team, match=self).count()
 
     def goals_amount_dict(self):
         my_dict = {}
-        for team in self.Match.teams:  #TODO: a może self.teams.all()
+        for team in self.teams.all():
             amount = self.goals_amount_team(team)
-            my_dict[team] = amount   #TODO: prawdopodobnie sypnie ValueError - ravczej team.team_name (albo team.id)
-
+            my_dict[team.id] = amount
         return my_dict
 
     @property
     def winner(self):
-        # TODO:elzbietagawickaLOVE Winner in match
-        # TODO: dostosować do sytuacji z MATCH_WON Event
-        my_dict = self.goals_amount_dict()
-        my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1])
-        winner_id = list(my_dict_sorted.keys())[0]
-        return Team.objects.get(pk=winner_id)
-
+        if not self.draw_match and self.match_ended:
+            my_dict = self.goals_amount_dict()
+            my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
+            winner_id = my_dict_sorted[0][0]
+            event = Event.objects.get_or_create(event_type=EventType.MATCH_WON, match=self, team=Team.objects.get(pk=winner_id))
+            return Team.objects.get(pk=winner_id)
+        else:
+            return False
 
     @property
     def loser(self):
-        # TODO:elzbietagawickaLOVE Loser in match
-        my_dict = self.goals_amount_dict()
-        my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
-        return list(my_dict_sorted.keys())[0]
-        # TODO: sprawdzić winnera i poprawić jak winner
+        if not self.draw_match and self.match_ended:
+            my_dict = self.goals_amount_dict()
+            my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1])
+            loser_id = my_dict_sorted[0][0]
+            event = Event.objects.get_or_create(event_type=EventType.MATCH_LOST, match=self, team=Team.objects.get(pk=loser_id))
+            return Team.objects.get(pk=loser_id)
+        else:
+            return False
 
     @property
-    def drawn(self):
-        my_dict = self.goals_amount_dict()
-        test_val = list(my_dict.values())[0]
-        for elem in my_dict:
-            if my_dict[elem] != test_val:
-                return False
-        return True
+    def draw_match(self):
+        if self.match_ended:
+            my_dict = self.goals_amount_dict()
+            test_val = list(my_dict.values())[0]
+            for elem in my_dict:
+                if my_dict[elem] != test_val:
+                    return False
+            for team in self.teams.all():
+                event = Event.objects.get_or_create(event_type=EventType.MATCH_DRAW, match=self, team=Team.objects.get(pk=team.id))
+            return True
+        else:
+            return False
 
 
 class TeamPlayer(models.Model):
+    DEFAULT_PLAYER_SCORE = 0
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
-    score = models.IntegerField()
+    score = models.IntegerField(default=DEFAULT_PLAYER_SCORE)
     player_nick = models.CharField(max_length=20)
 
 
@@ -141,7 +153,6 @@ class Event(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE)
-    event_time = models.DateTimeField(blank=True)
 
     @classmethod
     def get_events_for(cls, match, event_type=None):
