@@ -30,9 +30,9 @@ BASE_DIR_ALT = "C:\\Users\\maksy\\PycharmProjects\\league"
 SECRET_KEY = 'django-insecure-_k&0&!r-y(^03k8ac&ud435#%4*-!sw)_bv7eph^^)g!2zwi1h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -128,7 +128,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = (
     # "league\manager\static",
     # juz nie potrafie powiedziec ktore dziala bo jestem dosc pewien ze CSS sie nie aktualizuje/cashuje w pamieci przegladraki/django
-    path.join(BASE_DIR_ALT, "\league\manager\static"),
+    path.join(BASE_DIR, "manager", "static"),
 )
 
 # Default primary key field type

@@ -1,11 +1,11 @@
-<h2>You are lost</h2>
-
-<p>Here are some helpful links</p>
-
-<ul>
-    <li>
-
-        <a href="/">Go back home</a>
-
-    </li>
-</ul>
+{%extends "manager/base.html"%} {%block content%}
+<div class="error">
+    <h2>Error 404 (file not found)</h2>
+    <p>Here are some helpful links</p>
+    <ul>
+        <li>
+            <a href="/">Back to main page</a>
+        </li>
+    </ul>
+</div>
+{%endblock%}
