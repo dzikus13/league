@@ -88,6 +88,7 @@ def leagues(request):
     return render(request, "manager/leagues.html", league_context)
 
 
+
 def league_details(request, league_id):
     try:
         league = League.objects.get(id=league_id)

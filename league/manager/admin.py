@@ -5,7 +5,7 @@ from .models import League, Match, Team, TeamPlayer, Event, EventType
 
 
 class LeagueManager(admin.ModelAdmin):
-    list_display = ["name", "ended", "points_for_win", "points_for_lost", "points_for_draw", "max_number_of_teams",
+    list_display = ["name", "is_ended", "points_for_win", "points_for_lost", "points_for_draw", "max_number_of_teams",
                     "max_number_of_players_in_team", "teams_number", "all_matches", "played_matches", "league_winner"]
 
 
