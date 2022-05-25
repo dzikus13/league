@@ -1,11 +1,26 @@
-{%extends "manager/base.html"%}
-
-{%block content%}
+{%extends "manager/base.html"%} {%block content%}
+<h1>List of leagues</h1>
 <table>
-   {%for league in leagues%}
-    <tr><td><a href="{%url "league_details" league.id%}">{{league.name}}</td> <td>{{league.ended}}</td></tr>
+    <tr>
+        <th>League name</th>
+        <th>Teams</th>
+        <th>Matches</th>
+        <th>Is over</th>
+        <th>Winner</th>
+    </tr>
+    {%for league in object_list%}
+    <!-- views.py cialo klasy Leagues dla odpowiedzi  -->
+    <tr>
+        <td><a class="a_table" href="{%url "league_details" league.id%}">{{league.name}}</a></td>
+        <td>{{league.teams_number}}/{{league.max_number_of_teams}}</td>
+        <td><!--league.played_matches-->FIX/{{league.all_matches}}</td> <!-- #TODO:skam34 wyswietlic ilosc zagranych dotychczas meczy -->
+        <td>{{league.is_ended}}</td>
+        <td>{{league.league_winner}}</td>
+    </tr>
     {%empty%}
-    <tr><td>Mo Leagues found</td></tr>
+    <tr>
+        <td>No Leagues found</td>
+    </tr>
     {%endfor%}
 </table>
 {%endblock%}

@@ -1,0 +1,16 @@
+{%extends "manager/base.html"%} {%block content%}
+<table>
+    <tr>
+        <th>List of views</th>
+    </tr>
+    {%for link in links_list%}
+    <tr>
+        <td><a class="a_table" href="{{link}}">{{link}}</a></td>
+    </tr>
+    {%empty%}
+    <tr>
+        <td>There's no views to look at...</td>
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

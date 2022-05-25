@@ -1,0 +1,21 @@
+{%extends "manager/base.html"%} {%block content%}
+<h1>Details about {{teamplayer.player_nick}}</h1>
+<table>
+    <tr>
+        <th>id</th>
+        <th>{{teamplayer.id}}</th>
+    </tr>
+    <tr>
+        <td>team</td>
+        <td>{{teamplayer.team.team_name}}</td>
+    </tr>
+    <tr>
+        <td>score</td>
+        <td>{{teamplayer.score}}</td>
+    </tr>
+    <tr>
+        <td>nick</td>
+        <td>{{teamplayer.player_nick}}</td>
+    </tr>
+</table>
+{%endblock%}

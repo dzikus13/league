@@ -1,0 +1,29 @@
+{%extends "manager/base.html"%} {%block content%}
+<h1>Details about event #{{event.id}}</h1>
+<table>
+    <tr>
+        <th>id</th>
+        <th>{{event.id}</th>
+    </tr>
+    <tr>
+        <th>time</th>
+        <th>{{event.event_time}}</th>
+    </tr>
+    <tr>
+        <td>player</td>
+        <td>{{event.player}}</td>
+    </tr>
+    <tr>
+        <td>event_type</td>
+        <td>{{event.event_type}}</td>
+    </tr>
+    <tr>
+        <td>match</td>
+        <td>{{event.match}}</td>
+    </tr>
+    <tr>
+        <td>team</td>
+        <td>{{event.team}}</td>
+    </tr>
+</table>
+{%endblock%}
