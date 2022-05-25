@@ -1,9 +1,11 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
+from django.utils import timezone
 
 # Create your tests here.
 
-from .models import League, Team
+from .models import League, Team, TeamPlayer, Match, Event
+
 
 class LeagueTest(TestCase):
     def test_league_adding(self):
@@ -20,7 +22,6 @@ class LeagueTest(TestCase):
         league.save()
         with self.assertRaises(ValidationError):
             team = Team.objects.create(league=league, team_name="Test team name")
-
 
 
 class LeagueAddedTest(TestCase):
@@ -46,3 +47,26 @@ class LeagueAddedTest(TestCase):
         self.assertEqual(Team.objects.all().count(), 2)
         self.assertEqual(self.league.teams_number, 1)
         self.assertEqual(self.league2.teams_number, 1)
+
+
+class MaxPlayersTest(TestCase):
+    def setUp(self):
+        self.league = League.objects.create(name="Test league")
+
+    def test_league_name(self):
+        self.assertEqual(self.league.name,"Test league")
+
+    def test_league_teams(self):
+        self.assertEqual(self.league.teams_number, 0)
+
+    def tearDown(self):
+        self.league.delete()
+
+    def test_players_max_number(self):
+        self.assertEqual(Team.objects.all().count(), 0)
+        self.team = Team.objects.create(league=self.league, team_name="Test team name")
+        self.assertEqual(Team.objects.all().count(), 1)
+        self.assertEqual(self.league.teams_number, 1)
+        self.team_player = TeamPlayer.objects.create(team=self.team, player_nick="player1")
+        self.team_player = TeamPlayer.objects.create(team=self.team, player_nick="player2")
+        self.assertEqual(TeamPlayer.objects.all().count(), 2)

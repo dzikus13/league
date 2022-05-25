@@ -13,15 +13,8 @@ import os
 from pathlib import Path
 from os import path
 
-# Loading the CSS
-import mimetypes
-mimetypes.add_type("text/html", ".css", True)
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR_ALT = "C:\\Users\\maksy\\PycharmProjects\\league"
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -30,7 +23,7 @@ BASE_DIR_ALT = "C:\\Users\\maksy\\PycharmProjects\\league"
 SECRET_KEY = 'django-insecure-_k&0&!r-y(^03k8ac&ud435#%4*-!sw)_bv7eph^^)g!2zwi1h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
