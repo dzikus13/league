@@ -43,7 +43,7 @@ class League(models.Model):
         else:
             return None
 
-    #TODO: Some a in test for this validation
+    #TODO: Some a in test for this validation (Zuzannka77)
     def save(self, *args, **kwargs):
         if self.teams_number < self.MIN_NUMBER_OF_TEAMS:
             raise ValidationError("Number of teams is not enough", code="not_enough_teams")
