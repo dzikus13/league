@@ -26,13 +26,6 @@ html, body
     margin:auto;
 }
 
-#user_login_menu
-{
-    height:40px;
-    width:150px;
-	float:right;
-}
-
 #main
 {
 	background-color:#2f3136;
@@ -57,6 +50,12 @@ a
 {
     font-size:20px;
     text-decoration:none;
+    color:#90ee90;
+}
+a:hover
+{
+    text-decoration:underline;
+    color:#90ee90;
 }
 
 .a_table
@@ -66,7 +65,7 @@ a
 
 .a_table:hover
 {
-    color:#FF5858;
+    color:#90ee90;
 }
 
 table, tr, th, td 
@@ -115,6 +114,31 @@ table, tr, th, td
 	display:table-cell;
 	float:left;
 }
+
+.button_header_menu:hover
+{
+    background-color:#90ee90;
+    color:black;
+    cursor:pointer;
+}
+
+.button_header_login
+{
+    height:40px;
+    width:150px;
+	float:right;
+	background-color:black;
+    color:white;
+    cursor:pointer;
+    border-color:black;
+}
+
+.button_header_login:hover
+{
+    background-color:#90ee90;
+    color:black;
+}
+
 .button_back{
 	text-align:center;
     WIDTH:75px;
@@ -123,28 +147,21 @@ table, tr, th, td
 }
 .button_back:hover 
 {
-    background-color:lightgreen;
+    background-color:#90ee90;
     color:black;
     cursor:pointer;
 }
 
 .button_form_submit:hover 
 {
-    background-color:lightgreen;
+    background-color:#90ee90;
     color:black;
     cursor:pointer;
 }
 
 .button_form_clear:hover 
 {
-    background-color:#FF5858;
-    color:black;
-    cursor:pointer;
-}
-
-.button_header_menu:hover 
-{
-    background-color:lightgreen;
+    background-color:#90ee90;
     color:black;
     cursor:pointer;
 }
@@ -157,7 +174,7 @@ table, tr, th, td
 	border-radius:15px;
 	text-align:center;
 	outline-offset:0px;
-	outline-color:lightgreen;
+	outline-color:#90ee90;
 	border-width:10px;
 	border-color:white;
 }
@@ -171,7 +188,7 @@ table, tr, th, td
 	border-radius:15px;
 	text-align:center;
 	outline-offset:0px;
-	outline-color:lightgreen;
+	outline-color:#90ee90;
 	border-width:10px;
 	border-color:white;
 }
@@ -183,7 +200,7 @@ table, tr, th, td
 
 .select_option:hover
 {
-    background-color:lightgreen;
+    background-color:#90ee90;
 }
 
 .form_box
@@ -210,27 +227,68 @@ table, tr, th, td
 	min-height:100px;
 	background-color:#d3d3d3;
 	text-align:left;
-	padding-top:20px;
+	padding-top:10px;
 	padding-bottom:10px;
 	padding-left:20px;
 	padding-right:20px;
 	width:260px;
-	margin-top:7px;
+	margin-top:30px;
 	margin-bottom:7px;
 	margin:auto;
 	color:black;
 	position:relative;
-	border-radius:5px;
+	border-radius:5px 5px 0px 0px;
+}
+.form_box_login_bottom
+{
+	background-color:black;
+	text-align:left;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:20px;
+	padding-right:20px;
+	width:260px;
+	margin-top:0px;
+	margin-bottom:7px;
+	margin:auto;
+	color:white;
+	position:relative;
+	border-radius:0px 0px 5px 5px;
+}
+
+.login_bottom_link
+{
+    font-size:14px;
 }
 
 select:focus{
     box-shadow: 0 0 10px 100px #fff inset;
-    border-color: lightgreen;
+    border-color: #90ee90;
    	border-radius:15px;
    	border-width:2px;
     outline:none;
 }
 
+::-webkit-scrollbar
+{
+  width: 10px;
+}
+
+::-webkit-scrollbar-track
+{
+  background: #d3d3d3;
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: darkgray;
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+  background: #90ee90;
+}
+/*
 ol
 {
 	display:table-cell;
@@ -301,3 +359,4 @@ ol > li > ul > li{
 ol > li > ul > li:hover {
 	background-color:#90ee90;
 }
+*/

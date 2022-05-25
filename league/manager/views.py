@@ -1,20 +1,19 @@
-from django.shortcuts import render
-# from django.shortcuts import HttpResponse
-# ^ probowalem uzyc by bezposrednio wyswietlic html
+from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import login as django_login
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import logout as django_logout
 
 from os import path, listdir
 from pathlib import Path
-from django.core.exceptions import ObjectDoesNotExist
-
-
-# skopiowane z settings (i lekko zmienione)
+from .forms import NewUserForm
+from .models import League, Match, Team, TeamPlayer, Event, EventType
 BASE_DIR = Path(__file__).resolve().parent
-# .parent jeszcze bylo na koncu
-# -----------------------------------------
 
 # Create your views here.
-
-from .models import League, Match, Team, TeamPlayer, Event, EventType
 
 
 def base(request):
@@ -68,12 +67,82 @@ def add_team(request):
     return render(request, "manager/add_team.html")
 
 
+def register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        myuser = User.objects.create_user(username, password2, password1)
+
+        myuser.save()
+
+        messages.success(request, "Your Account has been successfully created.")
+
+        return redirect("login")
+
+    return render(request, "manager/register.html")
+
+
 def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password1']
+
+        user = authenticate(username=username, password=password1)
+
+        if user is not None:
+            django_login(request, user)
+            return render(request, "manager/logged.html")
+
+        else:
+            return redirect('login')
+
     return render(request, "manager/login.html")
 
 
-def register(request):
-    return render(request, "manager/register.html")
+def logout(request):
+    django_logout(request)
+    return render('/base')
+
+
+def registered(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        myuser = User.objects.create_user(username, password2, password1)
+
+        myuser.save()
+
+        messages.success(request, "Your Account has been successfully created.")
+
+        return redirect("login")
+
+    return render(request, "manager/registered.html")
+
+
+def logged(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password1']
+
+        user = authenticate(username=username, password=password1)
+
+        if user is not None:
+            django_login(request, user)
+            return render(request, "manager/logged.html")
+
+        else:
+            return redirect('login')
+
+    return render(request, "manager/logged.html")
+
+
+def logged_out(request):
+    django_logout(request)
+    return render(request, "manager/logged_out.html")
 
 
 def leagues(request):
@@ -171,4 +240,3 @@ def event_details(request, event_id):
         return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
     except:
         return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
-

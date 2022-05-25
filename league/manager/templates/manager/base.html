@@ -6,30 +6,32 @@ Everyone
 
 <head>
     <title>F</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}" />
     <meta charset="utf-8">
 </head>
 
 <body>
     <div id="header">
         <div id="menu">
-            <form action="/" class="button_header_menu">
+            <form action="manager" class="button_header_menu">
                 <input class="button_header_menu" type="submit" value="Widoki"/>
             </form>
             <form action="add_forms" class="button_header_menu">
                 <input class="button_header_menu" type="submit" value="Dodawanie" />
             </form>
-            <div id="user_login_menu">
-			    <ol>
-			        <li><a>User</a>
-			            <ul>
-                            <li><a href="login">Login</a></li>
-			                <li><a href="register">Register</a></li>
-			            </ul>
-			        </li>
-			    </ol>
-			</div>
-	    </div>
+
+            {% if not user.is_authenticated %}
+            <form action="login" id="#login_header_button_display" class="button_header_login" style="display:inline;">
+                <input class="button_header_login" type="submit" value="Zaloguj Się" />
+            </form>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+            <form action="logged_out" class="button_header_login" style="display:inline;">
+                <input class="button_header_login" type="submit" value="Wyloguj Się" />
+            </form>
+            {% endif %}
+        </div>
     </div>
 
     <div id="main">
