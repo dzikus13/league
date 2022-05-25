@@ -139,22 +139,6 @@ def player_details(request, player_id):
         return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
 
 
-def event_types(request):
-    all_event_types = EventType.objects.all()
-    event_types_context = {"event_types": all_event_types}
-    return render(request, "manager/event_types.html", event_types_context)
-
-
-def event_type_details(request, event_type_id):
-    try:
-        event_type = EventType.objects.get(id=event_type_id)
-        return render(request, "manager/event_type_details.html", {"event_type": event_type})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
-
-
 def events(request):
     all_events = Event.objects.all()
     events_context = {"events": all_events}

@@ -5,7 +5,7 @@
    {%for league in leagues%}
     <tr><td><a href="{%url "league_details" league.id%}">{{league.name}}</td> <td>{{league.ended}}</td></tr>
     {%empty%}
-    <tr><td>Mo Leagues found</td></tr>
+    <tr><td>No Leagues found</td></tr>
     {%endfor%}
 </table>
 {%endblock%}

@@ -6,8 +6,7 @@ from .views import leagues, league_details, add_league
 from .views import teams, team_details, add_team
 from .views import matches, match_details, add_match
 from .views import players, player_details, add_player, add_player_stats
-from .views import event_types, event_type_details
-from .views import events, event_details, add_event
+from .views import events, add_event
 from .views import login, register
 
 
@@ -25,6 +24,7 @@ urlpatterns = [
     path("add_team", add_team),
     path("login", login),
     path("register", register),
+    path("events", events),
 
     path("leagues", leagues, name="league_list"),
     re_path(r"league_details/(?P<league_id>\d+)", league_details, name="league_details"),
@@ -42,11 +42,4 @@ urlpatterns = [
     re_path(r"player_details/(?P<player_id>\d+)", player_details, name="player_details"),
     path("player_details", players, name="player_list"),
 
-    path("event_types", event_types, name="event_types_list"),
-    re_path(r"event_type_details/(?P<event_type_id>\d+)", event_type_details, name="event_type_details"),
-    path("event_type_details", event_types, name="event_types_list"),
-
-    path("events", events, name="events_list"),
-    re_path(r"event_details/(?P<event_id>\d+)", event_details, name="event_details"),
-    path("event_details", events, name="event_list"),
 ]
