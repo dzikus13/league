@@ -132,6 +132,7 @@ class Match(models.Model):
         else:
             return False
 
+
 class TeamPlayer(models.Model):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
     player_nick = models.CharField(max_length=20)
@@ -147,9 +148,9 @@ class EventType(models.TextChoices):
     MATCH_LOST = "Match has been lost"
     MATCH_DRAW = "Match has been drawn"
     MATCH_GOAL = "Goal has been scored"
-    MATCH_FIRST_YELLOW = "First yellow card risen"
-    MATCH_SECOND_YELLOW = "Second yellow card risen"
-    MATCH_RED = "Red card risen"
+    MATCH_FIRST_YELLOW = "First yellow card"
+    MATCH_SECOND_YELLOW = "Second yellow card"
+    MATCH_RED = "Red card"
     MISSING = "Event not specified"
 
 
