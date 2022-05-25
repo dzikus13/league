@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, re_path
 
-from .views import base, main, error, manager, add_forms
+from .views import base, main, view, error, manager, add_forms
 from .views import leagues, league_details, add_league
 from .views import teams, team_details, add_team
 from .views import matches, match_details, add_match
@@ -12,6 +12,7 @@ from .views import login, register
 
 urlpatterns = [
     path("", main),
+    path("view", view),
     path("manager", manager),
     path("base", base),
     path("error", error),
