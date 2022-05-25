@@ -133,10 +133,12 @@ class Match(models.Model):
 
 
 class TeamPlayer(models.Model):
-    DEFAULT_PLAYER_SCORE = 0
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
-    score = models.IntegerField(default=DEFAULT_PLAYER_SCORE)
     player_nick = models.CharField(max_length=20)
+
+    @property
+    def goals_scored_by_player(self):
+        return Event.objects.filter(event_type=EventType.MATCH_GOAL, player=self).count()
 
 
 class EventType(models.TextChoices):
