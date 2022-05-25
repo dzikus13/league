@@ -48,9 +48,6 @@ class League(models.Model):
 class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
-    matches_won = models.IntegerField(default=0)
-    matches_draw = models.IntegerField(default=0)
-    matches_lost = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if self.league.teams_number >= self.league.max_number_of_teams:
@@ -59,15 +56,27 @@ class Team(models.Model):
 
     @property  # TODO:Zuzannka77 add test to check if this property works properly
     def sum_of_points(self):
-        return self.matches_won * self.league.points_for_win + \
-               self.matches_draw * self.league.points_for_draw + \
-               self.matches_lost * self.league.points_for_lost
+        return self.number_of_matches_won * self.league.points_for_win + \
+               self.number_of_matches_drawn * self.league.points_for_draw + \
+               self.number_of_matches_lost * self.league.points_for_lost
 
     @property  # TODO:Zuzannka77 add test to check if this property works properly
     def matches_team_played(self):
-        return self.matches_won + \
-               self.matches_draw + \
-               self.matches_lost
+        return self.number_of_matches_won + \
+               self.number_of_matches_drawn + \
+               self.number_of_matches_lost
+    
+    @property
+    def number_of_matches_won(self):
+        return Event.objects.filter(event_type=EventType.MATCH_WON, team=self).count()
+
+    @property
+    def number_of_matches_lost(self):
+        return Event.objects).filter(event_type=EventType.MATCH_LOST, team=self).count()
+
+    @property
+    def number_of_matches_drawn(self):
+        return Event.objects.filter(event_type=EventType.MATCH_DRAW, team=self).count()
 
 
 class Match(models.Model):
