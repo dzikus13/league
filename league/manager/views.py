@@ -47,11 +47,6 @@ def debug_manager(request):
     return render(request, "manager/manager.html", model_links)
 
 
-def error(request):
-    return render(request, "manager/error.html", {"error_log": "Nie doszlo do zadnego bledu"})
-    # przerzucenie sie na customowe error page (500.html itp)
-
-
 def add_forms(request):
     return render(request, "manager/add_forms.html")
 
@@ -59,10 +54,7 @@ def add_forms(request):
 # Stary sposob dla porownania
 def leagues(request):
     all_leagues = League.objects.all()
-    league_context = {"leagues": all_leagues}
-    return render(request, "manager/leagues.html", league_context)
-
-
+    return render(request, "manager/leagues.html", {"leagues": all_leagues})
 
 def league_details(request, league_id):
     try:
@@ -149,3 +141,18 @@ class Events(generic.ListView):
 class EventDetail(generic.DetailView):
     model = Event
     template_name = 'manager/event_details.html'
+
+def error_400(request, exception):
+    return render(request, 'manager/400.html', status=400)
+
+
+def error_403(request, exception):
+    return render(request, 'manager/403.html', status=403)
+
+
+def error_404(request, exception):
+    return render(request, 'manager/404.html', status=404)
+
+
+def error_500(request, *args, **argv):
+    return render(request, 'manager/500.html', status=500)

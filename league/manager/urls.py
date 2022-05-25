@@ -1,22 +1,13 @@
 from django.contrib import admin
 from django.urls import path, re_path
-
+from .views import base, debug_manager, add_forms, list_of_views
 # do korzystania z generic views
 from . import views
-# ------------------------------
-
-from .views import base, error, debug_manager, add_forms, list_of_views
-# '''
-# To nie jest wykorzystywane z generic views
-# from .views import leagues, league_details
-# '''
 
 urlpatterns = [
     path("", list_of_views),
     path("base", base),
     path("main", list_of_views),
-    # TODO change the way of handling the errors
-    path("error", error),
     path("manager", debug_manager),
     path("add_forms", add_forms),
 
@@ -43,9 +34,8 @@ urlpatterns = [
     path("players", views.Players.as_view(), name="player_list"),
     re_path(r"player_details/(?P<pk>[0-9]+)/$", views.PlayerDetail.as_view(), name="player_details"),
 
-    #path("event_types", views.EventTypes.as_view(), name="event_types_list"),
-    #re_path(r"event_type_details/(?P<pk>[0-9]+)/$", views.EventTypeDetail.as_view(), name="event_type_details"),
-
-    path("events", views.Events.as_view(), name="events_list"),
-    re_path(r"event_details/(?P<pk>[0-9]+)/$", views.EventDetail.as_view(), name="event_details"),
+    # path("event_types", views.EventTypes.as_view(), name="event_types_list"),
+    # re_path(r"event_type_details/(?P<pk>[0-9]+)/$", views.EventTypeDetail.as_view(), name="event_type_details"),
 ]
+
+# custom error handlers are located in league/league/urls.py

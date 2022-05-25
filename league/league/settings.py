@@ -9,19 +9,12 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 from os import path
 
-# Loading the CSS
-import mimetypes
-mimetypes.add_type("text/html", ".css", True)
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR_ALT = "C:\\Users\\maksy\\PycharmProjects\\league"
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -32,7 +25,7 @@ SECRET_KEY = 'django-insecure-_k&0&!r-y(^03k8ac&ud435#%4*-!sw)_bv7eph^^)g!2zwi1h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -58,11 +51,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'league.urls'
-
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,11 +116,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_ROOT = 'staticdir'
+STATIC_URL = "/static/"
 
 STATICFILES_DIRS = (
-    # "league\manager\static",
-    # juz nie potrafie powiedziec ktore dziala bo jestem dosc pewien ze CSS sie nie aktualizuje/cashuje w pamieci przegladraki/django
     path.join(BASE_DIR, "manager", "static"),
 )
 
