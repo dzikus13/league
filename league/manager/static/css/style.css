@@ -76,7 +76,7 @@ table, tr, th, td
 .button_form_submit 
 {
     text-align:center;
-    WIDTH:75px;
+    width:75px;
     cursor:pointer;
     margin-right:10px;
     float:right;
@@ -86,7 +86,7 @@ table, tr, th, td
 .button_form_clear 
 {
     text-align:center;
-    WIDTH:75px;
+    width:75px;
     cursor:pointer;
     margin-right:10px;
     float:right;
@@ -97,7 +97,7 @@ table, tr, th, td
 {
     text-align:center;
     background-color:black;
-    width:300px;
+    width: 250px;
     height:90px;
     cursor:pointer;
     color:white;
@@ -106,12 +106,14 @@ table, tr, th, td
 	display:table-cell;
 	float:left;
 }
+
 .button_back{
 	text-align:center;
     WIDTH:75px;
     cursor:pointer;
     border-radius:5px;
 }
+
 .button_back:hover 
 {
     background-color:lightgreen;
@@ -185,6 +187,7 @@ table, tr, th, td
 	padding-left:20px;
 	padding-right:20px;
 }
+
 .form_box_login
 {
 	overflow:auto;

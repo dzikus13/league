@@ -74,6 +74,10 @@ def register(request):
     return render(request, "manager/register.html")
 
 
+def main(request):
+    return render(request, "manager/main.html")
+
+
 def leagues(request):
     all_leagues = League.objects.all()
     league_context = {"leagues": all_leagues}
