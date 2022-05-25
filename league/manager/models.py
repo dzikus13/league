@@ -1,11 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-
 from datetime import datetime
 
 
 class League(models.Model):
-    MIN_NUMBER_OF_TEAMS = 2
     name = models.CharField(max_length=50)
     points_for_win = models.IntegerField(default=3)
     points_for_lost = models.IntegerField(default=0)
@@ -45,12 +43,6 @@ class League(models.Model):
             return teams[team_points.index(max(team_points))]
         else:
             return None
-
-    #TODO: Some a in test for this validation
-    def save(self, *args, **kwargs):
-        if self.teams_number < self.MIN_NUMBER_OF_TEAMS:
-            raise ValidationError("Number of teams is not enough", code="not_enough_teams")
-        return super().save(*args, **kwargs)
 
 
 class Team(models.Model):
@@ -154,7 +146,7 @@ class Event(models.Model):
     event_type = models.CharField(max_length=20, choices=EventType.choices, default="MISSING")
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE)
+    player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE, null=True, blank=True)
 
     @classmethod
     def get_events_for(cls, match, event_type=None):
