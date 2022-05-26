@@ -48,7 +48,8 @@ class League(models.Model):
 class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
-
+    max_number_of_players = 4
+    
     def save(self, *args, **kwargs):
         if self.league.teams_number >= self.league.max_number_of_teams:
             raise ValidationError("Max number of teams exceeded", code="max_teams")
@@ -137,6 +138,11 @@ class TeamPlayer(models.Model):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
     player_nick = models.CharField(max_length=20)
 
+    def save(self, *args, **kwargs):
+        if TeamPlayer.objects.filter(team=self.team).count() >= Team.max_number_of_players:
+            raise ValidationError("Maximum number of players in this team exceeded", code="too_much_players")
+        return super().save(*args, **kwargs)
+    
     @property
     def goals_scored_by_player(self):
         return Event.objects.filter(event_type=EventType.MATCH_GOAL, player=self).count()
@@ -157,6 +163,11 @@ class Event(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE, null=True, blank=True)
 
+     def save(self, *args, **kwargs):
+        if self.player.team != self.team:
+            raise ValidationError("This player doesn't belong to that team", code="invalid_player")
+        return super().save(*args, **kwargs)
+    
     @classmethod
     def get_events_for(cls, match, event_type=None):
         ret_qs = cls.objects.filter(match=match)
