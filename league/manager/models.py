@@ -72,7 +72,7 @@ class Team(models.Model):
 
     @property
     def number_of_matches_lost(self):
-        return Event.objects).filter(event_type=EventType.MATCH_LOST, team=self).count()
+        return Event.objects.filter(event_type=EventType.MATCH_LOST, team=self).count()
 
     @property
     def number_of_matches_drawn(self):
