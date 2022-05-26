@@ -163,9 +163,10 @@ class Event(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE, null=True, blank=True)
 
-     def save(self, *args, **kwargs):
-        if self.player.team != self.team:
-            raise ValidationError("This player doesn't belong to that team", code="invalid_player")
+    def save(self, *args, **kwargs):
+        if self.event_type == EventType.MATCH_GOAL:
+            if self.player.team != self.team:
+                raise ValidationError("This player doesn't belong to that team", code="invalid_player")
         return super().save(*args, **kwargs)
     
     @classmethod
