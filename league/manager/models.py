@@ -136,7 +136,7 @@ class Match(models.Model):
                 event = Event.objects.get_or_create(event_type=EventType.MATCH_DRAW, match=self, team=Team.objects.get(pk=team.id))
             return True
         else:
-            return
+            return False
 
 
 class TeamPlayer(models.Model):
