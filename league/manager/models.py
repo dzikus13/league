@@ -48,7 +48,7 @@ class League(models.Model):
 class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
-    max_number_of_players = 4
+    MAX_NUMBER_OF_PLAYERS = 4
     
     def save(self, *args, **kwargs):
         if self.league.teams_number >= self.league.max_number_of_teams:
@@ -139,7 +139,7 @@ class TeamPlayer(models.Model):
     player_nick = models.CharField(max_length=20)
 
     def save(self, *args, **kwargs):
-        if TeamPlayer.objects.filter(team=self.team).count() >= Team.max_number_of_players:
+        if TeamPlayer.objects.filter(team=self.team).count() >= Team.MAX_NUMBER_OF_PLAYERS:
             raise ValidationError("Maximum number of players in this team exceeded", code="too_much_players")
         return super().save(*args, **kwargs)
     
