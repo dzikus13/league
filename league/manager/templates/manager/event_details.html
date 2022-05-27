@@ -3,7 +3,7 @@ AUTHORISATION:
 Admin, Judge, Logged_User
 -->
 {%extends "manager/base.html"%} {%block content%}
-Details about event #{{event.id}}
+<h1>Details about event #{{event.id}}</h1>
 <table>
     <tr>
         <th>id</th>
@@ -11,7 +11,7 @@ Details about event #{{event.id}}
     </tr>
     <tr>
         <th>time</th>
-        <th>{{event.time}}</th>
+        <th>{{event.event_time}}</th>
     </tr>
     <tr>
         <td>player</td>
@@ -24,6 +24,10 @@ Details about event #{{event.id}}
     <tr>
         <td>match</td>
         <td>{{event.match}}</td>
+    </tr>
+    <tr>
+        <td>team</td>
+        <td>{{event.team}}</td>
     </tr>
 </table>
 {%endblock%}

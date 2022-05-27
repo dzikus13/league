@@ -3,6 +3,7 @@ AUTHORISATION:
 Admin, Judge, Logged_User
 -->
 {%extends "manager/base.html"%} {%block content%}
+<h1>Details about {{team.team_name}}</h1>
 Details about {{team.team_name}}
 <table>
     <tr>
@@ -38,8 +39,8 @@ Details about {{team.team_name}}
         <td>{{team.sum_of_points}}</td>
     </tr>
     <tr>
-        <td>matches_teams_played</td>
-        <td>{{team.matches_teams_played}}</td>
+        <td>matches_team_played</td>
+        <td>{{team.matches_team_played}}</td>
     </tr>
 </table>
 {%endblock%}

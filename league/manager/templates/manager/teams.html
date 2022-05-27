@@ -3,11 +3,16 @@ AUTHORISATION:
 Everyone
 -->
 {%extends "manager/base.html"%} {%block content%}
+<h1>List of teams</h1>
 <table>
     <tr>
         <th>Team name</th>
         <th>Matches won</th>
+        <th>Matches drawn</th>
         <th>Matches lost</th>
+        <th>league</th>
+        <th>sum_of_points</th>
+        <th>matches_team_played</th>
         <th>Number of players</th>
         <th>Sum of points</th>
     </tr>
@@ -16,9 +21,13 @@ Everyone
     <tr>
         <td><a class="a_table" href="{%url "team_details" team.id%}">{{team.team_name}}</a></td>
         <td>{{team.matches_won}}</td>
+        <th>{{team.matches_draw}}</th>
         <td>{{team.matches_lost}}</td>
+        <!-- TODO wypisac graczy poprawnie -->
+        <td>{{team.league}}</td>
         <td>{{team.number_of_players}}</td>
         <td>{{team.sum_of_points}}</td>
+        <td>{{team.matches_team_played}}</td>
     </tr>
     </a>
     {%empty%}

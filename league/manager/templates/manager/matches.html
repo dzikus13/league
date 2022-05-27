@@ -3,9 +3,15 @@ AUTHORISATION:
 Everyone
 -->
 {%extends "manager/base.html"%} {%block content%}
+<h1>List of matches</h1>
 <table>
     <tr>
         <th>Match id</th>
+        <th>duration</th>
+        <th>winner</th>
+        <th>loser</th>
+        <th>drawn</th>
+        <th>amount_gols</th>
         <th>time</th>
         <th>result</th>
         <th>teams</th>
@@ -15,6 +21,12 @@ Everyone
     {%for match in matches%}
     <tr>
         <td><a class="a_table" href="{%url "match_details" match.id%}">{{match.id}}</a></td>
+        <th>{{match.duration}}</th>
+        <th>{{match.winner}}</th>
+        <th>{{match.loser}}</th>
+        <th>{{match.drawn}}</th>
+        <th>{{match.amount_gols}}</th>
+        <th>{{match.league}}</th>
         <td>{{match.time}}</td>
         <td>{{match.result}}</td>
         <td>{{match.teams}}</td>

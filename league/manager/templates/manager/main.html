@@ -5,16 +5,19 @@ Admin
 {%extends "manager/base.html"%} {%block content%}
 <table>
     <tr>
+        <th>List of views</th>
         <th>League name</th>
         <th>League has ended</th>
     </tr>
     {%for league in leagues%}
     <tr>
-        <td><a class="a_table" href="{%url "league_details" league.id%}">{{league.name}}</a></td>
+        <td><a class="a_table" href="{{link}}">{{link}}</a></td>
+        <td><a class="a_table" href="{%url 'league_details' league.id%}">{{league.name}}</a></td>
         <td>{{league.ended}}</td>
     </tr>
     {%empty%}
     <tr>
+        <td>There's no views to look at...</td>
         <td>No Leagues found</td>
     </tr>
     {%endfor%}

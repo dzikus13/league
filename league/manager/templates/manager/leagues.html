@@ -3,13 +3,23 @@ AUTHORISATION:
 Admin, Judge, Logged_User, Not_Logged_User
 -->
 {%extends "manager/base.html"%} {%block content%}
+<h1>List of leagues</h1>
 <table>
     <tr>
         <th>League name</th>
+        <th>Teams</th>
+        <th>Matches</th>
+        <th>Is over</th>
+        <th>Winner</th>
         <th>League has ended</th>
     </tr>
     {%for league in leagues%}
     <tr>
+        <td><a class="a_table" href="{%url "league_details" league.id%}">{{league.name}}</a></td>
+        <td>{{league.teams_number}}/{{league.max_number_of_teams}}</td>
+        <td><!--league.played_matches-->FIX/{{league.all_matches}}</td> <!-- #TODO:skam34 wyswietlic ilosc zagranych dotychczas meczy -->
+        <td>{{league.is_ended}}</td>
+        <td>{{league.league_winner}}</td>
         <td><a class="a_table" href="{%url "league_details" league.id%}"> {{league.name}} </a></td>
         <td>{{league.ended}}</td>
     </tr>

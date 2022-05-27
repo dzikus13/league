@@ -9,7 +9,7 @@ from django.contrib.auth import logout as django_logout
 
 from os import path, listdir
 from pathlib import Path
-from .forms import NewUserForm
+from django.views import generic
 from .models import League, Match, Team, TeamPlayer, Event, EventType
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -22,7 +22,7 @@ def base(request):
 
 def manager(request):
     # linki (a wlasciwie to "odnosniki"(ig?) do plikow html z folderu manager)
-    directory = path.join(BASE_DIR, "templates\manager")
+    directory = path.join(BASE_DIR, "templates/manager")
     model_links = {"links_list": []}
     i = 0
     for filename in listdir(directory):
@@ -50,6 +50,20 @@ def add_forms(request):
 def add_event(request):
     return render(request, "manager/add_event.html")
 
+class Leagues(generic.ListView):
+    template_name = 'manager/leagues.html'
+    # context_object_name = 'Leagues'
+    # gdybym chcial zmienic nazwe, ale wole posluzyc sie default'em (object_list)
+
+    def get_queryset(self):
+        return League.objects.all()
+
+
+def leagues(request):
+    all_leagues = League.objects.all()
+    league_context = {"leagues": all_leagues}
+    return render(request, "manager/leagues.html", league_context)
+
 
 def add_league(request):
     return render(request, "manager/add_league.html")
@@ -59,16 +73,42 @@ def add_match(request):
     return render(request, "manager/add_match.html")
 
 
+class LeagueDetail(generic.DetailView):
+    model = League
+    template_name = 'manager/league_details.html'
+
+
 def add_player(request):
     return render(request, "manager/add_player.html")
+
+
+class Teams(generic.ListView):
+    template_name = 'manager/teams.html'
+
+    def get_queryset(self):
+        return Team.objects.all()
+    # TODO wypisac graczy poprawnie
 
 
 def add_player_stats(request):
     return render(request, "manager/add_player_stats.html")
 
 
+class TeamDetail(generic.DetailView):
+    model = Team
+    template_name = 'manager/team_details.html'
+    # TODO wypisac graczy poprawnie
+
+
 def add_team(request):
     return render(request, "manager/add_team.html")
+
+
+class Matches(generic.ListView):
+    template_name = 'manager/matches.html'
+
+    def get_queryset(self):
+        return Match.objects.all()
 
 
 def register(request):
@@ -150,12 +190,6 @@ def logged_out(request):
     return render(request, "manager/logged_out.html")
 
 
-def leagues(request):
-    all_leagues = League.objects.all()
-    league_context = {"leagues": all_leagues}
-    return render(request, "manager/leagues.html", league_context)
-
-
 def league_details(request, league_id):
     try:
         league = League.objects.get(id=league_id)
@@ -189,6 +223,11 @@ def matches(request):
     return render(request, "manager/matches.html", matches_context)
 
 
+class MatchDetail(generic.DetailView):
+    model = Match
+    template_name = 'manager/match_details.html'
+
+
 def match_details(request, match_id):
     try:
         match = Match.objects.get(id=match_id)
@@ -199,10 +238,22 @@ def match_details(request, match_id):
         return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
 
 
+class Players(generic.ListView):
+    template_name = 'manager/players.html'
+
+    def get_queryset(self):
+        return TeamPlayer.objects.all()
+
+
 def players(request):
     all_players = TeamPlayer.objects.all()
     players_context = {"players": all_players}
     return render(request, "manager/players.html", players_context)
+
+
+class PlayerDetail(generic.DetailView):
+    model = TeamPlayer
+    template_name = 'manager/player_details.html'
 
 
 def player_details(request, player_id):
@@ -231,10 +282,22 @@ def event_type_details(request, event_type_id):
         return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
 
 
+class Events(generic.ListView):
+    template_name = 'manager/events.html'
+
+    def get_queryset(self):
+        return Event.objects.all()
+
+
 def events(request):
     all_events = Event.objects.all()
     events_context = {"events": all_events}
     return render(request, "manager/events.html", events_context)
+
+
+class EventDetail(generic.DetailView):
+    model = Event
+    template_name = 'manager/event_details.html'
 
 
 def event_details(request, event_id):
@@ -245,3 +308,19 @@ def event_details(request, event_id):
         return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
     except:
         return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+
+
+def error_400(request, exception):
+    return render(request, 'manager/400.html', status=400)
+
+
+def error_403(request, exception):
+    return render(request, 'manager/403.html', status=403)
+
+
+def error_404(request, exception):
+    return render(request, 'manager/404.html', status=404)
+
+
+def error_500(request, *args, **argv):
+    return render(request, 'manager/500.html', status=500)

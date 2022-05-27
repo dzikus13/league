@@ -9,8 +9,10 @@ from .views import players, player_details, add_player, add_player_stats
 from .views import event_types, event_type_details, events, event_details, add_event
 from .views import register, registered
 from .views import login, logged, logout, logged_out
+from . import views
 
 urlpatterns = [
+    path("base", base),
     path("", manager),
     path("base", base, name="base"),
     path("main", main),
@@ -31,23 +33,23 @@ urlpatterns = [
     path("logged", logged),
     path("logged_out", logged_out),
 
-    path("leagues", leagues, name="league_list"),
-    re_path(r"league_details/(?P<league_id>\d+)", league_details, name="league_details"),
+    path("leagues", views.Leagues.as_view(), name="leagues"),
+    re_path(r"league_details/(?P<pk>[0-9]+)/$", views.LeagueDetail.as_view(), name="league_details"),
     path("league_details", leagues, name="league_list"),
     # jezeli nie podane zostanie id wyswietli liste
 
-    path("teams", teams, name="team_list"),
-    re_path(r"team_details/(?P<team_id>\d+)", team_details, name="team_details"),
+    path("teams", views.Teams.as_view(), name="team_list"),
+    re_path(r"team_details/(?P<pk>[0-9]+)/$", views.TeamDetail.as_view(), name="team_details"),
     path("team_details", teams, name="team_list"),
     # jezeli nie podane zostanie id wyswietli liste
 
-    path("matches", matches, name="match_list"),
-    re_path(r"match_details/(?P<match_id>\d+)", match_details, name="match_details"),
+    path("matches", views.Matches.as_view(), name="match_list"),
+    re_path(r"match_details/(?P<pk>[0-9]+)/$", views.MatchDetail.as_view(), name="match_details"),
     path("match_details", matches, name="match_list"),
     # jezeli nie podane zostanie id wyswietli liste
 
-    path("players", players, name="player_list"),
-    re_path(r"player_details/(?P<player_id>\d+)", player_details, name="player_details"),
+    path("players", views.Players.as_view(), name="player_list"),
+    re_path(r"player_details/(?P<pk>[0-9]+)/$", views.PlayerDetail.as_view(), name="player_details"),
     path("player_details", players, name="player_list"),
     # jezeli nie podane zostanie id wyswietli liste
 
