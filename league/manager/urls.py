@@ -29,22 +29,17 @@ urlpatterns = [
     path("events", events),
 
     path("leagues", leagues, name="league_list"),
-    re_path(r"league_details/(?P<league_id>\d+)", league_details, name="league_details"),
-    path("league_details", leagues, name="league_list"),
+    re_path("league/(?P<league_id>\d+)", league_details, name="league_details"),
 
     path("teams", teams, name="team_list"),
-    re_path(r"team_details/(?P<team_id>\d+)", team_details, name="team_details"),
-    path("team_details", teams, name="team_list"),
+    re_path("teams/(?P<team_id>\d+)", team_details, name="team_details"),
 
     path("matches", matches, name="match_list"),
-    re_path(r"match_details/(?P<match_id>\d+)", match_details, name="match_details"),
-    path("match_details", matches, name="match_list"),
+    re_path("match/(?P<match_id>\d+)", match_details, name="match_details"),
 
     path("players", players, name="player_list"),
-    re_path(r"player_details/(?P<player_id>\d+)", player_details, name="player_details"),
-    path("player_details", players, name="player_list"),
+    re_path("players/(?P<player_id>\d+)", player_details, name="player_details"),
 
     path("events", events, name="events_list"),
-    re_path(r"event_details/(?P<event_id>\d+)", event_details, name="event_details"),
-    path("event_details", events, name="event_details"),
+    re_path("event/(?P<event_id>\d+)", event_details, name="event_details"),
 ]

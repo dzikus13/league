@@ -75,11 +75,19 @@ def register(request):
 
 
 def main(request):
-    return render(request, "manager/main.html")
+    all_leagues = League.objects.all()
+    all_matches = Match.objects.all()
+    all_context = {"leagues": all_leagues, "matches": all_matches}
+    return render(request, "manager/main.html", all_context)
 
 
 def view(request):
-    return render(request, "manager/view.html")
+    all_leagues = League.objects.all()
+    all_matches = Match.objects.all()
+    all_events = Event.objects.all()
+    all_teams = Team.objects.all()
+    all_context = {"leagues": all_leagues, "matches": all_matches, "events": all_events, "teams": all_teams}
+    return render(request, "manager/view.html", all_context)
 
 
 def leagues(request):
