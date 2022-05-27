@@ -1,5 +1,9 @@
+<!--
+AUTHORISATION:
+Admin, Judge, Logged_User
+-->
 {%extends "manager/base.html"%} {%block content%}
-<h1>Details about {{league.name}}</h1>
+Details about {{league.name}}
 <table>
     <tr>
         <th>id</th>
@@ -34,16 +38,16 @@
         <td>{{league.all_matches}}</td>
     </tr>
     <tr>
-        <td>played_matches (FIX)</td>
-        <td><!--league.played_matches--></td> <!-- #TODO:skam34 wyswietlic ilosc zagranych dotychczas meczy -->
+        <td>played_matches</td>
+        <td>{{league.played_matches}}</td>
     </tr>
     <tr>
-        <td>is_ended</td>
-        <td>{{league.is_ended}}</td>
+        <td>ended</td>
+        <td>{{league.ended}}</td>
     </tr>
     <tr>
         <td>winner</td>
-        <td>{{league.league_winner}}</td>
+        <td>{{league.winner}}</td>
     </tr>
 </table>
 {%endblock%}

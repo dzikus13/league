@@ -1,0 +1,46 @@
+<!--
+AUTHORISATION:
+Everyone
+-->
+{%extends "manager/base.html"%} {%block content%}
+	<div class="form_box_login">
+		<span style="float:left;">
+			<h1 style="text-align:center;">Register</h1>
+			<form action="/registered" method="POST">
+			{% csrf_token %}
+				<label>Username:</label>
+				<br>
+					<INPUT TYPE="login" class="form_input" NAME="username" SIZE="7" minlength="3" MAXLENGTH="10" required>
+				</br>
+
+				<br></br>
+
+				<label>Email:</label>
+				<br>
+					<INPUT TYPE="email" class="form_input" NAME="email" SIZE="7" minlength="8" MAXLENGTH="20" required>
+				</br>
+
+				<br></br>
+				
+				<label>Password:</label>
+				<br>
+					<INPUT TYPE="password" class="form_input" NAME="password1" SIZE="7" minlength="8" MAXLENGTH="20" required>
+				</br>
+
+				<br></br>
+
+				<label>Password:</label>
+				<br>
+					<INPUT TYPE="password" class="form_input" NAME="password2" SIZE="7" minlength="8" MAXLENGTH="20" required>
+				</br>
+
+				<br></br>
+
+				<button class="button_form_submit" type="submit">Register</button>
+			</form>
+		</span>
+	</div>
+	<div class="form_box_login_bottom">
+		<label class="login_bottom_link">If you already have an account, <a class="login_bottom_link" href="/login">login</a> instead.</label>
+	</div>
+{%endblock%}

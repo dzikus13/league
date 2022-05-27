@@ -1,5 +1,9 @@
+<!--
+AUTHORISATION:
+Admin, Judge, Logged_User
+-->
 {%extends "manager/base.html"%} {%block content%}
-<h1>Details about event #{{event.id}}</h1>
+Details about event #{{event.id}}
 <table>
     <tr>
         <th>id</th>
@@ -7,7 +11,7 @@
     </tr>
     <tr>
         <th>time</th>
-        <th>{{event.event_time}}</th>
+        <th>{{event.time}}</th>
     </tr>
     <tr>
         <td>player</td>
@@ -20,10 +24,6 @@
     <tr>
         <td>match</td>
         <td>{{event.match}}</td>
-    </tr>
-    <tr>
-        <td>team</td>
-        <td>{{event.team}}</td>
     </tr>
 </table>
 {%endblock%}

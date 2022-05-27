@@ -1,41 +1,28 @@
-from django.shortcuts import render
-# from django.shortcuts import HttpResponse
-# ^ probowalem uzyc by bezposrednio wyswietlic html
+from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import login as django_login
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import logout as django_logout
 
 from os import path, listdir
 from pathlib import Path
-from django.core.exceptions import ObjectDoesNotExist
-
-
-# skopiowane z settings (i lekko zmienione)
+from .forms import NewUserForm
+from .models import League, Match, Team, TeamPlayer, Event, EventType
 BASE_DIR = Path(__file__).resolve().parent
-# .parent jeszcze bylo na koncu
-# -----------------------------------------
 
 # Create your views here.
-# do tworzenia generic views
-from django.views import generic
-from .models import League, Match, Team, TeamPlayer, Event, EventType
 
 
 def base(request):
     return render(request, "manager/base.html")
 
 
-def list_of_views(request):
-    context = {"links_list": []}
-    context["links_list"].append("leagues")
-    context["links_list"].append("matches")
-    context["links_list"].append("teams")
-    context["links_list"].append("events")
-    context["links_list"].append("players")
-
-    return render(request, "manager/main.html", context)
-
-
-def debug_manager(request):
+def manager(request):
     # linki (a wlasciwie to "odnosniki"(ig?) do plikow html z folderu manager)
-    directory = path.join(BASE_DIR, "templates/manager")
+    directory = path.join(BASE_DIR, "templates\manager")
     model_links = {"links_list": []}
     i = 0
     for filename in listdir(directory):
@@ -46,15 +33,128 @@ def debug_manager(request):
 
     return render(request, "manager/manager.html", model_links)
 
+def user_profile(request):
+    return render(request, "manager/user_profile.html")
+
+def error(request):
+    return render(request, "manager/error.html", {"error_log": "Nie doszlo do zadnego bledu"})
+    # sprawic by mi pycharm nie krzyczal ze tak nie mozna
+
+def main(request):
+    return render(request, "manager/main.html")
 
 def add_forms(request):
     return render(request, "manager/add_forms.html")
 
-'''
-# Stary sposob dla porownania
+
+def add_event(request):
+    return render(request, "manager/add_event.html")
+
+
+def add_league(request):
+    return render(request, "manager/add_league.html")
+
+
+def add_match(request):
+    return render(request, "manager/add_match.html")
+
+
+def add_player(request):
+    return render(request, "manager/add_player.html")
+
+
+def add_player_stats(request):
+    return render(request, "manager/add_player_stats.html")
+
+
+def add_team(request):
+    return render(request, "manager/add_team.html")
+
+
+def register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        myuser = User.objects.create_user(username, email, password1)
+
+        myuser.save()
+
+        messages.success(request, "Your Account has been successfully created.")
+
+        return redirect("login")
+
+    return render(request, "manager/register.html")
+
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password1']
+
+        user = authenticate(username=username, password=password1)
+
+        if user is not None:
+            django_login(request, user)
+            return render(request, "manager/logged.html")
+
+        else:
+            return redirect('login')
+
+    return render(request, "manager/login.html")
+
+
+def logout(request):
+    django_logout(request)
+    return render('/base')
+
+
+def registered(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        myuser = User.objects.create_user(username, password2, password1)
+
+        myuser.save()
+
+        messages.success(request, "Your Account has been successfully created.")
+
+        return redirect("login")
+
+    return render(request, "manager/registered.html")
+
+
+def logged(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password1']
+
+        user = authenticate(username=username, password=password1)
+
+        if user is not None:
+            django_login(request, user)
+            return render(request, "manager/logged.html")
+
+        else:
+            return redirect('login')
+
+    return render(request, "manager/logged.html")
+
+
+def logged_out(request):
+    django_logout(request)
+    return render(request, "manager/logged_out.html")
+
+
 def leagues(request):
     all_leagues = League.objects.all()
-    return render(request, "manager/leagues.html", {"leagues": all_leagues})
+    league_context = {"leagues": all_leagues}
+    return render(request, "manager/leagues.html", league_context)
+
 
 def league_details(request, league_id):
     try:
@@ -65,94 +165,83 @@ def league_details(request, league_id):
     except:
         return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
         # sprawic by mi pycharm nie krzyczal ze tak nie mozna
-'''
-
-class Leagues(generic.ListView):
-    template_name = 'manager/leagues.html'
-    # context_object_name = 'Leagues'
-    # gdybym chcial zmienic nazwe, ale wole posluzyc sie default'em (object_list)
-
-    def get_queryset(self):
-        return League.objects.all()
 
 
-class LeagueDetail(generic.DetailView):
-    model = League
-    template_name = 'manager/league_details.html'
+def teams(request):
+    all_teams = Team.objects.all()
+    teams_context = {"teams": all_teams}
+    return render(request, "manager/teams.html", teams_context)
 
 
-class Teams(generic.ListView):
-    template_name = 'manager/teams.html'
-
-    def get_queryset(self):
-        return Team.objects.all()
-    # TODO wypisac graczy poprawnie
-
-
-class TeamDetail(generic.DetailView):
-    model = Team
-    template_name = 'manager/team_details.html'
-    # TODO wypisac graczy poprawnie
+def team_details(request, team_id):
+    try:
+        team = Team.objects.get(id=team_id)
+        return render(request, "manager/team_details.html", {"team": team})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
 
 
-class Matches(generic.ListView):
-    template_name = 'manager/matches.html'
-
-    def get_queryset(self):
-        return Match.objects.all()
-
-class MatchDetail(generic.DetailView):
-    model = Match
-    template_name = 'manager/match_details.html'
+def matches(request):
+    all_matches = Match.objects.all()
+    matches_context = {"matches": all_matches}
+    return render(request, "manager/matches.html", matches_context)
 
 
-class Players(generic.ListView):
-    template_name = 'manager/players.html'
-
-    def get_queryset(self):
-        return TeamPlayer.objects.all()
-
-
-class PlayerDetail(generic.DetailView):
-    model = TeamPlayer
-    template_name = 'manager/player_details.html'
-
-'''
-# model zostal calkowicie zmieniony
-class EventTypes(generic.ListView):
-    template_name = 'manager/event_types.html'
-
-    def get_queryset(self):
-        return EventType.objects.all()
+def match_details(request, match_id):
+    try:
+        match = Match.objects.get(id=match_id)
+        return render(request, "manager/match_details.html", {"match": match})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
 
 
-class EventTypeDetail(generic.DetailView):
-    model = EventType
-    template_name = 'manager/event_type_details.html'
-'''
-
-class Events(generic.ListView):
-    template_name = 'manager/events.html'
-
-    def get_queryset(self):
-        return Event.objects.all()
+def players(request):
+    all_players = TeamPlayer.objects.all()
+    players_context = {"players": all_players}
+    return render(request, "manager/players.html", players_context)
 
 
-class EventDetail(generic.DetailView):
-    model = Event
-    template_name = 'manager/event_details.html'
-
-def error_400(request, exception):
-    return render(request, 'manager/400.html', status=400)
-
-
-def error_403(request, exception):
-    return render(request, 'manager/403.html', status=403)
+def player_details(request, player_id):
+    try:
+        player = TeamPlayer.objects.get(id=player_id)
+        return render(request, "manager/player_details.html", {"player": player})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
 
 
-def error_404(request, exception):
-    return render(request, 'manager/404.html', status=404)
+def event_types(request):
+    all_event_types = EventType.objects.all()
+    event_types_context = {"event_types": all_event_types}
+    return render(request, "manager/event_types.html", event_types_context)
 
 
-def error_500(request, *args, **argv):
-    return render(request, 'manager/500.html', status=500)
+def event_type_details(request, event_type_id):
+    try:
+        event_type = EventType.objects.get(id=event_type_id)
+        return render(request, "manager/event_type_details.html", {"event_type": event_type})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+
+
+def events(request):
+    all_events = Event.objects.all()
+    events_context = {"events": all_events}
+    return render(request, "manager/events.html", events_context)
+
+
+def event_details(request, event_id):
+    try:
+        event = Event.objects.get(id=event_id)
+        return render(request, "manager/event_details.html", {"event": event})
+    except ObjectDoesNotExist:
+        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
+    except:
+        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
