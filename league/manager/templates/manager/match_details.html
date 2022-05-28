@@ -1,9 +1,16 @@
+<!--
+AUTHORISATION:
+Admin, Judge, Logged_User
+-->
 {%extends "manager/base.html"%} {%block content%}
 <h1>Details about match #{{match.id}}</h1>
+Details about match#{{match.id}}
 <table>
     <tr>
         <td>id</td>
         <td>{{match.id}}</td>
+        <th>time</th>
+        <th>{{match.time}}</th>
     </tr>
     <tr>
         <td>league</td>
@@ -12,10 +19,14 @@
     <tr>
         <th>amount_gols</th>
         <th>{{match.amount_gols}}</th>
+        <td>result</td>
+        <td>{{match.result}}</td>
     </tr>
     <tr>
         <td>winner</td>
         <td>{{match.winner}}</td>
+        <td>teams</td>
+        <td>{{match.teams}}</td>
     </tr>
     <tr>
         <td>loser</td>
@@ -24,6 +35,9 @@
     <tr>
         <td>drawn</td>
         <td>{{match.drawn}}</td>
+        <td>league</td>
+        <td>{{match.league}}</td>
     </tr>
 </table>
+    <input class="button_form_submit" TYPE="submit" VALUE="Submit" href="match"></input>
 {%endblock%}

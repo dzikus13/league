@@ -1,3 +1,7 @@
+<!--
+AUTHORISATION:
+Admin, Judge, Logged_User
+-->
 {%extends "manager/base.html"%} {%block content%}
 <h1>Details about {{league.name}}</h1>
 <table>
@@ -34,8 +38,8 @@
         <td>{{league.all_matches}}</td>
     </tr>
     <tr>
-        <td>played_matches (FIX)</td>
-        <td><!--league.played_matches--></td> <!-- #TODO:skam34 wyswietlic ilosc zagranych dotychczas meczy -->
+        <td>played_matches</td>
+        <td>{{league.played_matches}}</td>
     </tr>
     <tr>
         <td>is_ended</td>

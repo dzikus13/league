@@ -1,0 +1,473 @@
+html, body 
+{
+    background-color:#202225;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    font-family:tahoma;
+}
+
+/* HEADER */
+
+#header
+{
+    background-color:black;
+    height:90px;
+    width:100%;
+    position:fixed;
+    display:block;
+    z-index:9;
+	box-shadow:0px 5px 10px;
+}
+
+.button_header_menu
+{
+    text-align:center;
+    background-color:black;
+    width:300px;
+    height:90px;
+    cursor:pointer;
+    color:white;
+    font-size:30px;
+    border-color:black;
+	display:table-cell;
+	float:left;
+}
+
+.button_header_menu:hover
+{
+    /*background-color:#90ee90;*/
+    color:#90ee90;
+    cursor:pointer;
+}
+
+.button_header_login
+{
+    height:40px;
+    width:150px;
+	float:right;
+	background-color:black;
+    color:white;
+    cursor:pointer;
+    border-color:black;
+}
+
+.button_header_login:hover
+{
+    /*background-color:#90ee90;*/
+    color:#90ee90;
+}
+
+/* MAIN IDS AND CLASSES */
+
+#menu 
+{
+    background-color:black;
+    height:90px;
+    width:1050px;
+    padding-left:150px;
+    margin:auto;
+}
+
+#main
+{
+	background-color:#2f3136;
+	text-align:center;
+	padding-top:110px;
+	padding-bottom:20px;
+	overflow:auto;
+	padding-left:20px;
+	padding-right:20px;
+	width:845px;
+	margin-top:10px;
+	margin-left:7px;
+	margin:7px;
+	border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
+	margin:auto;
+}
+
+.form_box
+{
+	overflow:auto;
+	width:260px;
+	min-height:100px;
+	background-color:#d3d3d3;
+	text-align:left;
+	padding-top:20px;
+	padding-bottom:20px;
+	margin:auto;
+	margin-top:7px;
+	margin-bottom:7px;
+	color:black;
+	position:relative;
+	border-radius:5px;
+	padding-left:20px;
+	padding-right:20px;
+}
+
+::-webkit-scrollbar
+{
+    width:10px;
+}
+
+::-webkit-scrollbar-track
+{
+    background:black;
+}
+
+::-webkit-scrollbar-thumb
+{
+    background:white;
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+    background: #90ee90;
+}
+
+a
+{
+    font-size:20px;
+    text-decoration:none;
+    color:#90ee90;
+}
+a:hover
+{
+    text-decoration:underline;
+    color:#90ee90;
+}
+
+.a_table
+{
+    color:white;
+}
+
+.a_table:hover
+{
+    color:#90ee90;
+}
+
+table, tr, th, td
+{
+    text-align:center;
+    padding:0px;
+    color:white;
+    border:solid white;
+}
+
+.color_white
+{
+    color:white;
+}
+
+.button_back{
+	text-align:center;
+    WIDTH:75px;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+.button_back:hover
+{
+    background-color:#90ee90;
+    color:black;
+    cursor:pointer;
+}
+
+/* USER DROP-DOWN MENU */
+
+#user_drop_down_menu
+{
+    width:150px;
+	float:right;
+	background-color:transparent;
+    min-height:31px;
+    overflow:auto;
+}
+
+#user_drop_down_menu_other_elements_logout
+{
+    padding-top:0px;
+    height:40px;
+    border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
+}
+
+.user_drop_down_menu_first_element
+{
+    height:40px;
+    width:150px;
+	float:right;
+	background-color:black;
+    color:white;
+    cursor:pointer;
+    border-color:black;
+    margin:0px;
+}
+
+.user_drop_down_menu_first_element:hover
+{
+    /*background-color:#90ee90;*/
+    color:#90ee90;
+    text-decoration:none;
+}
+
+#user_drop_down_menu_block
+{
+    background-color:transparent;
+    height:115px;
+    width:150px;
+	margin:auto;
+	color:white;
+    cursor:pointer;
+    border-color:black;
+    float:right;
+    padding-bottom:5px;
+    border-bottom-left-radius:15px;
+	border-bottom-right-radius:15px;
+}
+
+.user_drop_down_menu_other_elements
+{
+    height:31px;
+    padding-top:9px;
+    width:150px;
+	float:right;
+	background-color:black;
+    color:white;
+    cursor:pointer;
+    border-color:black;
+    font-size:15px;
+    border-size:0px;
+}
+.user_drop_down_menu_other_elements:hover
+{
+    /*background-color:#90ee90;*/
+    color:#90ee90;
+    text-decoration:none;
+    border-color:black;
+}
+
+/* ADD FORMS */
+
+select:focus{
+    box-shadow: 0 0 10px 100px #fff inset;
+    border-color: #90ee90;
+   	border-radius:15px;
+   	border-width:2px;
+    outline:none;
+}
+
+.button_form_submit
+{
+    text-align:center;
+    WIDTH:75px;
+    cursor:pointer;
+    margin-right:10px;
+    float:right;
+    border-radius:5px;
+}
+
+.button_form_submit:hover
+{
+    background-color:#90ee90;
+    color:black;
+    cursor:pointer;
+}
+
+.button_form_clear
+{
+    text-align:center;
+    WIDTH:75px;
+    cursor:pointer;
+    margin-right:10px;
+    float:right;
+    border-radius:5px;
+}
+
+.button_form_clear:hover
+{
+    background-color:#db544b;
+    color:black;
+    cursor:pointer;
+}
+
+.form_input
+{
+	float:left;
+	height:35px;
+	width:260px;
+	border-radius:15px;
+	text-align:center;
+	outline-offset:0px;
+	outline-color:#90ee90;
+	border-width:10px;
+	border-color:white;
+}
+
+.form_select
+{
+	cursor:pointer;
+	float:left;
+	height:36px;
+	width:260px;
+	border-radius:15px;
+	text-align:center;
+	outline-offset:0px;
+	outline-color:#90ee90;
+	border-width:10px;
+	border-color:white;
+}
+
+.select_option
+{
+    background-color:white;
+}
+
+.select_option:hover
+{
+    background-color:#90ee90;
+}
+
+/* LOGIN AND REGISTER */
+
+#password_checkbox
+{
+    float:right;
+}
+
+.form_box_login
+{
+	overflow:auto;
+	min-height:100px;
+	background-color:#d3d3d3;
+	text-align:left;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:20px;
+	padding-right:20px;
+	width:260px;
+	margin-top:30px;
+	margin-bottom:7px;
+	margin:auto;
+	color:black;
+	position:relative;
+	border-radius:5px 5px 0px 0px;
+}
+
+.form_box_login_bottom
+{
+	background-color:black;
+	text-align:left;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:20px;
+	padding-right:20px;
+	width:260px;
+	margin-top:0px;
+	margin-bottom:7px;
+	margin:auto;
+	color:white;
+	position:relative;
+	border-radius:0px 0px 5px 5px;
+}
+
+.login_bottom_link
+{
+    font-size:14px;
+}
+
+/* USER PROFILE */
+
+.user_profile_box
+{
+	color:white;
+	overflow:auto;
+	width:260px;
+	min-height:100px;
+	text-align:left;
+	padding-top:30px;
+	margin-left:150px;
+	margin-top:7px;
+	margin-bottom:7px;
+	position:relative;
+	border-radius:5px;
+	padding-left:20px;
+	padding-right:20px;
+}
+
+/* HOVER DROP-DOWN MENU */
+
+/*
+ol
+{
+	display:table-cell;
+	width:150px;
+	list-style-type:none;
+	padding:0px;
+	margin:0px;
+	background-color:#FFF;
+	font-size:20px;
+	height:20px;
+	line-height:35px;
+	text-align:center;
+}
+
+ol a
+{
+	display:block;
+	text-decoration:none;
+	color:#000;
+	padding-bottom:5px;
+	padding-top:0px;
+}
+
+ol > li
+{
+	width:150px;
+	background-color:#EEE;
+	height:2em;
+	color:white;
+}
+
+ol > li:first-child
+{
+	cursor:normal;
+	background-color:black;
+}
+
+ol > li:first-child:hover
+{
+	background-color:#90ee90;
+}
+
+ol > li a:first-child
+{
+	color:white;
+}
+
+ol > li a:first-child:hover
+{
+	color:black;
+}
+
+ol > li:hover > ul {
+	display:block;
+}
+
+ol > li > ul {
+	display:none;
+	list-style-type:none;
+	padding:0;
+	margin:0;
+}
+
+ol > li > ul > li{
+	background-color:#000000;
+}
+
+ol > li > ul > li:hover {
+	background-color:#90ee90;
+}
+*/

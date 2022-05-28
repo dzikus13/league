@@ -1,5 +1,10 @@
+<!--
+AUTHORISATION:
+Admin, Judge, Logged_User
+-->
 {%extends "manager/base.html"%} {%block content%}
 <h1>Details about {{team.team_name}}</h1>
+Details about {{team.team_name}}
 <table>
     <tr>
         <th>id</th>
@@ -20,6 +25,14 @@
     <tr>
         <td>league</td>
         <td>{{team.league}}</td>
+    </tr>
+    <tr>
+        <td>max_players_number</td>
+        <td>{{team.max_players_number}}</td>
+    </tr>
+    <tr>
+        <td>number_of_players</td>
+        <td>{{team.number_of_players}}</td>
     </tr>
     <tr>
         <td>sum_of_points</td>
