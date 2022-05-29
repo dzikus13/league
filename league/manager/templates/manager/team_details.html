@@ -3,43 +3,38 @@ AUTHORISATION:
 Admin, Judge, Logged_User
 -->
 {%extends "manager/base.html"%} {%block content%}
+<h1>Go to <a href="/teams">Team List</a></h1>
 <h1>Details about {{team.team_name}}</h1>
-Details about {{team.team_name}}
 <table>
     <tr>
-        <th>id</th>
+        <th>Id</th>
         <th>{{team.id}}</th>
     </tr>
     <tr>
-        <td>matches_won</td>
-        <td>{{team.matches_won}}</td>
+        <td>Wins/Draws/Loses</td>
+        <td>{{team.number_of_matches_won}}/{{team.number_of_matches_drawn}}/{{team.number_of_matches_lost}}</td>
     </tr>
     <tr>
-        <td>matches_draw</td>
-        <td>{{team.matches_draw}}</td>
+        <td>League</td>
+        <td><a href="{%url 'league_details' team.league.id%}">{{team.league.name}}</a></td>
     </tr>
     <tr>
-        <td>matches_lost</td>
-        <td>{{team.matches_lost}}</td>
+        <td>Players</td>
+        <td>
+            Current players: {{team.teamplayer_set.all|length}}/{{team.MAX_NUMBER_OF_PLAYERS}}
+            {%for player in team.teamplayer_set.all%}
+            <p><a href="{%url 'player_details' player.id%}">{{player.player_nick}}</a></p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
     </tr>
     <tr>
-        <td>league</td>
-        <td>{{team.league}}</td>
-    </tr>
-    <tr>
-        <td>max_players_number</td>
-        <td>{{team.max_players_number}}</td>
-    </tr>
-    <tr>
-        <td>number_of_players</td>
-        <td>{{team.number_of_players}}</td>
-    </tr>
-    <tr>
-        <td>sum_of_points</td>
+        <td>Points</td>
         <td>{{team.sum_of_points}}</td>
     </tr>
     <tr>
-        <td>matches_team_played</td>
+        <td>Matches played</td>
         <td>{{team.matches_team_played}}</td>
     </tr>
 </table>

@@ -1,65 +1,13 @@
 <!--
 AUTHORISATION:
-Admin, Judge
+Admin
 -->
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
-	<FORM METHOD="" ACTION="">
-		<span style="float:left;">
-			<label>Event Date:</label>
-			<br>
-				<INPUT TYPE="date" class="form_input" NAME="event_date" SIZE="7" MAXLENGTH="10">
-			</br>	
-			
-			<br></br>
-			
-			<label>Event Type:</label>
-			<br>
-				<SELECT NAME="event_type" class="form_select">
-					<option class="select_option" value="1">event_id</option>
-					<option value="2">event_id</option>
-					<option value="3">event_id</option>
-				</SELECT>
-			</br>
-			
-			<br></br>
-
-			<label>League:</label>
-			<br>
-				<SELECT NAME="league" class="form_select">
-					<option value="1">league_id</option>
-					<option value="2">league_id</option>
-					<option value="3">league_id</option>
-				</SELECT>
-			</br>
-				
-			<br></br>
-	
-			<label>Team:</label>
-			<br>
-				<SELECT NAME="team" class="form_select">
-					<option value="1">team_id</option>
-					<option value="2">team_id</option>
-					<option value="3">team_id</option>
-				</SELECT>
-			</br>
-				
-			<br></br>
-	
-			<label>Player:</label>
-			<br>
-				<SELECT NAME="event_type" class="form_select">
-					<option value="1">player_id</option>
-					<option value="2">player_id</option>
-					<option value="3">player_id</option>
-				</SELECT>
-			</br>
-				
-			<br></br>
-	
-			<input class="button_form_clear" TYPE="reset" VALUE="Clear"></input>				
-			<input class="button_form_submit" TYPE="submit" VALUE="Submit"></input>
-		</span>
-	</FORM>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="button_form_submit" value="Submit">
+    </form>
 </div>
 {%endblock%}

@@ -17,14 +17,14 @@ Everyone
             <form action="/" class="button_header_menu">
                 <input class="button_header_menu" type="submit" value="Główna"/>
             </form>
-            <form action="manager" class="button_header_menu">
+            <form action="/manager" class="button_header_menu">
                 <input class="button_header_menu" type="submit" value="Widoki"/>
             </form>
-            <form action="add_forms" class="button_header_menu">
+            <form action="/add_forms" class="button_header_menu">
                 <input class="button_header_menu" type="submit" value="Dodawanie" />
             </form>
             {% if not user.is_authenticated %}
-            <form action="login" id="#login_header_button_display" class="button_header_login" style="display:inline;">
+            <form action="/login" id="#login_header_button_display" class="button_header_login" style="display:inline;">
                 <input class="button_header_login" type="submit" value="Zaloguj Się" />
             </form>
             {% endif %}

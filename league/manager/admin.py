@@ -4,24 +4,24 @@ from django.contrib import admin
 from .models import League, Match, Team, TeamPlayer, Event, EventType
 
 class LeagueManager(admin.ModelAdmin):
-    list_display = ["name", "max_number_of_teams", "points_for_win", "points_for_lost", "points_for_draw",
+    list_display = ["id", "name", "max_number_of_teams", "points_for_win", "points_for_lost", "points_for_draw",
                     "teams_number", "all_matches", "played_matches"]
 
 
 class TeamManager(admin.ModelAdmin):
-    list_display = ["team_name", "league", "sum_of_points"]
+    list_display = ["id", "team_name", "league", "sum_of_points"]
 
 
 class MatchManager(admin.ModelAdmin):
-    list_display = ["league"]
+    list_display = ["id", "league"]
 
 
 class TeamPlayerManager(admin.ModelAdmin):
-    list_display = ["team"]
+    list_display = ["id", "team"]
 
 
 class EventManager(admin.ModelAdmin):
-    list_display = ["player", "event_type", "match"]
+    list_display = ["id", "player", "event_type", "match"]
 
 
 admin.site.register(League, LeagueManager)

@@ -3,18 +3,19 @@ AUTHORISATION:
 Admin, Judge, Logged_User
 -->
 {%extends "manager/base.html"%} {%block content%}
+<h1>Go to <a href="/leagues">League List</a></h1>
 <h1>Details about {{league.name}}</h1>
 <table>
     <tr>
-        <th>id</th>
+        <th>Id</th>
         <th>{{league.id}}</th>
     </tr>
     <tr>
-        <td>name</td>
+        <td>Name</td>
         <td>{{league.name}}</td>
     </tr>
     <tr>
-        <td>max_number_of_teams</td>
+        <td>Teams</td>
         <td>
             Current teams: {{league.teams_number}}/{{league.max_number_of_teams}}
             {%for team in league.team_set.all%}
@@ -25,35 +26,32 @@ Admin, Judge, Logged_User
         </td>
     </tr>
     <tr>
-        <td>points_for_win</td>
-        <td>{{league.points_for_win}}</td>
+        <td>
+            Points for:
+        </td>
+        <td>
+            <p>Winning: {{league.points_for_win}}</p>
+            <p>Drawing: {{league.points_for_lost}}</p>
+            <p>Losing: {{league.points_for_draw}}</p>
+        </td>
     </tr>
     <tr>
-        <td>points_for_lost</td>
-        <td>{{league.points_for_lost}}</td>
+        <td>Matches played</td>
+        <td>
+            Matches played: {{league.match_set.all|length}}
+            {%for match in league.match_set.all%}
+            <p><a href="{%url 'match_details' match.id%}">Match #{{match.id}} (ID)</a></p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
     </tr>
     <tr>
-        <td>points_for_draw</td>
-        <td>{{league.points_for_draw}}</td>
-    </tr>
-    <tr>
-        <td>teams_number</td>
-        <td>{{league.teams_number}}</td>
-    </tr>
-    <tr>
-        <td>all_matches</td>
-        <td>{{league.all_matches}}</td>
-    </tr>
-    <tr>
-        <td>played_matches</td>
-        <td>{{league.played_matches}}</td>
-    </tr>
-    <tr>
-        <td>is_ended</td>
+        <td>Is over</td>
         <td>{{league.is_ended}}</td>
     </tr>
     <tr>
-        <td>winner</td>
+        <td>Winner</td>
         <td><a href="{%url 'team_details' league.league_winner.id%}">{{league.league_winner.team_name}}</a></td>
     </tr>
 </table>

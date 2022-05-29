@@ -11,7 +11,7 @@ class League(models.Model):
     max_number_of_teams = models.IntegerField(default=10)
 
     def __str__(self):
-        return self.name
+        return f"{self.id};{self.name}"
 
     @property
     def teams_number(self):
@@ -49,7 +49,10 @@ class Team(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
     MAX_NUMBER_OF_PLAYERS = 4
-    
+
+    def __str__(self):
+        return f"{self.id};{self.team_name}"
+
     def save(self, *args, **kwargs):
         if self.league.teams_number >= self.league.max_number_of_teams:
             raise ValidationError("Max number of teams exceeded", code="max_teams")
@@ -86,6 +89,9 @@ class Match(models.Model):
     match_duration = models.DurationField(default="01:30:00")
     teams = models.ManyToManyField(Team)
     match_ended = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Match #{self.id}"
 
     def goals_amount_team(self, which_team):
         return Event.objects.all().filter(event_type=EventType.MATCH_GOAL, team=which_team, match=self).count()
@@ -138,6 +144,9 @@ class TeamPlayer(models.Model):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
     player_nick = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"{self.id};{self.player_nick}"
+
     def save(self, *args, **kwargs):
         if TeamPlayer.objects.filter(team=self.team).count() >= Team.MAX_NUMBER_OF_PLAYERS:
             raise ValidationError("Maximum number of players in this team exceeded", code="too_much_players")
@@ -162,6 +171,9 @@ class Event(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.id}"
 
     def save(self, *args, **kwargs):
         if self.event_type == EventType.MATCH_GOAL:

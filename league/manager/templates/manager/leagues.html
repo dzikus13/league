@@ -23,9 +23,16 @@ Admin, Judge, Logged_User, Not_Logged_User
             None
             {%endfor%}
         </td>
-        <td>{{league.played_matches}}/{{league.all_matches}}</td>
+        <td>
+            Matches played: {{league.match_set.all|length}}
+            {%for match in league.match_set.all%}
+            <p><a href="{%url 'match_details' match.id%}">Match #{{match.id}} (ID)</a></p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
         <td>{{league.is_ended}}</td>
-        <td><a href="{%url 'team_details' league.league_winner.id%}">{{league.league_winner.team_name}}</a></td>
+        <td><a href="/">FIX LATER {{league.league_winner.team_name}}</a></td>
     </tr>
     {%empty%}
     <tr>
@@ -33,4 +40,5 @@ Admin, Judge, Logged_User, Not_Logged_User
     </tr>
     {%endfor%}
 </table>
+<h1><a href="/add_league">Add a new League</a></h1>
 {%endblock%}
