@@ -13,7 +13,7 @@ class League(models.Model):
     max_number_of_players_in_team = models.IntegerField(default=2)
 
     def __str__(self):
-        return self.league_name
+        return f"{self.id};{self.name}"
 
     @property
     def number_of_teams_in_league(self):
@@ -24,7 +24,7 @@ class League(models.Model):
         return self.match_set.all().count()
 
     @property
-    def number_of_played_matches_in_league(self):
+    def played_matches(self):
         return self.match_set.filter(event__isnull=False).count()
 
     @property
@@ -51,7 +51,10 @@ class Team(models.Model):
     team_league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
     MAX_NUMBER_OF_PLAYERS = 4
-    
+
+    def __str__(self):
+        return f"{self.id};{self.team_name}"
+
     def save(self, *args, **kwargs):
         if self.team_league.number_of_teams_in_league >= self.team_league.max_number_of_teams_in_league:
             raise ValidationError("Max number of teams exceeded", code="max_teams")
@@ -92,6 +95,9 @@ class Match(models.Model):
     match_is_ended = models.BooleanField(default=False)
     match_date = models.DateTimeField(default=timezone.now, blank=True)
     match_duration = models.DurationField(default="01:30:00")
+
+    def __str__(self):
+        return f"Match #{self.id}"
 
     def goals_amount_team(self, which_team):
         return Event.objects.filter(event_type=EventType.MATCH_GOAL, team=which_team, match=self).count()
@@ -144,6 +150,9 @@ class TeamPlayer(models.Model):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
     player_nick = models.CharField(max_length=20)
 
+    def __str__(self):
+        return f"{self.id};{self.player_nick}"
+
     def save(self, *args, **kwargs):
         if TeamPlayer.objects.filter(team=self.team).count() >= Team.MAX_NUMBER_OF_PLAYERS:
             raise ValidationError("Maximum number of players in this team exceeded", code="too_much_players")
@@ -173,6 +182,9 @@ class Event(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE, null=True, blank=True)
     event_time = models.TimeField(default=timezone.now, blank=True)
+
+    def __str__(self):
+        return f"{self.id}"
 
     def save(self, *args, **kwargs):
         if self.event_type == EventType.MATCH_GOAL:

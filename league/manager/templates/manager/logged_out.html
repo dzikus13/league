@@ -1,0 +1,18 @@
+<!--
+AUTHORISATION:
+Everyone
+-->
+<head>
+    <script type="text/javascript">
+        function changesite()
+        {
+            location.replace("main");
+        }
+        setTimeout("changesite();", 2000);
+    </script>
+</head>
+
+{%extends "manager/base.html"%} {%block content%}
+<h1 class="color_white">Logged Out</h1>
+<label class="color_white">Za 2 sekund nastąpi przekierowanie.</label>
+{%endblock%}

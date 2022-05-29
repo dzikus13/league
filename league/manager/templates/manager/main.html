@@ -1,3 +1,7 @@
+<!--
+AUTHORISATION:
+Admin
+-->
 {%extends "manager/base.html"%} {%block content%}
 <table>
     <tr>
@@ -5,7 +9,7 @@
     </tr>
     {%for link in links_list%}
     <tr>
-        <td><a class="a_table" href="{{link}}">{{link}}</a></td>
+        <td><a class="a_table" href="{{link}}">{{link|capfirst}}</a></td>
     </tr>
     {%empty%}
     <tr>

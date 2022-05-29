@@ -1,21 +1,23 @@
+from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import login as django_login
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import logout as django_logout
+
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-# from django.shortcuts import HttpResponse
-# ^ probowalem uzyc by bezposrednio wyswietlic html
+from .forms import LeagueForm, MatchForm, TeamForm, TeamPlayerForm, EventForm
 
 from os import path, listdir
 from pathlib import Path
-from django.core.exceptions import ObjectDoesNotExist
-
-
-# skopiowane z settings (i lekko zmienione)
-BASE_DIR = Path(__file__).resolve().parent
-# .parent jeszcze bylo na koncu
-# -----------------------------------------
-
-# Create your views here.
-# do tworzenia generic views
 from django.views import generic
 from .models import League, Match, Team, TeamPlayer, Event, EventType
+BASE_DIR = Path(__file__).resolve().parent
+
+# Create your views here.
 
 
 def base(request):
@@ -23,17 +25,17 @@ def base(request):
 
 
 def list_of_views(request):
-    context = {"links_list": []}
-    context["links_list"].append("leagues")
-    context["links_list"].append("matches")
-    context["links_list"].append("teams")
-    context["links_list"].append("events")
-    context["links_list"].append("players")
+    context = {"links_list": [
+        "leagues",
+        "teams",
+        "players",
+        "matches"
+    ]}
 
     return render(request, "manager/main.html", context)
 
 
-def debug_manager(request):
+def manager(request):
     # linki (a wlasciwie to "odnosniki"(ig?) do plikow html z folderu manager)
     directory = path.join(BASE_DIR, "templates/manager")
     model_links = {"links_list": []}
@@ -47,25 +49,148 @@ def debug_manager(request):
     return render(request, "manager/manager.html", model_links)
 
 
+def user_profile(request):
+    return render(request, "manager/user_profile.html")
+
+
+def error(request):
+    return render(request, "manager/error.html", {"error_log": "Nie doszlo do zadnego bledu"})
+    # sprawic by mi pycharm nie krzyczal ze tak nie mozna
+
+
 def add_forms(request):
     return render(request, "manager/add_forms.html")
 
-'''
-# Stary sposob dla porownania
-def leagues(request):
-    all_leagues = League.objects.all()
-    return render(request, "manager/leagues.html", {"leagues": all_leagues})
 
-def league_details(request, league_id):
-    try:
-        league = League.objects.get(id=league_id)
-        return render(request, "manager/league_details.html", {"league": league})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
-        # sprawic by mi pycharm nie krzyczal ze tak nie mozna
-'''
+def add_league(request):
+    form = LeagueForm()
+    if request.method == 'POST':
+        form = LeagueForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/leagues')
+    context = {'form': form}
+    return render(request, 'manager/add_league.html', context)
+
+
+def add_match(request):
+    form = MatchForm()
+    if request.method == 'POST':
+        form = MatchForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/matches')
+    context = {'form': form}
+    return render(request, 'manager/add_match.html', context)
+
+
+def add_player(request):
+    form = TeamPlayerForm()
+    if request.method == 'POST':
+        form = TeamPlayerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/players')
+    context = {'form': form}
+    return render(request, 'manager/add_player.html', context)
+
+
+def add_team(request):
+    form = TeamForm()
+    if request.method == 'POST':
+        form = TeamForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/teams')
+    context = {'form': form}
+    return render(request, 'manager/add_team.html', context)
+
+
+def add_event(request):
+    form = EventForm()
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/add_event')
+    context = {'form': form}
+    return render(request, 'manager/add_event.html', context)
+
+
+def register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        myuser = User.objects.create_user(username, email, password1)
+        myuser.save()
+        messages.success(request, "Your Account has been successfully created.")
+        return redirect("login")
+
+    return render(request, "manager/register.html")
+
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password1']
+
+        user = authenticate(username=username, password=password1)
+
+        if user is not None:
+            django_login(request, user)
+            return render(request, "manager/logged.html")
+
+        else:
+            return redirect('login')
+
+    return render(request, "manager/login.html")
+
+
+def logout(request):
+    django_logout(request)
+    return render('/base')
+
+
+def registered(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        myuser = User.objects.create_user(username, password2, password1)
+
+        myuser.save()
+
+        messages.success(request, "Your Account has been successfully created.")
+
+        return redirect("login")
+
+    return render(request, "manager/registered.html")
+
+
+def logged(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password1']
+
+        user = authenticate(username=username, password=password1)
+
+        if user is not None:
+            django_login(request, user)
+            return render(request, "manager/logged.html")
+
+        else:
+            return redirect('login')
+
+    return render(request, "manager/logged.html")
+
+
+def logged_out(request):
+    django_logout(request)
+    return render(request, "manager/logged_out.html")
+
 
 class Leagues(generic.ListView):
     template_name = 'manager/leagues.html'
@@ -101,6 +226,7 @@ class Matches(generic.ListView):
     def get_queryset(self):
         return Match.objects.all()
 
+
 class MatchDetail(generic.DetailView):
     model = Match
     template_name = 'manager/match_details.html'
@@ -117,19 +243,6 @@ class PlayerDetail(generic.DetailView):
     model = TeamPlayer
     template_name = 'manager/player_details.html'
 
-'''
-# model zostal calkowicie zmieniony
-class EventTypes(generic.ListView):
-    template_name = 'manager/event_types.html'
-
-    def get_queryset(self):
-        return EventType.objects.all()
-
-
-class EventTypeDetail(generic.DetailView):
-    model = EventType
-    template_name = 'manager/event_type_details.html'
-'''
 
 class Events(generic.ListView):
     template_name = 'manager/events.html'
@@ -141,6 +254,7 @@ class Events(generic.ListView):
 class EventDetail(generic.DetailView):
     model = Event
     template_name = 'manager/event_details.html'
+
 
 def error_400(request, exception):
     return render(request, 'manager/400.html', status=400)

@@ -1,31 +1,45 @@
+<!--
+AUTHORISATION:
+Everyone
+-->
 {%extends "manager/base.html"%} {%block content%}
 <h1>List of matches</h1>
 <table>
     <tr>
         <th>Match id</th>
-        <th>duration</th>
-        <th>winner</th>
-        <th>loser</th>
-        <th>drawn</th>
-        <th>amount_gols</th>
-        <th>league</th>
-        <!--<th>save</th>-->
+        <th>Date & time</th>
+        <th>League</th>
+        <th>Teams</th>
+        <th>Match result</th>
+        <th>Winner</th>
     </tr>
     {%for match in object_list%}
     <tr>
-        <td><a class="a_table" href="{%url "match_details" match.id%}">{{match.id}}</a></td>
-        <th>{{match.duration}}</th>
-        <th>{{match.winner}}</th>
-        <th>{{match.loser}}</th>
-        <th>{{match.drawn}}</th>
-        <th>{{match.amount_gols}}</th>
-        <th>{{match.league}}</th>
+        <td><a class="a_table" href="{%url 'match_details' match.id%}">#{{match.id}} (ID)</a></td>
+        <th>{{match.match_date}}</th>
+        <td><a class="a_table" href="{%url 'league_details' match.league.id%}">{{match.league.name}}</a></td>
+        <td><a class="a_table" href="{%url 'team_details' match.teams.first.id%}">{{match.teams.first.team_name}}</a>; <a class="a_table" href="{%url 'team_details' match.teams.last.id%}">{{match.teams.last.team_name}}</a></td>
+        <td>
+            {% if match.draw_match %}
+            <p> <!-- TODO match.teams dziala, ale match.winner nie dziala -->
+                Winner: <a class="a_table" href="">FIX_LATER(url 'team_details' match.winner.id){{match.winner.team_name}}</a> ({{match.winner.sum_of_points}})
+            </p>
+            <p>
+                Loser: <a class="a_table" href="{%url 'team_details' match.loser.id%}">{{match.loser.team_name}}</a> ({{match.loser.sum_of_points}})
+            </p>
+            {% else %}
+            <p>
+                <a class="a_table" href="{%url 'team_details' match.teams.first.id%}">{{match.teams.first.team_name}}</a> & <a class="a_table" href="{%url 'team_details' match.teams.last.id%}">{{match.teams.last.team_name}}</a> ended the match with a draw
+            </p>
+            {% endif %}
+        </td>
+        <td><a class="a_table" href="/404"<!--url 'team_details' match.winner.id-->{{match.winner.team_name}}FIX match.winner & match.loser</a></td>
     </tr>
-    </a>
     {%empty%}
     <tr>
         <td>No matches found</td>
     </tr>
     {%endfor%}
 </table>
+<h1><a href="/add_match">Add a new Match</a></h1>
 {%endblock%}

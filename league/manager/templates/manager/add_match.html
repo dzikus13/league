@@ -1,0 +1,13 @@
+<!--
+AUTHORISATION:
+Admin
+-->
+{%extends "manager/base.html"%} {%block content%}
+<div class="form_box">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="button_form_submit" value="Submit">
+    </form>
+</div>
+{%endblock%}
