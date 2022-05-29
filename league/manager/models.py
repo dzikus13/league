@@ -1,40 +1,42 @@
+from enum import Enum
 from django.core.exceptions import ValidationError
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
 
 class League(models.Model):
-    name = models.CharField(max_length=50)
+    league_name = models.CharField(max_length=50)
     points_for_win = models.IntegerField(default=3)
     points_for_lost = models.IntegerField(default=0)
     points_for_draw = models.IntegerField(default=1)
-    max_number_of_teams = models.IntegerField(default=10)
+    max_number_of_teams_in_league = models.IntegerField(default=10)
+    max_number_of_players_in_team = models.IntegerField(default=2)
 
     def __str__(self):
-        return self.name
+        return self.league_name
 
     @property
-    def teams_number(self):
+    def number_of_teams_in_league(self):
         return self.team_set.all().count()
 
     @property
-    def all_matches(self):
+    def number_of_all_matches_in_league(self):
         return self.match_set.all().count()
 
     @property
-    def played_matches(self):
-        return self.match_set.filter(winner__isnull=False, drawn__isnull=False).count()
+    def number_of_played_matches_in_league(self):
+        return self.match_set.filter(event__isnull=False).count()
 
     @property
-    def is_ended(self):
-        if self.all_matches > 0:
-            return self.all_matches == self.played_matches
+    def league_is_ended(self):
+        if self.number_of_all_matches_in_league > 0:
+            return self.number_of_all_matches_in_league == self.number_of_played_matches_in_league
         else:
             return False
 
     @property
     def league_winner(self):
-        if self.is_ended:
+        if self.league_is_ended:
             teams = []
             team_points = []
             for team in self.team_set.all():
@@ -46,27 +48,31 @@ class League(models.Model):
 
 
 class Team(models.Model):
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    team_league = models.ForeignKey(League, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=10)
     MAX_NUMBER_OF_PLAYERS = 4
     
     def save(self, *args, **kwargs):
-        if self.league.teams_number >= self.league.max_number_of_teams:
+        if self.team_league.number_of_teams_in_league >= self.team_league.max_number_of_teams_in_league:
             raise ValidationError("Max number of teams exceeded", code="max_teams")
         return super().save(*args, **kwargs)
 
     @property  # TODO:Zuzannka77 add test to check if this property works properly
     def sum_of_points(self):
-        return self.number_of_matches_won * self.league.points_for_win + \
-               self.number_of_matches_drawn * self.league.points_for_draw + \
-               self.number_of_matches_lost * self.league.points_for_lost
+        return self.number_of_matches_won * self.team_league.points_for_win + \
+               self.number_of_matches_drawn * self.team_league.points_for_draw + \
+               self.number_of_matches_lost * self.team_league.points_for_lost
 
     @property  # TODO:Zuzannka77 add test to check if this property works properly
-    def matches_team_played(self):
+    def number_of_played_matches_by_team(self):
         return self.number_of_matches_won + \
-               self.number_of_matches_drawn + \
-               self.number_of_matches_lost
-    
+               self.number_of_matches_lost + \
+               self.number_of_matches_drawn
+
+    @property
+    def number_of_players_in_team(self):
+        return self.teamplayer_set.all().count()
+
     @property
     def number_of_matches_won(self):
         return Event.objects.filter(event_type=EventType.MATCH_WON, team=self).count()
@@ -82,13 +88,13 @@ class Team(models.Model):
 
 class Match(models.Model):
     league = models.ForeignKey(League, on_delete=models.CASCADE)
-    match_date = models.DateTimeField(default=datetime.now, blank=True)
-    match_duration = models.DurationField(default="01:30:00")
     teams = models.ManyToManyField(Team)
-    match_ended = models.BooleanField(default=False)
+    match_is_ended = models.BooleanField(default=False)
+    match_date = models.DateTimeField(default=timezone.now, blank=True)
+    match_duration = models.DurationField(default="01:30:00")
 
     def goals_amount_team(self, which_team):
-        return Event.objects.all().filter(event_type=EventType.MATCH_GOAL, team=which_team, match=self).count()
+        return Event.objects.filter(event_type=EventType.MATCH_GOAL, team=which_team, match=self).count()
 
     def goals_amount_dict(self):
         my_dict = {}
@@ -98,8 +104,8 @@ class Match(models.Model):
         return my_dict
 
     @property
-    def winner(self):
-        if not self.draw_match and self.match_ended:
+    def match_winner(self):
+        if not self.match_draw and self.match_is_ended:
             my_dict = self.goals_amount_dict()
             my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
             winner_id = my_dict_sorted[0][0]
@@ -109,8 +115,8 @@ class Match(models.Model):
             return False
 
     @property
-    def loser(self):
-        if not self.draw_match and self.match_ended:
+    def match_loser(self):
+        if not self.match_draw and self.match_is_ended:
             my_dict = self.goals_amount_dict()
             my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1])
             loser_id = my_dict_sorted[0][0]
@@ -120,8 +126,8 @@ class Match(models.Model):
             return False
 
     @property
-    def draw_match(self):
-        if self.match_ended:
+    def match_draw(self):
+        if self.match_is_ended:
             my_dict = self.goals_amount_dict()
             test_val = list(my_dict.values())[0]
             for elem in my_dict:
@@ -147,9 +153,13 @@ class TeamPlayer(models.Model):
     def goals_scored_by_player(self):
         return Event.objects.filter(event_type=EventType.MATCH_GOAL, player=self).count()
 
+    def save(self, *args, **kwargs):
+        if self.team.number_of_players_in_team >= self.team.team_league.max_number_of_players_in_team:
+            raise ValidationError("Max number of players in that team exceeded", code="max_players_in_team")
+        return super().save(*args, **kwargs)
+
 
 class EventType(models.TextChoices):
-
     MATCH_WON = "Match has been won"
     MATCH_LOST = "Match has been lost"
     MATCH_DRAW = "Match has been drawn"
@@ -158,10 +168,11 @@ class EventType(models.TextChoices):
 
 
 class Event(models.Model):
-    event_type = models.CharField(max_length=20, choices=EventType.choices, default="MISSING")
+    event_type = models.CharField(max_length=20, choices=EventType.choices, default=EventType.MISSING)
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     player = models.ForeignKey(TeamPlayer, on_delete=models.CASCADE, null=True, blank=True)
+    event_time = models.TimeField(default=timezone.now, blank=True)
 
     def save(self, *args, **kwargs):
         if self.event_type == EventType.MATCH_GOAL:
