@@ -29,5 +29,3 @@ admin.site.register(Team, TeamManager)
 admin.site.register(Match, MatchManager)
 admin.site.register(TeamPlayer, TeamPlayerManager)
 admin.site.register(Event, EventManager)
-
-
