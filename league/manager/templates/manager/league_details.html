@@ -15,7 +15,14 @@ Admin, Judge, Logged_User
     </tr>
     <tr>
         <td>max_number_of_teams</td>
-        <td>{{league.max_number_of_teams}}</td>
+        <td>
+            Current teams: {{league.teams_number}}/{{league.max_number_of_teams}}
+            {%for team in league.team_set.all%}
+            <p><a href="{%url 'team_details' team.id%}">{{team.team_name}}</a></p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
     </tr>
     <tr>
         <td>points_for_win</td>
@@ -47,7 +54,7 @@ Admin, Judge, Logged_User
     </tr>
     <tr>
         <td>winner</td>
-        <td>{{league.league_winner}}</td>
+        <td><a href="{%url 'team_details' league.league_winner.id%}">{{league.league_winner.team_name}}</a></td>
     </tr>
 </table>
 {%endblock%}

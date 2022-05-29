@@ -14,8 +14,6 @@ class TeamManager(admin.ModelAdmin):
 
 class MatchManager(admin.ModelAdmin):
     list_display = ["league"]
-    # list_display.append("teams") wywala blad
-    # list_display.append("save") to chyba nie jest nawet property ale sie nie znam na tym co backend zrobil
 
 
 class TeamPlayerManager(admin.ModelAdmin):

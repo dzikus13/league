@@ -23,7 +23,7 @@ class League(models.Model):
 
     @property
     def played_matches(self):
-        return self.match_set.filter(winner__isnull=False, drawn__isnull=False).count()
+        return self.match_set.count()
 
     @property
     def is_ended(self):
