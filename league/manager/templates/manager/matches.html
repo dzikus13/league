@@ -22,7 +22,7 @@ Everyone
         <td>
             {% if match.draw_match %}
             <p> <!-- TODO match.teams dziala, ale match.winner nie dziala -->
-                Winner: <a class="a_table" href="{%url 'team_details' match.winner.id%}">{{match.winner.team_name}}</a> ({{match.winner.sum_of_points}})
+                Winner: <a class="a_table" href="">FIX_LATER(url 'team_details' match.winner.id){{match.winner.team_name}}</a> ({{match.winner.sum_of_points}})
             </p>
             <p>
                 Loser: <a class="a_table" href="{%url 'team_details' match.loser.id%}">{{match.loser.team_name}}</a> ({{match.loser.sum_of_points}})
