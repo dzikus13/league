@@ -5,52 +5,24 @@ from .models import League, Match, Team, TeamPlayer, Event, EventType
 
 
 class LeagueManager(admin.ModelAdmin):
-    list_display = ["name",
-                    "is_ended",
-                    "max_number_of_teams",
-                    "points_for_win",
-                    "points_for_lost",
-                    "points_for_draw",
-                    "teams_number",
-                    "all_matches",
-                    "league_winner"]
+    list_display = ["id", "league_name", "max_number_of_teams_in_league", "points_for_win", "points_for_lost", "points_for_draw",
+                    "number_of_teams_in_league", "number_of_all_matches_in_league", "played_matches"]
 
 
 class TeamManager(admin.ModelAdmin):
-    list_display = ["league",
-                    "team_name",
-                    "sum_of_points",
-                    "matches_team_played",
-                    "number_of_matches_won",
-                    "number_of_matches_lost",
-                    "number_of_matches_drawn"
-                    ]
+    list_display = ["id", "team_name", "team_league", "sum_of_points"]
 
 
 class MatchManager(admin.ModelAdmin):
-    list_display = [
-                    "league",
-                    "match_date",
-                    "match_duration",
-                   # "teams",
-                    "match_ended",
-                    "winner",
-                    "loser",
-                    "draw_match"
-                    ]
+    list_display = ["id", "league"]
 
 
 class TeamPlayerManager(admin.ModelAdmin):
-    list_display = ["team",
-                    "player_nick",
-                    "goals_scored_by_player"]
+    list_display = ["id", "team"]
 
 
 class EventManager(admin.ModelAdmin):
-    list_display = ["event_type",
-                    "match",
-                    "team",
-                    "player"]
+    list_display = ["id", "player", "event_type", "match"]
 
 
 admin.site.register(League, LeagueManager)
@@ -58,4 +30,3 @@ admin.site.register(Team, TeamManager)
 admin.site.register(Match, MatchManager)
 admin.site.register(TeamPlayer, TeamPlayerManager)
 admin.site.register(Event, EventManager)
-

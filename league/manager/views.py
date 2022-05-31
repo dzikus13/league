@@ -1,16 +1,21 @@
+from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import login as django_login
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import logout as django_logout
 
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from .forms import LeagueForm, MatchForm, TeamForm, TeamPlayerForm, EventForm
 
 from os import path, listdir
 from pathlib import Path
-from django.core.exceptions import ObjectDoesNotExist
-
+from django.views import generic
 from .models import League, Match, Team, TeamPlayer, Event, EventType
-
-
-# pasted from settings (and changed a little)
 BASE_DIR = Path(__file__).resolve().parent
-# -----------------------------------------
 
 # Create your views here.
 
@@ -33,6 +38,10 @@ def manager(request):
     return render(request, "manager/manager.html", model_links)
 
 
+def user_profile(request):
+    return render(request, "manager/user_profile.html")
+
+
 def error(request):
     return render(request, "manager/error.html", {"error_log": "Nie doszlo do zadnego bledu"})
     # sprawic by mi pycharm nie krzyczal ze tak nie mozna
@@ -42,131 +51,211 @@ def add_forms(request):
     return render(request, "manager/add_forms.html")
 
 
-def add_event(request):
-    return render(request, "manager/add_event.html")
-
-
 def add_league(request):
-    return render(request, "manager/add_league.html")
+    form = LeagueForm()
+    if request.method == 'POST':
+        form = LeagueForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/leagues')
+    context = {'form': form}
+    return render(request, 'manager/add_league.html', context)
 
 
 def add_match(request):
-    return render(request, "manager/add_match.html")
+    form = MatchForm()
+    if request.method == 'POST':
+        form = MatchForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/matches')
+    context = {'form': form}
+    return render(request, 'manager/add_match.html', context)
 
 
 def add_player(request):
-    return render(request, "manager/add_player.html")
-
-
-def add_player_stats(request):
-    return render(request, "manager/add_player_stats.html")
+    form = TeamPlayerForm()
+    if request.method == 'POST':
+        form = TeamPlayerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/players')
+    context = {'form': form}
+    return render(request, 'manager/add_player.html', context)
 
 
 def add_team(request):
-    return render(request, "manager/add_team.html")
+    form = TeamForm()
+    if request.method == 'POST':
+        form = TeamForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/teams')
+    context = {'form': form}
+    return render(request, 'manager/add_team.html', context)
 
 
-def login(request):
-    return render(request, "manager/login.html")
+def add_event(request):
+    form = EventForm()
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/add_event')
+    context = {'form': form}
+    return render(request, 'manager/add_event.html', context)
 
 
 def register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        email = request.POST['email']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        myuser = User.objects.create_user(username, email, password1)
+        myuser.save()
+        messages.success(request, "Your Account has been successfully created.")
+        return redirect("login")
+
     return render(request, "manager/register.html")
 
 
-def main(request):
-    all_leagues = League.objects.all()
-    all_matches = Match.objects.all()
-    all_context = {"leagues": all_leagues, "matches": all_matches}
-    return render(request, "manager/main.html", all_context)
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password1']
+
+        user = authenticate(username=username, password=password1)
+
+        if user is not None:
+            django_login(request, user)
+            return render(request, "manager/logged.html")
+
+        else:
+            return redirect('login')
+
+    return render(request, "manager/login.html")
 
 
-def view(request):
-    all_leagues = League.objects.all()
-    all_matches = Match.objects.all()
-    all_events = Event.objects.all()
-    all_teams = Team.objects.all()
-    all_context = {"leagues": all_leagues, "matches": all_matches, "events": all_events, "teams": all_teams}
-    return render(request, "manager/view.html", all_context)
+def logout(request):
+    django_logout(request)
+    return render('/base')
 
 
-def leagues(request):
-    all_leagues = League.objects.all()
-    league_context = {"leagues": all_leagues}
-    return render(request, "manager/leagues.html", league_context)
+def registered(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+
+        myuser = User.objects.create_user(username, password2, password1)
+
+        myuser.save()
+
+        messages.success(request, "Your Account has been successfully created.")
+
+        return redirect("login")
+
+    return render(request, "manager/registered.html")
 
 
+def logged(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password1 = request.POST['password1']
 
-def league_details(request, league_id):
-    try:
-        league = League.objects.get(id=league_id)
-        return render(request, "manager/league_details.html", {"league": league})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
-        # sprawic by mi pycharm nie krzyczal ze tak nie mozna
+        user = authenticate(username=username, password=password1)
 
+        if user is not None:
+            django_login(request, user)
+            return render(request, "manager/logged.html")
 
-def teams(request):
-    all_teams = Team.objects.all()
-    teams_context = {"teams": all_teams}
-    return render(request, "manager/teams.html", teams_context)
+        else:
+            return redirect('login')
 
-
-def team_details(request, team_id):
-    try:
-        team = Team.objects.get(id=team_id)
-        return render(request, "manager/team_details.html", {"team": team})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+    return render(request, "manager/logged.html")
 
 
-def matches(request):
-    all_matches = Match.objects.all()
-    matches_context = {"matches": all_matches}
-    return render(request, "manager/matches.html", matches_context)
+def logged_out(request):
+    django_logout(request)
+    return render(request, "manager/logged_out.html")
 
 
-def match_details(request, match_id):
-    try:
-        match = Match.objects.get(id=match_id)
-        return render(request, "manager/match_details.html", {"match": match})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+class Leagues(generic.ListView):
+    template_name = 'manager/leagues.html'
+    # context_object_name = 'Leagues'
+    # gdybym chcial zmienic nazwe, ale wole posluzyc sie default'em (object_list)
+
+    def get_queryset(self):
+        return League.objects.all()
 
 
-def players(request):
-    all_players = TeamPlayer.objects.all()
-    players_context = {"players": all_players}
-    return render(request, "manager/players.html", players_context)
+class LeagueDetail(generic.DetailView):
+    model = League
+    template_name = 'manager/league_details.html'
 
 
-def player_details(request, player_id):
-    try:
-        player = TeamPlayer.objects.get(id=player_id)
-        return render(request, "manager/player_details.html", {"player": player})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+class Teams(generic.ListView):
+    template_name = 'manager/teams.html'
+
+    def get_queryset(self):
+        return Team.objects.all()
+    # TODO wypisac graczy poprawnie
 
 
-def events(request):
-    all_events = Event.objects.all()
-    events_context = {"events": all_events}
-    return render(request, "manager/events.html", events_context)
+class TeamDetail(generic.DetailView):
+    model = Team
+    template_name = 'manager/team_details.html'
+    # TODO wypisac graczy poprawnie
 
 
-def event_details(request, event_id):
-    try:
-        event = Event.objects.get(id=event_id)
-        return render(request, "manager/event_details.html", {"event": event})
-    except ObjectDoesNotExist:
-        return render(request, "manager/error.html", {"error_log": "Nie ma elementu o takim id"})
-    except:
-        return render(request, "manager/error.html", {"error_log": "brak pewnosci co do tego jaki to blad"})
+class Matches(generic.ListView):
+    template_name = 'manager/matches.html'
+
+    def get_queryset(self):
+        return Match.objects.all()
+
+
+class MatchDetail(generic.DetailView):
+    model = Match
+    template_name = 'manager/match_details.html'
+
+
+class Players(generic.ListView):
+    template_name = 'manager/players.html'
+
+    def get_queryset(self):
+        return TeamPlayer.objects.all()
+
+
+class PlayerDetail(generic.DetailView):
+    model = TeamPlayer
+    template_name = 'manager/player_details.html'
+
+
+class Events(generic.ListView):
+    template_name = 'manager/events.html'
+
+    def get_queryset(self):
+        return Event.objects.all()
+
+
+class EventDetail(generic.DetailView):
+    model = Event
+    template_name = 'manager/event_details.html'
+
+
+def error_400(request, exception):
+    return render(request, 'manager/400.html', status=400)
+
+
+def error_403(request, exception):
+    return render(request, 'manager/403.html', status=403)
+
+
+def error_404(request, exception):
+    return render(request, 'manager/404.html', status=404)
+
+
+def error_500(request, *args, **argv):
+    return render(request, 'manager/500.html', status=500)
