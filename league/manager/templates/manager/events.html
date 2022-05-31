@@ -1,13 +1,7 @@
-<!--
-AUTHORISATION:
-Admin, Judge, Logged_User
--->
 {%extends "manager/base.html"%} {%block content%}
-<h1>List of events</h1>
 <table>
     <tr>
         <th>Event id</th>
-        <th>time</th>
         <th>player</th>
         <th>event_type</th>
         <th>match</th>
@@ -16,11 +10,9 @@ Admin, Judge, Logged_User
     {%for event in events%}
     <tr>
         <td><a class="a_table" href="{%url "event_details" event.id%}">{{event.id}}</a></td>
-        <td>{{event.event_time}}</td>
         <td>{{event.player}}</td>
         <td>{{event.event_type}}</td>
         <td>{{event.match}}</td>
-        <td>{{event.team}}</td>
     </tr>
     </a>
     {%empty%}

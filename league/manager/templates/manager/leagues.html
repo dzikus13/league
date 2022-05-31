@@ -1,7 +1,3 @@
-<!--
-AUTHORISATION:
-Admin, Judge, Logged_User, Not_Logged_User
--->
 {%extends "manager/base.html"%} {%block content%}
 <h1>List of leagues</h1>
 <table>
@@ -15,9 +11,23 @@ Admin, Judge, Logged_User, Not_Logged_User
     </tr>
     {%for league in leagues%}
     <tr>
-        <td><a class="a_table" href="{%url "league_details" league.id%}">{{league.name}}</a></td>
-        <td>{{league.teams_number}}/{{league.max_number_of_teams}}</td>
-        <td><!--league.played_matches-->FIX/{{league.all_matches}}</td> <!-- #TODO:skam34 wyswietlic ilosc zagranych dotychczas meczy -->
+        <td><a class="a_table" href="{%url 'league_details' league.id%}">{{league.name}}</a></td>
+        <td>
+            Current teams: {{league.teams_number}}/{{league.max_number_of_teams}}
+            {%for team in league.team_set.all%}
+            <p><a href="{%url 'team_details' team.id%}">{{team.team_name}}</a></p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
+        <td>
+            Matches played: {{league.match_set.all|length}}
+            {%for match in league.match_set.all%}
+            <p><a href="{%url 'match_details' match.id%}">Match #{{match.id}} (ID)</a></p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
         <td>{{league.is_ended}}</td>
         <td>{{league.league_winner}}</td>
         <td><a class="a_table" href="{%url "league_details" league.id%}"> {{league.name}} </a></td>
@@ -29,4 +39,5 @@ Admin, Judge, Logged_User, Not_Logged_User
     </tr>
     {%endfor%}
 </table>
+<h1><a href="/add_league">Add a new League</a></h1>
 {%endblock%}

@@ -1,23 +1,19 @@
-<!--
-AUTHORISATION:
-Admin
--->
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
-	<FORM METHOD="" ACTION="">
+	<FORM METHOD="post" ACTION="">
 		<span style="float:left;">
 			<label>League Name:</label>
 			<br>
 				<INPUT autocomplete="off" TYPE="text" NAME="league_name" SIZE="40" MAXLENGTH="40" class="form_input" placeholder="League Name">
 			</br>
-				
+
 			<br></br>
 
 			<label>Maximal Number of Teams:</label>
 			<br>
 				<INPUT autocomplete="off" TYPE="number" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
 			</br>
-				
+
 			<br></br>
 				
 			<input class="button_form_clear" TYPE="reset" VALUE="Clear"></input>

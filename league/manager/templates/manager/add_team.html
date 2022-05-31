@@ -1,17 +1,13 @@
-<!--
-AUTHORISATION:
-Admin
--->
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
-	<FORM METHOD="" ACTION="">
+	<FORM METHOD="post" ACTION="">
 		<label>Team Name:</label>
 		<br>
 			<INPUT autocomplete="off" TYPE="text" NAME="team_name" SIZE="40" MAXLENGTH="40" class="form_input" placeholder="Team Name">
-		</br>	
-	
+		</br>
+
 		<br></br>
-		
+
 		<label>League:</label>
 		<br>
 		<SELECT NAME="league" class="form_select">
@@ -21,7 +17,7 @@ Admin
 	
 		<br></br>
 		
-		Maximal Number of Players:
+		<label>Maximal Number of Players:</label>
 		<br>
 			<INPUT autocomplete="off" TYPE="number" NAME="max_number_of_players" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
 		</br>
