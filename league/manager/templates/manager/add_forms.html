@@ -7,9 +7,11 @@ Admin, Judge
     <tr>
         <th>List of all add_forms</th>
     </tr>
+    {% if request.user|group:"Judges" %}
     <tr>
         <td><a class="a_table" href="add_event">Event</a></td>
     </tr>
+    {% endif %}
     <tr>
         <td><a class="a_table" href="add_league">League</a></td>
     </tr>
