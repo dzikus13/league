@@ -1,11 +1,34 @@
-{%extends "manager/base.html"%}
-
-{%block content%}
+{%extends "manager/base.html"%} {%block content%}
+<h1>List of leagues</h1>
 <table>
-   {%for league in leagues%}
     <tr>
-        <td><a href="{%url 'league_details' league.id%}">{{league.name}}</a></td>
-        <td>{{league.ended}}</td>
+        <th>League name</th>
+        <th>Teams</th>
+        <th>Matches</th>
+        <th>Is over</th>
+        <th>Winner</th>
+    </tr>
+    {%for league in object_list%}
+    <tr>
+        <td><a class="a_table" href="{%url 'league_details' league.id%}">{{league.name}}</a></td>
+        <td>
+            Current teams: {{league.teams_number}}/{{league.max_number_of_teams}}
+            {%for team in league.team_set.all%}
+            <p><a href="{%url 'team_details' team.id%}">{{team.team_name}}</a></p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
+        <td>
+            Matches played: {{league.match_set.all|length}}
+            {%for match in league.match_set.all%}
+            <p><a href="{%url 'match_details' match.id%}">Match #{{match.id}} (ID)</a></p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
+        <td>{{league.is_ended}}</td>
+        <td><a href="/">FIX LATER {{league.league_winner.team_name}}</a></td>
     </tr>
     {%empty%}
     <tr>
@@ -13,4 +36,5 @@
     </tr>
     {%endfor%}
 </table>
+<h1><a href="/add_league">Add a new League</a></h1>
 {%endblock%}
