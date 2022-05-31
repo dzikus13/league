@@ -198,4 +198,3 @@ class Event(models.Model):
         if event_type is not None:
             ret_qs = ret_qs.filter(event_type=event_type)
         return ret_qs
-
