@@ -9,7 +9,8 @@
         <th>Players</th>
         <th>Points</th>
     </tr>
-    {%for team in object_list%}
+    {%for team in teams%}
+
     <tr>
         <td><a class="a_table" href="{%url 'team_details' team.id%}">{{team.team_name}}</a></td>
         <td>{{team.number_of_matches_won}}/{{team.number_of_matches_drawn}}/{{team.number_of_matches_lost}}</td>

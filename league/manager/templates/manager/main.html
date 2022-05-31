@@ -4,7 +4,8 @@
         <th>League</th>
         <th>Status</th>
     </tr>
-   {%for league in leagues%}
+
+    {%for league in object_list%}
     <tr>
         <td><a class="a_table" href="{%url 'league_details' league.id%}">{{league.name}}</a></td>
         <td>{{league.ended}}</td>
@@ -16,7 +17,7 @@
     {%endfor%}
 </table>
 
-<p></p>
+<br></br>
 
 <table>
     <tr>
@@ -26,7 +27,8 @@
         <th>teams</th>
         <th>league</th>
     </tr>
-    {%for match in matches%}
+
+    {%for match in object_list%}
     <tr>
         <td><a class="a_table" href="{%url 'match_details' match.id%}">{{match.id}}</a></td>
         <td>{{match.match_duration}}</td>

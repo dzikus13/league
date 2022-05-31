@@ -8,14 +8,13 @@ from .views import register, registered
 from .views import login, logged, logout, logged_out
 from .views import events, event_details
 from . import views
-# ^^^ do obslugiwania generic views
 
 urlpatterns = [
     path("base", base, name="base"),
     path("", main),
-    path("view", login_required(view)),
     path("error", error),
     path("manager", manager),
+    path("view", login_required(view)),
     path("add_forms", add_forms),
     path("add_event", add_event),
     path("user_profile", user_profile),
@@ -24,10 +23,10 @@ urlpatterns = [
     path("add_player", add_player),
     path("add_team", add_team),
     path("register", register, name="register"),
-    path("login", login, name="login"),
-    path("logout", logout),
     path("registered", registered),
+    path("login", login, name="login"),
     path("logged", logged),
+    path("logout", logout),
     path("logged_out", logged_out),
     path("events", events),
 

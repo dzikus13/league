@@ -6,7 +6,7 @@
         <th>Team</th>
         <th>Goals scored</th>
     </tr>
-    {%for player in object_list%}
+    {%for player in players%}
     <tr>
         <td><a class="a_table" href="{%url 'player_details' player.id%}">{{player.player_nick}}</a></td>
         <td><a class="a_table" href="{%url 'team_details' player.team.id%}">{{player.team.team_name}}</a></td>

@@ -17,8 +17,6 @@ from django.views import generic
 from .models import League, Match, Team, TeamPlayer, Event, EventType
 BASE_DIR = Path(__file__).resolve().parent
 
-# Create your views here.
-
 
 def main(request):
     all_leagues = League.objects.all()
@@ -225,7 +223,6 @@ class Matches(generic.ListView):
     def get_queryset(self):
         return Match.objects.all()
 
-
 class MatchDetail(generic.DetailView):
     model = Match
     template_name = 'manager/match_details.html'
@@ -243,6 +240,19 @@ class PlayerDetail(generic.DetailView):
     template_name = 'manager/player_details.html'
 
 
+# model zostal calkowicie zmieniony
+class EventTypes(generic.ListView):
+    template_name = 'manager/event_types.html'
+
+    def get_queryset(self):
+        return EventType.objects.all()
+
+
+class EventTypeDetail(generic.DetailView):
+    model = EventType
+    template_name = 'manager/event_type_details.html'
+
+
 class Events(generic.ListView):
     template_name = 'manager/events.html'
 
@@ -253,7 +263,6 @@ class Events(generic.ListView):
 class EventDetail(generic.DetailView):
     model = Event
     template_name = 'manager/event_details.html'
-
 
 def error_400(request, exception):
     return render(request, 'manager/400.html', status=400)

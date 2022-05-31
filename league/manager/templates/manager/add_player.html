@@ -1,18 +1,24 @@
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
 	<FORM METHOD="post" ACTION="">
-		Player Nick:
+		<label>Player Nick:</label>
 		<br>
 			<INPUT autocomplete="off" TYPE="text" NAME="nick" SIZE="40" MAXLENGTH="60" class="form_input" placeholder="Player Nick">
-		<br>
-		Team:
+		</br>
+
+		<br></br>
+
+		<label>Team:</label>
 		<br>
 			<SELECT NAME="team" class="form_select">
 				<option>team_id</option>
 			</SELECT>
-		<br>
-		<input class="button_form_clear" TYPE="reset" VALUE="Clear">
-		<input class="button_form_submit" TYPE="submit" VALUE="Submit">
+		</br>
+
+		<br></br>
+
+		<input class="button_form_clear" TYPE="reset" VALUE="Clear"></input>
+		<input class="button_form_submit" TYPE="submit" VALUE="Submit"></input>
 	</FORM>
 </div>
 {%endblock%}

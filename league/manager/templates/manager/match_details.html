@@ -40,7 +40,12 @@
         <td>
             Events: {{match.event_set.all|length}}
             {%for event in match.event_set.all%}
-            <p>{{event.event_type}} by <a class="a_table" href="{%url 'player_details' event.player.id%}">{{event.player.player_nick}}</a> from <a class="a_table" href="{%url 'team_details' event.player.team.id%}">{{event.player.team.team_name}}</a></p>
+            <p>{{event.event_type}}
+                by
+                <a class="a_table" href="{%url 'player_details' event.player.id%}">{{event.player.player_nick}}</a>
+                from
+                <a class="a_table" href="{%url 'team_details' event.player.team.id%}">{{event.player.team.team_name}}</a>
+            </p>
             {%empty%}
             None
             {%endfor%}
@@ -48,4 +53,5 @@
     </tr>
 </table>
 <h1><a href="/add_event">Add a new Event</a></h1>
+    <input class="button_form_submit" TYPE="submit" VALUE="Submit" href="match"></input>
 {%endblock%}
