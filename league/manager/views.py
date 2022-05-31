@@ -121,20 +121,6 @@ class Matches(generic.ListView):
 
 
 def register(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-
-        myuser = User.objects.create_user(username, email, password1)
-
-        myuser.save()
-
-        messages.success(request, "Your Account has been successfully created.")
-
-        return redirect("login")
-
     return render(request, "manager/register.html")
 
 
@@ -163,10 +149,11 @@ def logout(request):
 def registered(request):
     if request.method == "POST":
         username = request.POST['username']
+        email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
-        myuser = User.objects.create_user(username, password2, password1)
+        myuser = User.objects.create_user(username, email, password1)
 
         myuser.save()
 
