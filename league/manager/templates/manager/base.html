@@ -1,38 +1,66 @@
 {% load static %}
+{% load custom_tags%}
 
 <html>
-<head>
-    <title>F</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
-    <meta charset="utf-8">
-</head>
-<body>
-    <div id="header">
-        <div id="menu">
-            <form action="/" class="button_header_menu">
-                <input class="button_header_menu" type="submit" value="Główna"/>
-            </form>
-            <form action="add_forms" class="button_header_menu">
-                <input class="button_header_menu" type="submit" value="Dodawanie" />
-            </form>
-            <form action="view" class="button_header_menu">
-                <input class="button_header_menu" type="submit" value="Przeglądanie" />
-            </form>
-            <div id="user_login_menu">
-			    <ol>
-			        <li><a>User</a>
-			            <ul>
-                            <li><a href="login">Login</a></li>
-			                <li><a href="register">Register</a></li>
-			            </ul>
-			        </li>
-			    </ol>
-			</div>
-	    </div>
-    </div>
+    <head>
+        <title>Manager Lig</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style13.css' %}" />
+        <meta charset="utf-8">
+    </head>
 
-    <div id="main">
-        {%block content%} {%endblock%}
-    </div>
-</body>
+    <body>
+        <div id="header">
+            <div id="menu">
+                <form action="/" class="button_header_menu">
+                    <input class="button_header_menu" type="submit" value="Główna"/>
+                </form>
+                <form action="/view" class="button_header_menu">
+                    <input class="button_header_menu" type="submit" value="Przeglądanie"/>
+                </form>
+                <form action="/add_forms" class="button_header_menu">
+                    <input class="button_header_menu" type="submit" value="Dodawanie" />
+                </form>
+                {% if not user.is_authenticated %}
+                <form action="/login" id="#login_header_button_display" class="button_header_login" style="display:inline;">
+                    <input class="button_header_login" type="submit" value="Zaloguj Się" />
+                </form>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <script type="text/javascript">
+                    function user_drop_down_menu_open_f()
+                    {
+                        document.getElementById('user_drop_down_menu_block').style.display = "inline";
+                        document.getElementById('user_drop_down_menu_close').style.display = "inline";
+                        document.getElementById('user_drop_down_menu_open').style.display = "none";
+                    }
+
+                    function user_drop_down_menu_close_f()
+                    {
+                        document.getElementById('user_drop_down_menu_open').style.display = "inline";
+                        document.getElementById('user_drop_down_menu_block').style.display = "none";
+                        document.getElementById('user_drop_down_menu_close').style.display = "none";
+                    }
+	            </script>
+                <div id="user_drop_down_menu">
+                    <form action="#" class="user_drop_down_menu">
+                        <input class="user_drop_down_menu_first_element" id="user_drop_down_menu_open"  onclick="user_drop_down_menu_open_f()"  type="submit" value="{{user.username}}"  style="display:inline;"/>
+                        <input class="user_drop_down_menu_first_element" id="user_drop_down_menu_close" onclick="user_drop_down_menu_close_f()" type="submit" value="{{user.username}}" style="display:none;"/>
+                    </form>
+                    <div id="user_drop_down_menu_block" style="display:none;">
+                        <a href="user_profile?#" class="user_drop_down_menu_other_elements">Profil</a>
+                        <a href="#" class="user_drop_down_menu_other_elements">Ustawienia</a>
+                        <form action="logged_out">
+                            <input class="user_drop_down_menu_other_elements" id="user_drop_down_menu_other_elements_logout" type="submit" value="Wyloguj Się" />
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="main">
+            {%block content%} {%endblock%}
+        </div>
+    </body>
 </html>
