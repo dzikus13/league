@@ -2,11 +2,11 @@ from django.contrib import admin
 from django.urls import path, re_path
 from django.contrib.auth.decorators import login_required
 
-from .views import base, main, view, error, manager, add_forms, user_profile,
+from .views import base, main, view, error, manager, add_forms, user_profile
 from .views import add_match, add_event, add_team, add_league, add_player
 from .views import register, registered
 from .views import login, logged, logout, logged_out
-from .views import events
+from .views import events, event_details
 from . import views
 # ^^^ do obslugiwania generic views
 
@@ -32,7 +32,7 @@ urlpatterns = [
     path("events", events),
 
     path("events", events, name="events_list"),
-    re_path("event/(?P<event_id>\d+)", event_details, name="event_details")
+    re_path("event/(?P<event_id>\d+)", event_details, name="event_details"),
 
     path("leagues", views.Leagues.as_view(), name="leagues"),
     re_path(r"league_details/(?P<pk>[0-9]+)/$", views.LeagueDetail.as_view(), name="league_details"),

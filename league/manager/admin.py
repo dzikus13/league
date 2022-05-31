@@ -1,12 +1,12 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import League, Match, Team, TeamPlayer, Event, EventType
+from .models import League, Match, Team, TeamPlayer, Event
 
 
 class LeagueManager(admin.ModelAdmin):
-    list_display = ["id", "league_name", "max_number_of_teams_in_league", "points_for_win", "points_for_lost", "points_for_draw",
-                    "number_of_teams_in_league", "number_of_all_matches_in_league", "played_matches"]
+    list_display = ["id", "league_name", "max_number_of_teams_in_league", "points_for_win", "points_for_lost",
+                    "points_for_draw", "number_of_teams_in_league", "number_of_all_matches_in_league", "played_matches"]
 
 
 class TeamManager(admin.ModelAdmin):

@@ -19,8 +19,7 @@ from .settings import STATIC_ROOT
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('manager.urls'))
-    path('', include("manager.urls")),
+    path('', include('manager.urls')),
 
     # Sprawienie aby static files dzialaly z setting.DEBUG=False
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),

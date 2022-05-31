@@ -20,8 +20,32 @@ BASE_DIR = Path(__file__).resolve().parent
 # Create your views here.
 
 
+def main(request):
+    all_leagues = League.objects.all()
+    all_matches = Match.objects.all()
+    all_context = {"leagues": all_leagues, "matches": all_matches}
+    return render(request, "manager/main.html", all_context)
+
+
+def view(request):
+    all_leagues = League.objects.all()
+    all_matches = Match.objects.all()
+    all_events = Event.objects.all()
+    all_teams = Team.objects.all()
+    all_context = {"leagues": all_leagues, "matches": all_matches, "events": all_events, "teams": all_teams}
+    return render(request, "manager/view.html", all_context)
+
+
 def base(request):
     return render(request, "manager/base.html")
+
+
+def events(request):
+    return render(request, "manager/events.html")
+
+
+def event_details(request):
+    return render(request, "manager/event_details.html")
 
 
 def manager(request):
