@@ -116,8 +116,7 @@ class Match(models.Model):
             my_dict = self.goals_amount_dict()
             my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
             winner_id = my_dict_sorted[0][0]
-            event = Event.objects.get_or_create(event_type=EventType.MATCH_WON, match=self,
-                                                team=Team.objects.get(pk=winner_id))
+            event = Event.objects.get_or_create(event_type=EventType.MATCH_WON, match=self, team=Team.objects.get(pk=winner_id))
             return Team.objects.get(pk=winner_id)
         else:
             return False
@@ -128,8 +127,7 @@ class Match(models.Model):
             my_dict = self.goals_amount_dict()
             my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1])
             loser_id = my_dict_sorted[0][0]
-            event = Event.objects.get_or_create(event_type=EventType.MATCH_LOST, match=self,
-                                                team=Team.objects.get(pk=loser_id))
+            event = Event.objects.get_or_create(event_type=EventType.MATCH_LOST, match=self, team=Team.objects.get(pk=loser_id))
             return Team.objects.get(pk=loser_id)
         else:
             return False
@@ -143,8 +141,7 @@ class Match(models.Model):
                 if my_dict[elem] != test_val:
                     return False
             for team in self.teams.all():
-                event = Event.objects.get_or_create(event_type=EventType.MATCH_DRAW, match=self,
-                                                    team=Team.objects.get(pk=team.id))
+                event = Event.objects.get_or_create(event_type=EventType.MATCH_DRAW, match=self, team=Team.objects.get(pk=team.id))
             return True
         else:
             return False
@@ -177,9 +174,6 @@ class EventType(models.TextChoices):
     MATCH_LOST = "Match has been lost"
     MATCH_DRAW = "Match has been drawn"
     MATCH_GOAL = "Goal has been scored"
-    MATCH_FIRST_YELLOW = "First yellow card"
-    MATCH_SECOND_YELLOW = "Second yellow card"
-    MATCH_RED = "Red card"
     MISSING = "Event not specified"
 
 
