@@ -128,7 +128,7 @@ def add_event(request):
     return render(request, 'manager/add_event.html', context)
 
 
-def regis ter(request):
+def register(request):
     return render(request, "manager/register.html")
 
 

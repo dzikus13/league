@@ -9,7 +9,7 @@
         <th>Winner</th>
         <th>League has ended</th>
     </tr>
-    {%for league in leagues%}
+    {%for league in object_list%}
     <tr>
         <td><a class="a_table" href="{%url 'league_details' league.id%}">{{league.name}}</a></td>
         <td>

@@ -9,7 +9,7 @@
         <th>Match result</th>
         <th>Winner</th>
     </tr>
-    {%for match in matches%}
+    {%for match in object_list%}
     <tr>
         <td><a class="a_table" href="{%url 'match_details' match.id%}">#{{match.id}} (ID)</a></td>
         <th>{{match.match_date}}</th>

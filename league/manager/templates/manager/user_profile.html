@@ -1,18 +1,17 @@
-<!--
-AUTHORISATION:
-Admin
--->
 {%extends "manager/base.html"%} {%block content%}
 <h1 class="color_white">USER PROFILE</h1>
 <div class="user_profile_box">
-    Username: {{user.username}}
+    <label>Username:</label>
+    {{user.username}}
 
     <br></br>
 
-    Email: {{user.email}}
+    <label>Email:</label>
+    {{user.email}}
 
     <br></br>
 
-    Dodatkowe Uprawnienia: {{user.group}} <!-- Admin,Judge,None -->
+    <label>Dodatkowe Uprawnienia:</label>
+    {{user.group}} <!-- Admin,Judge,None -->
 </div>
 {%endblock%}
