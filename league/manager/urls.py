@@ -9,6 +9,7 @@ from .views import players, player_details, add_player, add_player_stats
 from .views import event_types, event_type_details, events, event_details, add_event
 from .views import register, registered
 from .views import login, logged, logout, logged_out
+from .views import users
 from . import views
 
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
     path("registered", registered),
     path("logged", logged),
     path("logged_out", logged_out),
+    path("users", users),
 
     path("leagues", views.Leagues.as_view(), name="leagues"),
     re_path(r"league_details/(?P<pk>[0-9]+)/$", views.LeagueDetail.as_view(), name="league_details"),

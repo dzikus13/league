@@ -33,15 +33,23 @@ def manager(request):
 
     return render(request, "manager/manager.html", model_links)
 
+
 def user_profile(request):
     return render(request, "manager/user_profile.html")
+
+
+def users(request):
+    return render(request, "manager/users.html")
+
 
 def error(request):
     return render(request, "manager/error.html", {"error_log": "Nie doszlo do zadnego bledu"})
     # sprawic by mi pycharm nie krzyczal ze tak nie mozna
 
+
 def main(request):
     return render(request, "manager/main.html")
+
 
 def add_forms(request):
     return render(request, "manager/add_forms.html")
@@ -49,6 +57,7 @@ def add_forms(request):
 
 def add_event(request):
     return render(request, "manager/add_event.html")
+
 
 class Leagues(generic.ListView):
     template_name = 'manager/leagues.html'
