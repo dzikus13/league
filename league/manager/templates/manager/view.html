@@ -1,0 +1,98 @@
+{%extends "manager/base.html"%} {%block content%}
+<table>
+    <tr>
+        <th>League</th>
+        <th>Status</th>
+    </tr>
+   {%for league in leagues%}
+    <tr>
+        <td><a class="a_table" href="{%url 'league_details' league.id%}">{{league.name}}</a></td>
+        <td>{{league.ended}}</td>
+    </tr>
+    {%empty%}
+    <tr>
+        <td>No Leagues found</td>
+    </tr>
+    {%endfor%}
+</table>
+
+<p></p>
+
+<table>
+    <tr>
+        <th>Match id</th>
+        <th>time</th>
+        <th>result</th>
+        <th>teams</th>
+        <th>league</th>
+    </tr>
+    {%for match in matches%}
+    <tr>
+        <td><a class="a_table" href="{%url 'match_details' match.id%}">{{match.id}}</a></td>
+        <td>{{match.time}}</td>
+        <td>{{match.result}}</td>
+        <td>{{match.teams}}</td>
+        <td>{{match.league}}</td>
+    </tr>
+    </a>
+    {%empty%}
+    <tr>
+        <td>No matches found</td>
+    </tr>
+    {%endfor%}
+</table>
+
+<p></p>
+
+<table>
+    <tr>
+        <th>Event id</th>
+        <th>time</th>
+        <th>player</th>
+        <th>event_type</th>
+        <th>match</th>
+    </tr>
+    {%for event in events%}
+    <tr>
+        <td><a class="a_table" href="{%url 'event_details' event.id%}">{{event.id}}</a></td>
+        <td>{{event.time}}</td>
+        <td>{{event.player}}</td>
+        <td>{{event.event_type}}</td>
+        <td>{{event.match}}</td>
+    </tr>
+    </a>
+    {%empty%}
+    <tr>
+        <td>No events found</td>
+    </tr>
+    {%endfor%}
+</table>
+
+<p></p>
+
+<table>
+    <tr>
+        <th>Team name</th>
+        <th>Matches won</th>
+        <th>Matches lost</th>
+        <th>Number of players</th>
+        <th>Sum of points</th>
+    </tr>
+    {%for team in teams%}
+
+    <tr>
+        <td><a class="a_table" href="{%url 'team_details' team.id%}">{{team.team_name}}</a></td>
+        <td>{{team.matches_won}}</td>
+        <td>{{team.matches_lost}}</td>
+        <td>{{team.number_of_players}}</td>
+        <td>{{team.sum_of_points}}</td>
+    </tr>
+    </a>
+    {%empty%}
+    <tr>
+        <td>No teams found</td>
+    </tr>
+    {%endfor%}
+</table>
+
+{%endblock%}

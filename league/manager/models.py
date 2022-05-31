@@ -157,7 +157,7 @@ class TeamPlayer(models.Model):
         if TeamPlayer.objects.filter(team=self.team).count() >= Team.MAX_NUMBER_OF_PLAYERS:
             raise ValidationError("Maximum number of players in this team exceeded", code="too_much_players")
         return super().save(*args, **kwargs)
-    
+
     @property
     def goals_scored_by_player(self):
         return Event.objects.filter(event_type=EventType.MATCH_GOAL, player=self).count()
@@ -191,7 +191,7 @@ class Event(models.Model):
             if self.player.team != self.team:
                 raise ValidationError("This player doesn't belong to that team", code="invalid_player")
         return super().save(*args, **kwargs)
-    
+
     @classmethod
     def get_events_for(cls, match, event_type=None):
         ret_qs = cls.objects.filter(match=match)

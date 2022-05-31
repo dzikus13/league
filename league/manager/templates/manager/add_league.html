@@ -1,13 +1,24 @@
-<!--
-AUTHORISATION:
-Admin
--->
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }} <!-- sa rozne metody wyswietlajace ten formularz na rozne sposoby -->
-        <input type="submit" class="button_form_submit" value="Submit">
-    </form>
+	<FORM METHOD="post" ACTION="">
+		<span style="float:left;">
+			League Name:
+			<br>
+				<INPUT autocomplete="off" TYPE="text" NAME="league_name" SIZE="40" MAXLENGTH="40" class="form_input" placeholder="League Name">
+			</br>
+				
+			<br>
+
+			Maximal Number of Teams:
+			<br>
+				<INPUT autocomplete="off" TYPE="number" NAME="number_of_teams" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
+			</br>
+				
+			<br>
+				
+			<input class="button_form_clear" TYPE="reset" VALUE="Clear">
+			<input class="button_form_submit" TYPE="submit" VALUE="Submit">
+		</span>
+	</FORM>
 </div>
 {%endblock%}

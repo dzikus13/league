@@ -20,19 +20,32 @@ BASE_DIR = Path(__file__).resolve().parent
 # Create your views here.
 
 
+def main(request):
+    all_leagues = League.objects.all()
+    all_matches = Match.objects.all()
+    all_context = {"leagues": all_leagues, "matches": all_matches}
+    return render(request, "manager/main.html", all_context)
+
+
+def view(request):
+    all_leagues = League.objects.all()
+    all_matches = Match.objects.all()
+    all_events = Event.objects.all()
+    all_teams = Team.objects.all()
+    all_context = {"leagues": all_leagues, "matches": all_matches, "events": all_events, "teams": all_teams}
+    return render(request, "manager/view.html", all_context)
+
+
 def base(request):
     return render(request, "manager/base.html")
 
 
-def list_of_views(request):
-    context = {"links_list": [
-        "leagues",
-        "teams",
-        "players",
-        "matches"
-    ]}
+def events(request):
+    return render(request, "manager/events.html")
 
-    return render(request, "manager/main.html", context)
+
+def event_details(request):
+    return render(request, "manager/event_details.html")
 
 
 def manager(request):
@@ -118,16 +131,6 @@ def add_event(request):
 
 
 def register(request):
-    if request.method == "POST":
-        username = request.POST['username']
-        email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        myuser = User.objects.create_user(username, email, password1)
-        myuser.save()
-        messages.success(request, "Your Account has been successfully created.")
-        return redirect("login")
-
     return render(request, "manager/register.html")
 
 
@@ -156,15 +159,11 @@ def logout(request):
 def registered(request):
     if request.method == "POST":
         username = request.POST['username']
+        email = request.POST['email']
         password1 = request.POST['password1']
-        password2 = request.POST['password2']
-
-        myuser = User.objects.create_user(username, password2, password1)
-
+        myuser = User.objects.create_user(username, email, password1)
         myuser.save()
-
         messages.success(request, "Your Account has been successfully created.")
-
         return redirect("login")
 
     return render(request, "manager/registered.html")

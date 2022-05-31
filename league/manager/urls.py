@@ -1,17 +1,19 @@
 from django.contrib import admin
 from django.urls import path, re_path
+from django.contrib.auth.decorators import login_required
 
-from .views import base, error, manager, add_forms, user_profile, list_of_views
+from .views import base, main, view, error, manager, add_forms, user_profile
 from .views import add_match, add_event, add_team, add_league, add_player
 from .views import register, registered
 from .views import login, logged, logout, logged_out
+from .views import events, event_details
 from . import views
 # ^^^ do obslugiwania generic views
 
 urlpatterns = [
-    path("", list_of_views),
     path("base", base, name="base"),
-    path("main", list_of_views),
+    path("", main),
+    path("view", login_required(view)),
     path("error", error),
     path("manager", manager),
     path("add_forms", add_forms),
@@ -27,6 +29,10 @@ urlpatterns = [
     path("registered", registered),
     path("logged", logged),
     path("logged_out", logged_out),
+    path("events", events),
+
+    path("events", events, name="events_list"),
+    re_path("event/(?P<event_id>\d+)", event_details, name="event_details"),
 
     path("leagues", views.Leagues.as_view(), name="leagues"),
     re_path(r"league_details/(?P<pk>[0-9]+)/$", views.LeagueDetail.as_view(), name="league_details"),
@@ -41,3 +47,4 @@ urlpatterns = [
     path("players", views.Players.as_view(), name="player_list"),
     re_path(r"player_details/(?P<pk>[0-9]+)/$", views.PlayerDetail.as_view(), name="player_details")
 ]
+

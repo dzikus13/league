@@ -1,13 +1,18 @@
-<!--
-AUTHORISATION:
-Admin
--->
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" class="button_form_submit" value="Submit">
-    </form>
+	<FORM METHOD="post" ACTION="">
+		Player Nick:
+		<br>
+			<INPUT autocomplete="off" TYPE="text" NAME="nick" SIZE="40" MAXLENGTH="60" class="form_input" placeholder="Player Nick">
+		<br>
+		Team:
+		<br>
+			<SELECT NAME="team" class="form_select">
+				<option>team_id</option>
+			</SELECT>
+		<br>
+		<input class="button_form_clear" TYPE="reset" VALUE="Clear">
+		<input class="button_form_submit" TYPE="submit" VALUE="Submit">
+	</FORM>
 </div>
 {%endblock%}

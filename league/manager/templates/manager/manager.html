@@ -1,12 +1,7 @@
-<!--
-AUTHORISATION:
-Everyone
--->
 {%extends "manager/base.html"%} {%block content%}
 <table>
     <!--{% debug %}-->
     <tr>
-        <th>List of LITERALLY ALL templates</th>
         <th>List of all views</th>
     </tr>
     <tr>
@@ -18,7 +13,6 @@ Everyone
     </tr>
     {%empty%}
     <tr>
-        <td>There's no templates to look at...</td>
         <td>No models (somehow?)</td>
     </tr>
     {%endfor%}
