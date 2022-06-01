@@ -13,7 +13,7 @@ class League(models.Model):
     max_number_of_players_in_team = models.IntegerField(default=2)
 
     def __str__(self):
-        return f"{self.id};{self.name}"
+        return f"{self.id};{self.league_name}"
 
     @property
     def number_of_teams_in_league(self):
