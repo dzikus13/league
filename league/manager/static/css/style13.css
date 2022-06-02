@@ -87,25 +87,6 @@ html, body
 	margin:auto;
 }
 
-.form_box
-{
-	overflow:auto;
-	width:260px;
-	min-height:100px;
-	background-color:#d3d3d3;
-	text-align:left;
-	padding-top:20px;
-	padding-bottom:20px;
-	margin:auto;
-	margin-top:7px;
-	margin-bottom:7px;
-	color:black;
-	position:relative;
-	border-radius:5px;
-	padding-left:20px;
-	padding-right:20px;
-}
-
 ::-webkit-scrollbar
 {
     width:10px;
@@ -113,7 +94,7 @@ html, body
 
 ::-webkit-scrollbar-track
 {
-    background:black;
+    background:#2a2a2a;
 }
 
 ::-webkit-scrollbar-thumb
@@ -123,7 +104,7 @@ html, body
 
 ::-webkit-scrollbar-thumb:hover
 {
-    background: #90ee90;
+    background: #656565;
 }
 
 a
@@ -250,86 +231,103 @@ table, tr, th, td
 }
 
 /* ADD FORMS */
-
-select:focus{
-    box-shadow: 0 0 10px 100px #fff inset;
-    border-color: #90ee90;
-   	border-radius:15px;
-   	border-width:2px;
-    outline:none;
+@keyframes form_clear_button {
+  from {background-color: rgba(255,255,255,0.07);}
+  to {background-color: #db544b;color:black;}
+}
+@keyframes form_submit_button {
+  from {background-color: rgba(255,255,255,0.07);}
+  to {background-color: #90ee90;color:black;}
+}
+.form_box
+{
+    height: 520px;
+    width: 400px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+    overflow:auto;
 }
 
-.button_form_submit
+.form_box *
 {
-    text-align:center;
-    WIDTH:75px;
-    cursor:pointer;
-    margin-right:10px;
-    float:right;
-    border-radius:5px;
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.form_box h3
+{
+    font-size: 50px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+
+.form_box label{
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    text-align:left;
+    margin-top:25px;
+}
+
+.form_box input, select{
+    display: block;
+    height: 50px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 300;
+    margin-top:8px;
+}
+
+.form_box button{
+    margin-top: 50px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form_box input, select, button{
+box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 }
 
 .button_form_submit:hover
 {
-    background-color:#90ee90;
-    color:black;
     cursor:pointer;
-}
-
-.button_form_clear
-{
-    text-align:center;
-    WIDTH:75px;
-    cursor:pointer;
-    margin-right:10px;
-    float:right;
-    border-radius:5px;
+    animation-name: form_submit_button;
+    animation-duration: 0.5s;
 }
 
 .button_form_clear:hover
 {
-    background-color:#db544b;
-    color:black;
     cursor:pointer;
+    animation-name: form_clear_button;
+    animation-duration: 0.5s;
 }
 
-.form_input
-{
-	float:left;
-	height:35px;
-	width:260px;
-	border-radius:15px;
-	text-align:center;
-	outline-offset:0px;
-	outline-color:#90ee90;
-	border-width:10px;
-	border-color:white;
+::placeholder{
+    color: #e5e5e5;
 }
-
-.form_select
-{
-	cursor:pointer;
-	float:left;
-	height:36px;
-	width:260px;
-	border-radius:15px;
-	text-align:center;
-	outline-offset:0px;
-	outline-color:#90ee90;
-	border-width:10px;
-	border-color:white;
-}
-
-.select_option
-{
-    background-color:white;
-}
-
-.select_option:hover
-{
-    background-color:#90ee90;
-}
-
 /* LOGIN AND REGISTER */
 
 #password_checkbox
