@@ -123,7 +123,7 @@ class Match(models.Model):
             event = Event.objects.get_or_create(event_type=EventType.MATCH_WON, match=self, team=Team.objects.get(pk=winner_id))
             return Team.objects.get(pk=winner_id)
         else:
-            return False
+            return None
 
     @property
     def match_loser(self):
