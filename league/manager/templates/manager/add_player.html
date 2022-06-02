@@ -1,22 +1,18 @@
-{%extends "manager/base.html"%} {%block content%}
+{%extends "manager/base.html"%}{%block content%}
 <div class="form_box">
 	<FORM METHOD="post" ACTION="">
-		<label>Player Nick:</label>
-		<br>
+		{%csrf_token%}
+		<h3>ADD PLAYER</h3>
+		<label>Player Nick</label>
 			<INPUT autocomplete="off" TYPE="text" NAME="nick" SIZE="40" MAXLENGTH="60" class="form_input" placeholder="Player Nick">
-		</br>
 
-		<br></br>
 
-		<label>Team:</label>
-		<br>
+		<label>Team</label>
 			<SELECT NAME="team" class="form_select">
 				<option>team_id</option>
 			</SELECT>
-		</br>
 
-		<br></br>
-
+		<br><br>
 		<input class="button_form_clear" TYPE="reset" VALUE="Clear"></input>
 		<input class="button_form_submit" TYPE="submit" VALUE="Submit"></input>
 	</FORM>
