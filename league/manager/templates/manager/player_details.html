@@ -1,21 +1,22 @@
 {%extends "manager/base.html"%} {%block content%}
+<h1>Go to <a href="/players">Player List</a></h1>
 <h1>Details about {{teamplayer.player_nick}}</h1>
 <table>
     <tr>
-        <th>id</th>
+        <th>ID</th>
         <th>{{teamplayer.id}}</th>
     </tr>
     <tr>
-        <td>team</td>
-        <td>{{teamplayer.team.team_name}}</td>
-    </tr>
-    <tr>
-        <td>score</td>
-        <td>{{teamplayer.score}}</td>
-    </tr>
-    <tr>
-        <td>nick</td>
+        <td>Nick</td>
         <td>{{teamplayer.player_nick}}</td>
+    </tr>
+    <tr>
+        <td>Team</td>
+        <td><a class="a_table" href="{%url 'team_details' teamplayer.team.id%}">{{teamplayer.team.team_name}}</a></td>
+    </tr>
+    <tr>
+        <td>Goals scored</td>
+        <td>{{teamplayer.goals_scored_by_player}}</td>
     </tr>
 </table>
 {%endblock%}

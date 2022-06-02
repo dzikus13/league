@@ -1,8 +1,7 @@
 {%extends "manager/base.html"%} {%block content%}
 <table>
-    <!--{% debug %}-->
     <tr>
-        <th>List of LITERALLY ALL templates</th>
+        <th>List of all views</th>
     </tr>
     <tr>
         <td><a class="a_table" href="admin">admin</a></td>
@@ -14,6 +13,7 @@
     {%empty%}
     <tr>
         <td>There's no templates to look at...</td>
+        <td>No models (somehow?)</td>
     </tr>
     {%endfor%}
 </table>

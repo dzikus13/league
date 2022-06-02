@@ -2,17 +2,15 @@
 <h1>List of players</h1>
 <table>
     <tr>
-        <th>Player id</th>
-        <th>nick</th>
-        <th>team</th>
-        <th>goals</th>
+        <th>Nickname</th>
+        <th>Team</th>
+        <th>Goals scored</th>
     </tr>
-    {%for player in object_list%}
+    {%for player in players%}
     <tr>
-        <td><a class="a_table" href="{%url "player_details" player.id%}">{{player.id}}</a></td>
-        <td>{{player.player_nick}}</td>
-        <td>{{player.team.team_name}}</td>
-        <td>{{player.score}}</td>
+        <td><a class="a_table" href="{%url 'player_details' player.id%}">{{player.player_nick}}</a></td>
+        <td><a class="a_table" href="{%url 'team_details' player.team.id%}">{{player.team.team_name}}</a></td>
+        <td>{{player.goals_scored_by_player}}</td>
     </tr>
     {%empty%}
     <tr>
@@ -20,4 +18,5 @@
     </tr>
     {%endfor%}
 </table>
+<h1><a href="/add_player">Add a new Player</a></h1>
 {%endblock%}

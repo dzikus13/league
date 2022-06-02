@@ -1,0 +1,12 @@
+{%extends "manager/base.html"%} {%block content%}
+<script type="text/javascript">
+function changesite()
+{
+location.replace("/?#");
+}
+setTimeout("changesite();", 2000);
+</script>
+
+<h1 class="color_white">Logged In</h1>
+<label class="color_white">Za 2 sekund nastąpi przekierowanie.</label>
+{%endblock%}

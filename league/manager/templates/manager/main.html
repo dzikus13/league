@@ -1,15 +1,44 @@
 {%extends "manager/base.html"%} {%block content%}
 <table>
-    <tr>
-        <th>List of views</th>
+     <tr>
+        <th>League</th>
+        <th>Status</th>
     </tr>
-    {%for link in links_list%}
+
+    {%for league in object_list%}
     <tr>
-        <td><a class="a_table" href="{{link}}">{{link}}</a></td>
+        <td><a class="a_table" href="{%url 'league_details' league.id%}">{{league.name}}</a></td>
+        <td>{{league.ended}}</td>
     </tr>
     {%empty%}
     <tr>
-        <td>There's no views to look at...</td>
+        <td>No Leagues found</td>
+    </tr>
+    {%endfor%}
+</table>
+
+<br></br>
+
+<table>
+    <tr>
+        <th>Match id</th>
+        <th>time</th>
+        <th>result</th>
+        <th>teams</th>
+        <th>league</th>
+    </tr>
+
+    {%for match in object_list%}
+    <tr>
+        <td><a class="a_table" href="{%url 'match_details' match.id%}">{{match.id}}</a></td>
+        <td>{{match.match_duration}}</td>
+        <td>{{match.result}}</td>
+        <td>{{match.teams}}</td>
+        <td>{{match.league}}</td>
+    </tr>
+    {%empty%}
+    <tr>
+        <td>No matches found</td>
     </tr>
     {%endfor%}
 </table>

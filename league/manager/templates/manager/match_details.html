@@ -1,29 +1,57 @@
 {%extends "manager/base.html"%} {%block content%}
+<h1>Go to <a href="/matches">Match List</a></h1>
 <h1>Details about match #{{match.id}}</h1>
 <table>
     <tr>
-        <td>id</td>
+        <td>ID</td>
         <td>{{match.id}}</td>
     </tr>
     <tr>
-        <td>league</td>
-        <td>{{match.league}}</td>
+        <td>Date & time</td>
+        <td>{{match.match_date}}</td>
     </tr>
     <tr>
-        <th>amount_gols</th>
-        <th>{{match.amount_gols}}</th>
+        <td>League</td>
+        <td><a class="a_table" href="{%url 'league_details' match.league.id%}">{{match.league.name}}</a></td>
     </tr>
     <tr>
-        <td>winner</td>
-        <td>{{match.winner}}</td>
+        <td>Teams</td>
+        <td><a class="a_table" href="{%url 'team_details' match.teams.first.id%}">{{match.teams.first.team_name}}</a>; <a class="a_table" href="{%url 'team_details' match.teams.last.id%}">{{match.teams.last.team_name}}</a></td>
     </tr>
     <tr>
-        <td>loser</td>
-        <td>{{match.loser}}</td>
+        <td>Match result</td>
+        <td>
+            {% if match.draw_match %}
+            <p> <!-- TODO match.teams dziala, ale match.winner nie dziala -->
+                Winner: <a class="a_table" href="{%url 'team_details' match.winner.id%}">{{match.winner}}</a> ({{match.winner.sum_of_points}})
+            </p>
+            <p>
+                Loser: <a class="a_table" href="{%url 'team_details' match.loser.id%}">{{match.loser}}</a> ({{match.loser.sum_of_points}})
+            </p>
+            {% else %}
+            <p>
+                <a class="a_table" href="{%url 'team_details' match.teams.first.id%}">{{match.teams.first.team_name}}</a> & <a class="a_table" href="{%url 'team_details' match.teams.last.id%}">{{match.teams.last.team_name}}</a> ended the match with a draw
+            </p>
+            {% endif %}
+        </td>
     </tr>
     <tr>
-        <td>drawn</td>
-        <td>{{match.drawn}}</td>
+        <td>Events</td>
+        <td>
+            Events: {{match.event_set.all|length}}
+            {%for event in match.event_set.all%}
+            <p>{{event.event_type}}
+                by
+                <a class="a_table" href="{%url 'player_details' event.player.id%}">{{event.player.player_nick}}</a>
+                from
+                <a class="a_table" href="{%url 'team_details' event.player.team.id%}">{{event.player.team.team_name}}</a>
+            </p>
+            {%empty%}
+            None
+            {%endfor%}
+        </td>
     </tr>
 </table>
+<h1><a href="/add_event">Add a new Event</a></h1>
+    <input class="button_form_submit" TYPE="submit" VALUE="Submit" href="match"></input>
 {%endblock%}

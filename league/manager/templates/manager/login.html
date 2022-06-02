@@ -1,0 +1,44 @@
+{%extends "manager/base.html"%} {%block content%}
+<script type="text/javascript">
+	function password_check()
+	{
+		var checkBox = document.getElementById('password_checkbox');
+		if (checkBox.checked === true)
+		{
+			document.getElementById('password_input').type = "text";
+		}
+		else
+		{
+			document.getElementById('password_input').type = "password";
+		}
+	}
+</script>
+
+<div class="form_box_login">
+	<h1 style="text-align:center;">Login</h1>
+	<form action="/logged" method="POST">
+	{% csrf_token %}
+		<span style="float:left;">
+			<label>Username:</label>
+			<br>
+				<input type="login" class="form_input" name="username" size="7" minlength="3" maxlength="10" required>
+			</br>
+
+			<br></br>
+
+			<label>Password:</label>
+			<br>
+				<input TYPE="password" id="password_input" class="form_input" name="password1" size="7" minlength="8" MAXLENGTH="20" required>
+				<input type="checkbox" onclick="password_check()" id="password_checkbox"  title="Pokaż Hasło">
+			</br>
+
+			<br></br>
+
+			<input class="button_form_submit" TYPE="submit" VALUE="login">
+		</span>
+	</form>
+</div>
+<div class="form_box_login_bottom">
+	<label class="login_bottom_link" style="font-size:14px;">Don't have an account? <a class="login_bottom_link" href="/register">Create an account</a>.</label>
+</div>
+{%endblock%}
