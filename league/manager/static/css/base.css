@@ -1,0 +1,388 @@
+* {
+    margin: 0;
+    z-index:1;
+}
+
+::-webkit-scrollbar
+{
+    width:10px;
+}
+
+::-webkit-scrollbar-track
+{
+    background:#40444b;
+}
+
+::-webkit-scrollbar-thumb
+{
+    background:#22252b;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover
+{
+    background: #16181d;
+    border-radius: 10px;
+}
+
+body {
+    background-color:#517820;
+    scroll-behavior: smooth;
+}
+
+HTML {
+    scroll-behavior: smooth;
+}
+
+header {
+    background-color:#141e14;
+    width: 100%;
+    height: 10vh;
+    position: fixed;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(9px);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    z-index:5;
+}
+
+.main {
+    padding-top:10vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+    width: 100%;
+    height: 98vh;
+}
+
+.about_us {
+    width: 100%;
+    height: 100px;
+}
+
+footer {
+    width: 100%;
+}
+
+.buttons {
+    background-color:white;
+    width: 10vw;
+    margin-top:2.5vh;
+    height:5vh;
+    text-align: center;
+    line-height: 5.25vh;
+    font-size: 2.75vh;
+    border-radius: 17.5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    font-family: 'Anek Malayalam', sans-serif;
+}
+
+.buttons:hover {
+    box-shadow: rgba(50, 50, 93, 0.45) 0px 6px 15px -2px, rgba(0, 0, 0, 0.5) 0px 3px 10px -3px;
+    cursor:pointer;
+}
+
+.button_left {
+    margin-left:4vh;
+    float:left;
+}
+
+.button_right {
+    margin-right:4vh;
+    float:right;
+}
+
+.blocks_container {
+    width:47.5%;
+    height:100%;
+    margin:auto;
+    float:center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+.main_white_container {
+    background-color: #F9F9F9;
+    width:90%;
+    height:35%;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
+.main_graphic_container {
+    background-color: None;
+    width:70%; 
+    height:55%; 
+    right: -50;
+    position: absolute;
+    background-image: url(pilkarzyk1.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.main_text_container {
+    width:46.5%; 
+    height:35%; 
+    left: 0;
+    position: absolute;
+    font-size: 4.8vh;
+    text-align: center;
+    top: 39%;
+    font-family: 'Anek Malayalam', sans-serif;
+}
+
+.big_text {
+    font-family: 'Squada One', cursive;
+    font-size: 7vh;
+}
+
+a:visited, a:link, a:active {
+    color:black;
+}
+
+.leagues {
+    width: 100%;
+    height: 87.5vh;
+    background-color:white;
+}
+
+.wave1{
+    margin-top:5px;
+    width:100%;
+    height:43px;
+    display:block;
+}
+
+.empty1 {
+    height:2vh;
+    width:100%;
+}
+
+.league_view_container {
+    width:70%;
+    height:80vh;
+    padding-top:3vh;
+    margin:auto;
+}
+
+.league_tables_header {
+    width:100%;
+    height:15vh;
+    margin-bottom:2.5vh;
+}
+
+.league_tables_container {
+    width:100%;
+    height:55vh;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow-y: auto;
+    flex-wrap:wrap;
+    box-sizing: border-box;
+    padding-right:15px;
+}
+
+.league_table_container  {
+    width:30%;
+    height:100%;
+    background-color:lightgray;
+    float:left;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    margin-bottom:7.5vh;
+}
+
+.league_table_league_name {
+    width:100%;
+    height:15%;
+    background-color:#5a5d63;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    font-size:4vh;
+    font-family: 'Anek Malayalam', sans-serif;
+}
+
+.league_table_teams_container {
+    width:100%;
+    height:85%;
+    overflow-y: auto;
+}
+
+.leagues_text {
+    width:85%;
+    height:100%;
+    float:left;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    font-size:10vh;
+    box-sizing: border-box;
+    font-family: 'Squada One', cursive;
+}
+
+.create_league_button {
+    width:15%;
+    height:100%;
+    float:left;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+}
+
+.league_table_team_name {
+    width:80%;
+    height:65px;
+    float:left;
+    background-color:#c8cbd0;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    box-sizing: border-box;
+    padding-left:10px;
+    font-size:2.5vh;
+    font-family: 'Anek Malayalam', sans-serif;
+}
+
+.league_table_team_points {
+    width:20%;
+    height:65px;
+    box-sizing: border-box;
+    border-left:3px solid #f54242;
+    float:left;
+    background-color:#45464a;
+    color:white;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    font-size:2.5vh;
+    font-family: 'Anek Malayalam', sans-serif;
+}
+
+.league_table_team_name:nth-child(2) {
+    background-color:#9fa4ad;
+}
+
+.about_us {
+    width:70%;
+    height:72.5vh;
+    margin:auto;
+    margin-bottom:25px;
+    //background-color:white;
+    display: flex;
+    flex-direction:column;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: flex-start;
+
+}
+
+.about_us_block {
+    width:100%;
+    height:31%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.about_us_person {
+    width:22.5%;
+    height:100%;
+}
+
+.about_us_block1 {
+    width:100%;
+    height:31%;
+}
+
+.about_us_avatar {
+    width:100%;
+    height:85%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.about_us_nick {
+    width:100%;
+    height:15%;
+    font-size:3vh;
+    text-align:center;
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    font-family: 'Squada One', cursive;
+    color:white;
+}
+
+.text_about_us {
+    margin-top:75px;
+    color:white;
+    width:70%;
+    height:20.5vh;
+    margin:auto;
+    text-align:center;
+    font-size:7vh;
+    font-family: 'Squada One', cursive;
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.log_in_background {
+    width:100%;
+    height:100vh;
+    position: fixed;
+    z-index:6;
+    background-color: rgba(0,0,0,0.4);
+    //display: none;
+    backdrop-filter: blur(4.5px);
+}
+
+.log_in_container {
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.log_in_window {
+    width:21%;
+    height:60vh;
+    background-color:white;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    margin:auto;
+}
+
+.cancel_button_container {
+    width:1.75vw;
+    height:3.5vh;
+    margin-top:2.5vh;
+    float:right;
+    margin-right:1.5vh;
+    background-size:cover;
+    cursor:pointer;
+}
+
+.cancel_button_container:hover {
+    opacity:0.7;
+}
+
+.form_container {
+    width:100%;
+    height:47.5vh;
+    margin-top:2.5vh;
+    float:left;
+}
