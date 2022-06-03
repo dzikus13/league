@@ -1,0 +1,124 @@
+{% load static %}
+
+    <head>
+        <meta charset="UTF-8">
+        <title>League Manager</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+        <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon/">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Squada+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Anek+Malayalam:wght@500&display=swap" rel="stylesheet">
+    </head>
+    <BODY>
+        <header>
+            <a href="#main"><div class="buttons button_left">Welcome</div></a>
+            <a href="#leagues"><div class="buttons button_left">Leagues</div></a>
+            <a href="#about_us"><div class="buttons button_left">About us</div></a>
+            <div class="buttons button_right" onclick="document.getElementById('id01').style.display='block'" >Log in</div>
+        </header>
+
+        <div class="log_in_background" id="id01">
+            <div class="log_in_container">
+                <div class="log_in_window">
+                    <form>
+                        <div class="cancel_button_container" style="background-image: url({% static 'images/x.png' %});" onclick="document.getElementById('id01').style.display='none'"></div>
+                        <div class="form_container">
+                            <div class="form_login"></div>
+                            <div class="form_login"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <section class="main" id="main" style="background-image: url({% static 'images/soccer.gif' %});">
+            <div class="blocks_container">
+                <div class="main_white_container"></div>
+                <div class="main_graphic_container" style="background-image: url({% static 'images/pilkarzyk1.png' %});"></div>
+                <div class="main_text_container"><span class="big_text">Welcome to our</span><br>TABLE FOOTBALL<br>LEAGUE</div>
+            </div>
+        </section>
+        <section class="empty1">
+        </section>
+        <section class="leagues" id="leagues">
+            <div class="wave1" style="background: #517820 url({% static 'images/unknown1.png' %});"></div>
+            <div class="league_view_container">
+                <div class="league_tables_header">
+                    <div class="leagues_text">Leagues</div>
+                    <div class="create_league_button">
+                        <div class="buttons" style="font-size: 2.5vh; margin-top:0;">Add your league</div>
+                    </div>
+                </div>
+
+                <div class="league_tables_container">
+                    {%for league in object_list%}
+                    <div class="league_table_container">
+                        <div class="league_table_league_name">{{league.league_name}}</div>
+                        <div class="league_table_teams_container">
+                            {%for team in league.team_set.all%}
+                            {% if forloop.counter|divisibleby:2 %}
+                            <div class="league_table_team_name" style="background-color:#9fa4ad;">{{team.team_name}}</div>
+                            <div class="league_table_team_points">{{team.sum_of_points}}</div>
+                            {% else %}
+                            <div class="league_table_team_name">{{team.team_name}}</div>
+                            <div class="league_table_team_points">{{team.sum_of_points}}</div>
+                            {% endif %}
+                            {%empty%}
+                            {%endfor%}
+                        </div>
+                    </div>
+                    {%empty%}
+                    {%endfor%}
+                </div>
+            </div>
+            <div class="wave1" style="background: #517820 url({% static 'images/unknown2.png' %}); margin-top:0;"></div>
+        </section>
+        <section id="about_us" class="text_about_us">
+            Nasza zaloga
+        </section>
+        <section class="about_us">
+            <div class="about_us_block1">
+                <div class="about_us_person" style="margin:auto;">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/piotr.png' %});"></div>
+                    <div class="about_us_nick">Piotrek</div>
+                </div>
+            </div>
+            <div class="about_us_block">
+                <div class="about_us_person">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/kornel.png' %});"></div>
+                    <div class="about_us_nick">Kornelek</div>
+                </div>
+                <div class="about_us_person">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/maks.png' %});"></div>
+                    <div class="about_us_nick">Maksik P</div>
+                </div>
+                <div class="about_us_person">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/iga.png' %});"></div>
+                    <div class="about_us_nick">Igus</div>
+                </div>
+                <div class="about_us_person">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/maksm.png' %});"></div>
+                    <div class="about_us_nick">Maksik M</div></div>
+            </div>
+            <div class="about_us_block">
+                <div class="about_us_person">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/tomekj.png' %});"></div>
+                    <div class="about_us_nick">Tomeczek J</div>
+                </div>
+                <div class="about_us_person">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/zuzia.png' %});"></div>
+                    <div class="about_us_nick">Zuzanka</div>
+                </div>
+                <div class="about_us_person">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/tomekm.png' %});"></div>
+                    <div class="about_us_nick">Tomeczek M</div>
+                </div>
+                <div class="about_us_person">
+                    <div class="about_us_avatar" style="background-image:url({% static 'images/szymon.png' %});"></div>
+                    <div class="about_us_nick">Szymonek</div>
+                </div>
+            </div>
+        </section>
+        <!--<footer></footer>-->
+    </BODY>

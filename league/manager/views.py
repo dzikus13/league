@@ -35,7 +35,7 @@ def view(request):
 
 
 def base(request):
-    return render(request, "manager/base.html")
+    return render(request, "manager/base1.html")
 
 
 def events(request):
