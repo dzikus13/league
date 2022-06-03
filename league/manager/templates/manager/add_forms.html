@@ -1,10 +1,5 @@
-<!--
-AUTHORISATION:
-Admin, Judge
--->
-{%extends "manager/base.html"%}
+{%extends "manager/base.html"%} {%block content%}
 {%load custom_tags%}
-{%block content%}
 <table>
     <tr>
         <th>List of all add_forms</th>
@@ -17,6 +12,7 @@ Admin, Judge
     <tr>
         <td><a class="a_table" href="add_league">League</a></td>
     </tr>
+
     {% if user.is_authenticated %}
     <tr>
         <td><a class="a_table" href="add_match">Match</a></td>
@@ -24,9 +20,6 @@ Admin, Judge
     {% endif %}
     <tr>
         <td><a class="a_table" href="add_player">Player</a></td>
-    </tr>
-    <tr>
-        <td><a class="a_table" href="add_player_stats">Player statistics</a></td>
     </tr>
     <tr>
         <td><a class="a_table" href="add_team">Team</a></td>

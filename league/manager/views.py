@@ -41,6 +41,8 @@ def base(request):
 def events(request):
     return render(request, "manager/events.html")
 
+def events(request):
+    return render(request, "manager/events.html")
 
 def event_details(request):
     return render(request, "manager/event_details.html")

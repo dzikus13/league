@@ -1,30 +1,10 @@
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
 	<FORM METHOD="post" ACTION="">
-		<label>Team Name:</label>
-		<br>
-			<INPUT autocomplete="off" TYPE="text" NAME="team_name" SIZE="40" MAXLENGTH="40" class="form_input" placeholder="Team Name">
-		</br>
-
-		<br></br>
-
-		<label>League:</label>
-		<br>
-		<SELECT NAME="league" class="form_select">
-			<option>league_id</option>
-		</SELECT>
-		</br>
-	
-		<br></br>
-		
-		<label>Maximal Number of Players:</label>
-		<br>
-			<INPUT autocomplete="off" TYPE="number" NAME="max_number_of_players" SIZE="1" MAXLENGTH="2" class="form_input" placeholder="00">
-		</br>
-	
-		<br></br>
-		
-		<input class="button_form_clear" TYPE="reset" VALUE="Clear"></input>				
+    <h3>ADD TEAM</h3>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input class="button_form_clear" TYPE="reset" VALUE="Clear"></input>
 		<input class="button_form_submit" TYPE="submit" VALUE="Submit"></input>
 	</FORM>
 </div>
