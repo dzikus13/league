@@ -30,19 +30,24 @@ class League(models.Model):
     @property
     def league_is_ended(self):
         if self.number_of_all_matches_in_league > 0:
-            return self.number_of_all_matches_in_league == self.number_of_played_matches_in_league
+            return self.number_of_all_matches_in_league == self.played_matches
         else:
             return False
+
+    def points_amount_dict(self):
+        my_dict = {}
+        for team in Team.objects.all().filter(team_league=self.id):
+            amount = team.sum_of_points
+            my_dict[team.id] = amount
+        return my_dict
 
     @property
     def league_winner(self):
         if self.league_is_ended:
-            teams = []
-            team_points = []
-            for team in self.team_set.all():
-                teams.append(team)
-                team_points.append(team.sum_of_points)
-            return teams[team_points.index(max(team_points))]
+            my_dict = self.points_amount_dict()
+            my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
+            winner_id = my_dict_sorted[0][0]
+            return Team.objects.get(pk=winner_id)
         else:
             return None
 
