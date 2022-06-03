@@ -12,9 +12,12 @@
     <tr>
         <td><a class="a_table" href="add_league">League</a></td>
     </tr>
+
+    {% if user.is_authenticated %}
     <tr>
         <td><a class="a_table" href="add_match">Match</a></td>
     </tr>
+    {% endif %}
     <tr>
         <td><a class="a_table" href="add_player">Player</a></td>
     </tr>

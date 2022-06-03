@@ -35,12 +35,14 @@ def view(request):
 
 
 def base(request):
-    return render(request, "manager/base.html")
+    return render(request, "manager/base1.html")
 
 
 def events(request):
     return render(request, "manager/events.html")
 
+def events(request):
+    return render(request, "manager/events.html")
 
 def event_details(request):
     return render(request, "manager/event_details.html")

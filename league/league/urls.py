@@ -1,5 +1,4 @@
 """league URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
 Examples:
@@ -20,7 +19,7 @@ from .settings import STATIC_ROOT
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("manager.urls")),
+    path('', include('manager.urls')),
 
     # Sprawienie aby static files dzialaly z setting.DEBUG=False
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': STATIC_ROOT}),

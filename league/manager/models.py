@@ -27,24 +27,29 @@ class League(models.Model):
     def played_matches(self):
         return self.match_set.filter(event__isnull=False).count()
 
-    #@property
-    #def league_is_ended(self):
-    #   if self.number_of_all_matches_in_league > 0:
-    #        return self.number_of_all_matches_in_league == self.number_of_played_matches_in_league
-    #    else:
-    #        return False
+    @property
+    def league_is_ended(self):
+        if self.number_of_all_matches_in_league > 0:
+            return self.number_of_all_matches_in_league == self.played_matches
+        else:
+            return False
 
-    #@property
-    #def league_winner(self):
-    #    if self.league_is_ended:
-    #        teams = []
-    #        team_points = []
-    #        for team in self.team_set.all():
-    #            teams.append(team)
-    #            team_points.append(team.sum_of_points)
-    #        return teams[team_points.index(max(team_points))]
-    #    else:
-    #        return None
+    def points_amount_dict(self):
+        my_dict = {}
+        for team in Team.objects.all().filter(team_league=self.id):
+            amount = team.sum_of_points
+            my_dict[team.id] = amount
+        return my_dict
+
+    @property
+    def league_winner(self):
+        if self.league_is_ended:
+            my_dict = self.points_amount_dict()
+            my_dict_sorted = sorted(my_dict.items(), key=lambda x: x[1], reverse=True)
+            winner_id = my_dict_sorted[0][0]
+            return Team.objects.get(pk=winner_id)
+        else:
+            return None
 
 
 class Team(models.Model):
@@ -97,7 +102,7 @@ class Match(models.Model):
     match_duration = models.DurationField(default="01:30:00")
 
     def __str__(self):
-        return f"{self.id}"
+        return f"Match #{self.id}"
 
     def goals_amount_team(self, which_team):
         return Event.objects.filter(event_type=EventType.MATCH_GOAL, team=which_team, match=self).count()
@@ -151,7 +156,7 @@ class TeamPlayer(models.Model):
     player_nick = models.CharField(max_length=20)
 
     def __str__(self):
-        return f"{self.player_nick}"
+        return f"{self.id};{self.player_nick}"
 
     def save(self, *args, **kwargs):
         if TeamPlayer.objects.filter(team=self.team).count() >= Team.MAX_NUMBER_OF_PLAYERS:

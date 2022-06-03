@@ -1,10 +1,8 @@
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
 	<FORM METHOD="post" ACTION="">
+    <h3>ADD EVENT</h3>
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input class="button_form_clear" TYPE="reset" VALUE="Clear"></input>
 		<input class="button_form_submit" TYPE="submit" VALUE="Submit"></input>
-	</FORM>
-</div>
-{%endblock%}

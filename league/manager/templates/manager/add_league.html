@@ -1,6 +1,7 @@
 {%extends "manager/base.html"%} {%block content%}
 <div class="form_box">
 	<FORM action="" method="POST">
+    <h3>ADD LEAGUE</h3>
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input class="button_form_clear" TYPE="reset" VALUE="Clear"></input>
